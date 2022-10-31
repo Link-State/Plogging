@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if loginFail == "로그인실패" %}
+        <body onload="init(0)">
+        </body>
+    {% elif loginFail == "로그인성공" %}
+        <body onload="">
+            <form action="/logout">
+                <input type="submit" value="로그아웃">
+            </form>
+        </body>
+    {% else %}
+        <body onload="init(1)">
+        </body>
+    {% endif %}
+{% endblock %}

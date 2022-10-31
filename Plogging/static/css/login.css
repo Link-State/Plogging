@@ -1,0 +1,115 @@
+
+@property --ang {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+#frame {
+    position: absolute;
+    border-radius: 1%;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}
+
+#border {
+    position: absolute;
+    border-radius: 1.5%;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    opacity: 0.75;
+    transform: translate(-50%, -50%);
+}
+
+#loginText {
+    font-size: 32pt;
+    opacity: 0;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    animation: iconopacity 500ms linear 3000ms both;
+}
+
+#loginIcon {
+    font-size: 32pt;
+    opacity: 0;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    cursor: pointer;
+    border: solid 2px black;
+    border-radius: 2px;
+    padding: 6px;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    animation: textopacity 500ms linear 3500ms both;
+}
+
+#loginFail {
+    font-size: 16pt;
+    opacity: 0;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    z-index: 2;
+    color: red;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -35%);
+    animation: erropacity 100ms linear 3500ms both;
+}
+
+@keyframes rotate {
+    0% {
+        --ang: 0%;
+    }
+    100% {
+        --ang: 100%;
+    }
+}
+
+@keyframes textopacity {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -15%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -25%);
+    }
+}
+
+@keyframes iconopacity {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -55%);
+    }
+}
+
+@keyframes erropacity {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -35%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -45%);
+    }
+}
