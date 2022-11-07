@@ -1,4 +1,5 @@
 const MENU_COUNT = 5;
+const MENU_FX = [ploggingBoard, null, null, null, null];
 let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 
 // 메인 요소 생성
@@ -32,6 +33,7 @@ function loadMain() {
     BODY.appendChild(background);
 
     loadButton();
+    loadBoard();
     // [완료] 배경화면 div 크기 고정해서 브라우저 크기 줄이면 화면 잘리게끔 (ex.네이버 메인화면)
     // [완료] 화면 가로가 세로보다 더 짧아질 경우 배경화면 div의 height를 100%로 변경
     // [완료] ㄴ 이 때 아이템이 들어갈 슬롯들의 크기, 위치도 알맞게 변경
@@ -64,6 +66,7 @@ function loadButton() {
 
     for (let i = 0; i < MENU_COUNT; i++) {
         let div = document.createElement('div');
+        div.onclick = MENU_FX[i];
         div.id = "menu:" + i;
         div.className = "menuElem";
         menu.appendChild(div);
@@ -76,14 +79,41 @@ function loadButton() {
     window.addEventListener("resize", onResize);
 }
 
-function onClickMenu(e) {
+// 게시판 요소 생성
+function loadBoard() {
+    const BODY = document.getElementsByTagName('body').item(0);
+
+    let board = document.createElement('div');
+    board.style.display = "none";
+    board.id = "board";
+
+    BODY.appendChild(board);
+}
+
+// 메뉴 버튼
+function onClickMenu() {
     let menu = document.getElementById("menu");
 
-    if (menu.style.display === "none") {
-        menu.style.display = "block";
+    if (menu.style.display !== "none") {
+        menu.style.display = "none";
     }
     else {
-        menu.style.display = "none";
+        menu.style.display = "block";
+    }
+}
+
+// 게시판 버튼
+function ploggingBoard() {
+    let background = document.getElementById("background");
+    let board = document.getElementById("board");
+
+    if (background.style.display !== "none") {
+        background.style.display = "none";
+        board.style.display = "block";
+    }
+    else {
+        background.style.display = "block";
+        board.style.display = "none";
     }
 }
 
