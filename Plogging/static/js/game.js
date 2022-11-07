@@ -10,19 +10,19 @@ function loadMain() {
     let background = document.createElement('div');
     background.id = "background";
 
-    // 컨버전스홀
+    // 배경 -> 컨버전스홀
     let slot1 = document.createElement('div');
     slot1.id = "slot1";
 
-    // 독수리상
+    // 배경 -> 독수리상
     let slot2 = document.createElement('div');
     slot2.id = "slot2";
     
-    // 해 및 달
+    // 배경 -> 해 및 달
     let slot3 = document.createElement('div');
     slot3.id = "slot3";
 
-    // 강아지
+    // 배경 -> 강아지
     let slot4 = document.createElement('div');
     slot4.id = "slot4";
 
@@ -83,10 +83,67 @@ function loadButton() {
 function loadBoard() {
     const BODY = document.getElementsByTagName('body').item(0);
 
+    // 플로깅 모집 게시판
     let board = document.createElement('div');
     board.style.display = "none";
     board.id = "board";
 
+    // 뒤로가기
+    let back = document.createElement('div');
+    back.innerHTML = "X";
+    back.id = "back";
+
+    // 위치
+    let locationMenu = document.createElement('div');
+    locationMenu.id = "locationMenu";
+
+    // 자동 위치
+    let auto = document.createElement('div');
+    auto.id = "auto";
+
+    // 수동 위치
+    let manual = document.createElement('div');
+    manual.id = "manual";
+
+    // 광역시/도
+    let state = document.createElement('select');
+    state.id = "state";
+
+    // 시/군
+    let country = document.createElement('select');
+    country.id = "country";
+
+    // 게시판
+    let boardBody = document.createElement('div');
+    boardBody.id = "boardBody";
+
+    // 총 게시글 수
+    let totalCount = document.createElement('div');
+    totalCount.id = "totalCount";
+
+    // 모집글 작성
+    let write = document.createElement('div');
+    write.id = "write";
+
+    // 게시글 목록
+    let boardList = document.createElement('div');
+    boardList.id = "boardList";
+
+    // 페이징
+    let paging = document.createElement('div');
+    paging.id = "paging";
+
+    boardBody.appendChild(totalCount);
+    boardBody.appendChild(write);
+    boardBody.appendChild(boardList);
+    boardBody.appendChild(paging);
+    manual.appendChild(state);
+    manual.appendChild(country);
+    locationMenu.appendChild(auto);
+    locationMenu.appendChild(manual);
+    board.appendChild(back);
+    board.appendChild(locationMenu);
+    board.appendChild(boardBody);
     BODY.appendChild(board);
 }
 
