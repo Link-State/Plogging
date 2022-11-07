@@ -90,6 +90,7 @@ function loadBoard() {
 
     // 뒤로가기
     let back = document.createElement('div');
+    back.onclick = ploggingBoard;
     back.innerHTML = "X";
     back.id = "back";
 
@@ -97,32 +98,47 @@ function loadBoard() {
     let locationMenu = document.createElement('div');
     locationMenu.id = "locationMenu";
 
-    // 자동 위치
-    let auto = document.createElement('div');
-    auto.id = "auto";
-
-    // 수동 위치
-    let manual = document.createElement('div');
-    manual.id = "manual";
-
     // 광역시/도
     let state = document.createElement('select');
+    const STATES = ['전체', '서울', '인천', '대전', '부산', '울산', '광주', '제주', '경기', '강원', '충북', '충남', '경북', '경남', '전북', '전남'];
+    for (let s of STATES) {
+        let option = document.createElement('option');
+        option.value = s;
+        option.innerHTML = s;
+        state.appendChild(option);
+    }
+    state.name = "state";
     state.id = "state";
 
     // 시/군
     let country = document.createElement('select');
     country.id = "country";
 
+    // 구
+    let zone = document.createElement('select');
+    zone.id = "zone";
+
+    // 지역 검색
+    let search = document.createElement('div');
+    search.innerHTML = "검색";
+    search.id = "search";
+
     // 게시판
     let boardBody = document.createElement('div');
     boardBody.id = "boardBody";
 
+    // 게시판 리본
+    let boardRibon = document.createElement('div');
+    boardRibon.id = "boardRibon";
+
     // 총 게시글 수
     let totalCount = document.createElement('div');
+    totalCount.innerHTML = "총 N건";
     totalCount.id = "totalCount";
 
     // 모집글 작성
     let write = document.createElement('div');
+    write.innerHTML = "모집글 작성";
     write.id = "write";
 
     // 게시글 목록
@@ -133,17 +149,18 @@ function loadBoard() {
     let paging = document.createElement('div');
     paging.id = "paging";
 
-    boardBody.appendChild(totalCount);
-    boardBody.appendChild(write);
+    boardRibon.appendChild(totalCount);
+    boardRibon.appendChild(write);
+    boardBody.appendChild(boardRibon);
     boardBody.appendChild(boardList);
-    boardBody.appendChild(paging);
-    manual.appendChild(state);
-    manual.appendChild(country);
-    locationMenu.appendChild(auto);
-    locationMenu.appendChild(manual);
+    locationMenu.appendChild(state);
+    locationMenu.appendChild(country);
+    locationMenu.appendChild(zone);
+    locationMenu.appendChild(search);
     board.appendChild(back);
     board.appendChild(locationMenu);
     board.appendChild(boardBody);
+    board.appendChild(paging);
     BODY.appendChild(board);
 }
 

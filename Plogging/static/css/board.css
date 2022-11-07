@@ -1,11 +1,66 @@
 #board {
-    position: absolute;
     width: 100%;
     height: 100%;
     background-color: white;
 }
 
-
 #back {
+    position: absolute;
+    width: 2%;
+    aspect-ratio: 4 / 3;
+    text-align: center;
+    right: 0%;
+    z-index: 1;
+    color: white;
+    border: solid 1px black;
     background-color: red;
+    cursor: default;
+}
+
+#locationMenu {
+    position: relative;
+    display: flex;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    justify-content: space-around;
+    font-size: 20pt;
+    margin: 0 auto;
+}
+
+#locationMenu > * {
+    display: inline-block;
+}
+
+#boardBody {
+    position: relative;
+    width: 90%;
+    height: 800px;
+    font-size: 20pt;
+    border: solid 1px black;
+    margin: 0 auto;
+}
+
+#boardRibon {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#boardList {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 50%;
+    font-size: 20pt;
+    margin: 0 auto;
+    border: solid 1px red;
+}
+
+#paging {
+    position: absolute;
+    width: 100%;
+    bottom: 1%;
+    left: 50%;
+    transform: translate(-50%, 1%);
 }

@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'roka';
+    src: local('../font/ROKA_Bold.ttf') format('truetype');
+}
+
+* {
+    font-family: 'roka';
+}
