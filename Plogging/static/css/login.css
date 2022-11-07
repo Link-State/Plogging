@@ -4,9 +4,9 @@
     inherits: false;
     initial-value: 0%;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     display: none;
-}
+} */
 
 #frame {
     position: absolute;

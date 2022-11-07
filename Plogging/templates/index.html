@@ -5,10 +5,9 @@
         <body onload="init(0)">
         </body>
     {% elif loginFail == "로그인성공" %}
-        <body onload="">
-            <form action="/logout">
-                <input type="submit" value="로그아웃">
-            </form>
+        <link rel="stylesheet" type="text/css" href="../static/css/game.css">
+        <script src="../static/js/game.js"></script>
+        <body onload="loadMain()">
         </body>
     {% else %}
         <body onload="init(1)">

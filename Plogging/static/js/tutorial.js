@@ -1,7 +1,5 @@
 
-// DataBase 먼저 구축 후 구현할 것.
-
-function startTutorial() {
+function loadTutorial() {
     console.log("tutorial");
 }
 

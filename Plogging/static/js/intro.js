@@ -1,8 +1,7 @@
-let BODY = null;
 
 // 초기화
 function init(code) {
-    BODY = document.getElementsByTagName('body').item(0);
+    const BODY = document.getElementsByTagName('body').item(0);
     if (code === 1) {
         BODY.style.backgroundColor = "#000";
 
@@ -66,6 +65,7 @@ function init(code) {
 }
 
 function loginForm(code) {
+    const BODY = document.getElementsByTagName('body').item(0);
     let rate = window.innerHeight / window.innerWidth;
     let rad = Math.atan(rate);
 

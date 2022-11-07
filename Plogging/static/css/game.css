@@ -1,0 +1,97 @@
+/* * {
+    overflow: hidden;
+} */
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#background {
+    position: absolute;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url("../image/bg.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: repeat-x;
+}
+
+#slot1 {
+    position: absolute;
+    width: 100%;
+    aspect-ratio: 4 / 1;
+    background-image: url("../image/hall.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+#slot2 {
+    position: absolute;
+    aspect-ratio: 5 / 13;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("../image/statue.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+#slot3 {
+    position: absolute;
+    width: 10%;
+    aspect-ratio: 1 / 1;
+    top: 8%;
+    left: 4.5%;
+    background-image: url("../image/sun.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+#slot4 {
+    position: absolute;
+    aspect-ratio: 1 / 1;
+    background-image: url("../image/dog.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 3;
+}
+
+#menuBtn {
+    position: absolute;
+    aspect-ratio: 1 / 1;
+    right: 2%;
+    border-radius: 5px;
+    background-color: skyblue;
+    z-index: 4;
+}
+
+#menu {
+    position: absolute;
+    background-color: aqua;
+    z-index: 4;
+}
+
+.menuElem {
+    aspect-ratio: 1 / 1;
+    display: inline-block;
+    background-color: tomato;
+    margin: 0 auto;
+}
