@@ -13,7 +13,7 @@ SOCKET.on('response', function(data) {
         alert('더이상 게시글을 올릴 수 없습니다.');
     }
     else if (data.msg === 'sessionFail') {
-        alert('세션 연결이 끊어졌습니다. 다시 로그인 해주세요.');
+        alert('세션이 끊어졌습니다. 다시 로그인 해주세요.');
     }
     else if (data.msg === 'invalidUser') {
         alert('존재하지 않는 유저입니다. 로그인 먼저 해주세요.');
@@ -56,6 +56,7 @@ function loadMain() {
     loadButton();
     loadBoard();
     loadPost();
+    loadUserPost();
     // [완료] 배경화면 div 크기 고정해서 브라우저 크기 줄이면 화면 잘리게끔 (ex.네이버 메인화면)
     // [완료] 화면 가로가 세로보다 더 짧아질 경우 배경화면 div의 height를 100%로 변경
     // [완료] ㄴ 이 때 아이템이 들어갈 슬롯들의 크기, 위치도 알맞게 변경

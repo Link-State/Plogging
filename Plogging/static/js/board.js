@@ -32,6 +32,7 @@ const ZONE = {
     '창원':['전체', '의창구', '성산구', '마산합포구', '마산회원구', '진해구']
 };
 const MAX_MEMBER = 10;
+let BOARD_LIST = {};
 
 // 게시판 요소 생성
 function loadBoard() {
@@ -181,7 +182,7 @@ function selectCountry(e) {
     }
 }
 
-// 게시글 요소 생성
+// 게시글 작성 요소 생성
 function loadPost() {
     const BOARD = document.getElementById('board');
 
@@ -274,6 +275,88 @@ function loadPost() {
     BOARD.appendChild(post);
 }
 
+// 게시글 읽기 요소 생성
+function loadUserPost() {
+    const BOARD = document.getElementById('board');
+
+    // 배경
+    let userPost = document.createElement('div');
+    userPost.id = "userPost";
+    userPost.style.display = "none";
+
+    // 닫기
+    let back = document.createElement('div');
+    back.className = "back";
+    back.id = "userPostBack";
+    back.innerHTML = "X";
+    back.onclick = detailPost;
+
+    // 제목
+    let userPostTitle = document.createElement('div');
+    userPostTitle.id = "userPostTitle";
+
+    // 글 관련 정보
+    let postInfo = document.createElement('div');
+    postInfo.id = "postInfo";
+
+    // 작성자
+    let postWritter = document.createElement('div');
+    postWritter.id = "postWritter";
+
+    // 작성 일자
+    let postUploadDate = document.createElement('div');
+    postUploadDate.id = "postUploadDate";
+
+    // 플로깅 관련 정보
+    let ploggingInfo = document.createElement('div');
+    ploggingInfo.id = "ploggingInfo";
+
+    // 지역
+    let ploggingLocation = document.createElement('div');
+    ploggingLocation.id = "ploggingLocation";
+
+    // 시작 일자
+    let ploggingStartDate = document.createElement('div');
+    ploggingStartDate.id = "ploggingStartDate";
+
+    // 인원 현황
+    let currentMembers = document.createElement('div');
+    currentMembers.id = "currentMembers";
+    
+    // 내용
+    let userPostContext = document.createElement('div');
+    userPostContext.id = "userPostContext";
+
+    // 참가
+    let ploggingJoin = document.createElement('div');
+    ploggingJoin.onclick = Join;
+    ploggingJoin.style.display = "none";
+    ploggingJoin.innerHTML = "참가";
+    ploggingJoin.id = "ploggingJoin";
+
+    // 참가 취소
+    let ploggingLeft = document.createElement('div');
+    ploggingLeft.onclick = Left();
+    ploggingLeft.style.display = "none";
+    ploggingLeft.innerHTML = "참가 취소";
+    ploggingLeft.id = "ploggingLeft";
+
+    postInfo.appendChild(postWritter);
+    postInfo.appendChild(postUploadDate);
+    ploggingInfo.appendChild(ploggingLocation);
+    ploggingInfo.appendChild(ploggingStartDate);
+    ploggingInfo.appendChild(currentMembers);
+    userPost.appendChild(back);
+    userPost.appendChild(userPostTitle);
+    userPost.appendChild(postInfo);
+    userPost.appendChild(ploggingInfo);
+    userPost.appendChild(userPostContext);
+    userPost.appendChild(ploggingJoin);
+    userPost.appendChild(ploggingLeft);
+
+    BOARD.appendChild(userPost);
+}
+
 // 게시판 버튼
 function ploggingBoard() {
 
@@ -291,8 +374,9 @@ function ploggingBoard() {
     }
 }
 
-// 게시판의 게시글 업데이트
+// 게시글 업데이트
 function boardUpdate(data) {
+    BOARD_LIST = data;
     let state = document.getElementById('state').value;
     let country = document.getElementById('country').value;
     let zone = document.getElementById('zone').value;
@@ -303,6 +387,7 @@ function boardUpdate(data) {
     const KEYS = Object.keys(data);
     const CREATE_POST = (key) => {
         let post = document.createElement('div');
+        post.onclick = detailPost;
         post.id = key;
         post.className = "user_post";
         post.innerHTML = data[key]['postTitle'];
@@ -337,6 +422,44 @@ function boardUpdate(data) {
     }
 
     totalCount.innerHTML = "총 " + count + "건";
+}
+
+function Join() {
+
+}
+
+function Left() {
+
+}
+
+function detailPost(e) {
+    let userPost = document.getElementById('userPost');
+
+    if (userPost.style.display !== "none") {
+        userPost.style.display = "none";
+    }
+    else {
+        let userPostInfo = BOARD_LIST[e.target.id];
+        let startDate = userPostInfo['date']['y'] + "년 " + userPostInfo['date']['M'] + "월 " + userPostInfo['date']['d'] + "일 ("
+        + userPostInfo['date']['w'] + ") " + userPostInfo['date']['h'] + "시 " + userPostInfo['date']['m'] + "분";
+        let userPostTitle = document.getElementById('userPostTitle');
+        let postWritter = document.getElementById('postWritter');
+        let postUploadDate = document.getElementById('postUploadDate');
+        let ploggingLocation = document.getElementById('ploggingLocation');
+        let ploggingStartDate = document.getElementById('ploggingStartDate');
+        let currentMembers = document.getElementById('currentMembers');
+        let userPostContext = document.getElementById('userPostContext');
+
+        userPostTitle.innerHTML = userPostInfo['postTitle'];
+        postWritter.innerHTML = "작성자 : " + userPostInfo['host'];
+        postUploadDate.innerHTML = "작성일자 : " + userPostInfo['uploadDate'];
+        ploggingLocation.innerHTML = "지역 : " + userPostInfo['state'] + ' ' + userPostInfo['country'] + ' ' + userPostInfo['zone'];
+        ploggingStartDate.innerHTML = "시작 날짜 : " + startDate;
+        currentMembers.innerHTML = "인원 현황 : " + userPostInfo['memberList'].length + " / " + userPostInfo['maxMember'] + " 명";
+        userPostContext.innerHTML = userPostInfo['postContext'];
+
+        userPost.style.display = "block";
+    }
 }
 
 // 게시글 검색
