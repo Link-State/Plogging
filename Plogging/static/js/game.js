@@ -2,6 +2,27 @@ const MENU_COUNT = 5;
 const MENU_FX = [ploggingBoard, null, null, null, null];
 let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 
+const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
+
+SOCKET.on('response', function(data) {
+    if (data.msg === 'successUpload') {
+        writePost();
+        alert('게시글을 올렸습니다.');
+    }
+    else if (data.msg === 'alreadyPost') {
+        alert('더이상 게시글을 올릴 수 없습니다.');
+    }
+    else if (data.msg === 'sessionFail') {
+        alert('세션 연결이 끊어졌습니다. 다시 로그인 해주세요.');
+    }
+    else if (data.msg === 'invalidUser') {
+        alert('존재하지 않는 유저입니다. 로그인 먼저 해주세요.');
+    }
+    else if (data.msg === 'boardList') {
+        boardUpdate(data.data);
+    }
+});
+
 // 메인 요소 생성
 function loadMain() {
     const BODY = document.getElementsByTagName('body').item(0);
@@ -34,6 +55,7 @@ function loadMain() {
 
     loadButton();
     loadBoard();
+    loadPost();
     // [완료] 배경화면 div 크기 고정해서 브라우저 크기 줄이면 화면 잘리게끔 (ex.네이버 메인화면)
     // [완료] 화면 가로가 세로보다 더 짧아질 경우 배경화면 div의 height를 100%로 변경
     // [완료] ㄴ 이 때 아이템이 들어갈 슬롯들의 크기, 위치도 알맞게 변경
@@ -44,7 +66,7 @@ function loadMain() {
     // 메뉴1 : 플로깅 모집
     // 메뉴2 : 봉사활동 연계
     // 메뉴3 : 미니게임
-    // 메뉴4 : 상점
+    // 메뉴4 : 상점 
     // 메뉴5 : 설정
     
     // 각 슬롯들에 들어가는 이미지는 gif도 가능 (컨버전스홀, 독수리상, 강아지, 해 및 달)
@@ -79,91 +101,6 @@ function loadButton() {
     window.addEventListener("resize", onResize);
 }
 
-// 게시판 요소 생성
-function loadBoard() {
-    const BODY = document.getElementsByTagName('body').item(0);
-
-    // 플로깅 모집 게시판
-    let board = document.createElement('div');
-    board.style.display = "none";
-    board.id = "board";
-
-    // 뒤로가기
-    let back = document.createElement('div');
-    back.onclick = ploggingBoard;
-    back.innerHTML = "X";
-    back.id = "back";
-
-    // 위치
-    let locationMenu = document.createElement('div');
-    locationMenu.id = "locationMenu";
-
-    // 광역시/도
-    let state = document.createElement('select');
-    const STATES = ['전체', '서울', '인천', '대전', '부산', '울산', '광주', '제주', '경기', '강원', '충북', '충남', '경북', '경남', '전북', '전남'];
-    for (let s of STATES) {
-        let option = document.createElement('option');
-        option.value = s;
-        option.innerHTML = s;
-        state.appendChild(option);
-    }
-    state.name = "state";
-    state.id = "state";
-
-    // 시/군
-    let country = document.createElement('select');
-    country.id = "country";
-
-    // 구
-    let zone = document.createElement('select');
-    zone.id = "zone";
-
-    // 지역 검색
-    let search = document.createElement('div');
-    search.innerHTML = "검색";
-    search.id = "search";
-
-    // 게시판
-    let boardBody = document.createElement('div');
-    boardBody.id = "boardBody";
-
-    // 게시판 리본
-    let boardRibon = document.createElement('div');
-    boardRibon.id = "boardRibon";
-
-    // 총 게시글 수
-    let totalCount = document.createElement('div');
-    totalCount.innerHTML = "총 N건";
-    totalCount.id = "totalCount";
-
-    // 모집글 작성
-    let write = document.createElement('div');
-    write.innerHTML = "모집글 작성";
-    write.id = "write";
-
-    // 게시글 목록
-    let boardList = document.createElement('div');
-    boardList.id = "boardList";
-
-    // 페이징
-    let paging = document.createElement('div');
-    paging.id = "paging";
-
-    boardRibon.appendChild(totalCount);
-    boardRibon.appendChild(write);
-    boardBody.appendChild(boardRibon);
-    boardBody.appendChild(boardList);
-    locationMenu.appendChild(state);
-    locationMenu.appendChild(country);
-    locationMenu.appendChild(zone);
-    locationMenu.appendChild(search);
-    board.appendChild(back);
-    board.appendChild(locationMenu);
-    board.appendChild(boardBody);
-    board.appendChild(paging);
-    BODY.appendChild(board);
-}
-
 // 메뉴 버튼
 function onClickMenu() {
     let menu = document.getElementById("menu");
@@ -173,21 +110,6 @@ function onClickMenu() {
     }
     else {
         menu.style.display = "block";
-    }
-}
-
-// 게시판 버튼
-function ploggingBoard() {
-    let background = document.getElementById("background");
-    let board = document.getElementById("board");
-
-    if (background.style.display !== "none") {
-        background.style.display = "none";
-        board.style.display = "block";
-    }
-    else {
-        background.style.display = "block";
-        board.style.display = "none";
     }
 }
 
@@ -284,6 +206,6 @@ function renderingMobile() {
 }
 
 // 개발전용
-function test() {
-    const BODY = document.getElementsByTagName('body').item(0);
+function test(msg="msg") {
+    SOCKET.emit('my event', {data:msg});
 }
