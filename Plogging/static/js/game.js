@@ -88,6 +88,7 @@ function loadMain() {
 
     // 배경
     let background = document.createElement('div');
+    background.style.display = "none";
     background.id = "background";
 
     // 배경 -> 컨버전스홀
@@ -116,6 +117,10 @@ function loadMain() {
     loadBoard();
     loadPost();
     loadUserPost();
+    loadMailForm();
+
+    background.style.display = "block";
+
     // [완료] 배경화면 div 크기 고정해서 브라우저 크기 줄이면 화면 잘리게끔 (ex.네이버 메인화면)
     // [완료] 화면 가로가 세로보다 더 짧아질 경우 배경화면 div의 height를 100%로 변경
     // [완료] ㄴ 이 때 아이템이 들어갈 슬롯들의 크기, 위치도 알맞게 변경
