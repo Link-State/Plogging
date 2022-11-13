@@ -83,6 +83,22 @@ function loadBoard() {
     search.innerHTML = "검색";
     search.id = "search";
 
+    // 
+    let postMenu = document.createElement('div');
+    postMenu.id = "postMenu";
+
+    // 내 글 보기
+    let myPost = document.createElement('div');
+    myPost.onclick = detailPost;
+    myPost.innerHTML = "내 모집글 보기";
+    myPost.id = "myPost";
+
+    // 참여중인 플로깅 보기
+    let joiningPlogging = document.createElement('div');
+    joiningPlogging.onclick = detailPost;
+    joiningPlogging.innerHTML = "참여중인 플로깅 보기";
+    joiningPlogging.id = "joiningPlogging";
+
     // 게시판
     let boardBody = document.createElement('div');
     boardBody.id = "boardBody";
@@ -118,8 +134,11 @@ function loadBoard() {
     locationMenu.appendChild(country);
     locationMenu.appendChild(zone);
     locationMenu.appendChild(search);
+    postMenu.appendChild(myPost);
+    postMenu.appendChild(joiningPlogging);
     board.appendChild(back);
     board.appendChild(locationMenu);
+    board.appendChild(postMenu);
     board.appendChild(boardBody);
     board.appendChild(paging);
     BODY.appendChild(board);
@@ -232,7 +251,7 @@ function loadPost() {
     // 인원
     let setMember = document.createElement('select');
     setMember.id = "setMember";
-    for (let i = 0; i < MAX_MEMBER; i++) {
+    for (let i = 1; i < MAX_MEMBER; i++) {
         let option = document.createElement('option');
         option.value = i+1;
         option.innerHTML = i+1;
@@ -246,11 +265,16 @@ function loadPost() {
 
     // 제목
     let title = document.createElement('input');
+    title.placeholder = "제목";
     title.type = "text";
     title.id = "title";
 
     // 내용
     let context = document.createElement('textarea');
+    context.placeholder = "1. 욕설/비방/광고 등 목적에 맞지 않는 글은 임의로 삭제될 수 있습니다." +
+    "\n2. 신고 누적횟수에 따라 이용에 제한이 있을 수 있습니다." +
+    "\n3. 모집글은 1명 당 동시에 최대 1개만 게시할 수 있습니다." +
+    "\n4. 플로깅 참가 신청 후 노쇼로 인한 불이익은 당사가 책임지지 않습니다.";
     context.id = "context";
 
     // 게시 버튼
@@ -301,6 +325,7 @@ function loadUserPost() {
 
     // 작성자
     let postWritter = document.createElement('div');
+    postWritter.onclick = sendMail;
     postWritter.id = "postWritter";
 
     // 작성 일자
@@ -327,19 +352,33 @@ function loadUserPost() {
     let userPostContext = document.createElement('div');
     userPostContext.id = "userPostContext";
 
+    // 삭제
+    let ploggingDelete = document.createElement('div');
+    ploggingDelete.onclick = deletePost;
+    ploggingDelete.style.display = "none";
+    ploggingDelete.innerHTML = "삭제";
+    ploggingDelete.id = "ploggingDelete";
+
     // 참가
     let ploggingJoin = document.createElement('div');
-    ploggingJoin.onclick = Join;
+    ploggingJoin.onclick = joinPlogging;
     ploggingJoin.style.display = "none";
     ploggingJoin.innerHTML = "참가";
     ploggingJoin.id = "ploggingJoin";
 
     // 참가 취소
     let ploggingLeft = document.createElement('div');
-    ploggingLeft.onclick = Left();
+    ploggingLeft.onclick = leftPlogging;
     ploggingLeft.style.display = "none";
     ploggingLeft.innerHTML = "참가 취소";
     ploggingLeft.id = "ploggingLeft";
+
+    // 신고
+    let ploggingReport = document.createElement('div');
+    ploggingReport.onclick = reportPost;
+    ploggingReport.style.display = "none";
+    ploggingReport.innerHTML = "신고";
+    ploggingReport.id = "ploggingReport";
 
     postInfo.appendChild(postWritter);
     postInfo.appendChild(postUploadDate);
@@ -351,13 +390,23 @@ function loadUserPost() {
     userPost.appendChild(postInfo);
     userPost.appendChild(ploggingInfo);
     userPost.appendChild(userPostContext);
+    userPost.appendChild(ploggingDelete);
     userPost.appendChild(ploggingJoin);
     userPost.appendChild(ploggingLeft);
+    userPost.appendChild(ploggingReport);
 
     BOARD.appendChild(userPost);
 }
 
-// 게시판 버튼
+// 메일 보내기
+function sendMail(e) {
+    // - 백엔드에서 처리해야하는 것들 -
+    // 해당 타겟이 존재하는 유저인지 확인
+    // 자기 자신한테는 보낼 수 없음
+    let target = e.target.value;
+}
+
+// 게시판 폼 토글
 function ploggingBoard() {
 
     let background = document.getElementById("background");
@@ -424,14 +473,39 @@ function boardUpdate(data) {
     totalCount.innerHTML = "총 " + count + "건";
 }
 
-function Join() {
-
+// 내 게시글 삭제
+function deletePost(e) {
+    let answer = confirm('글을 삭제하시겠습니까?');
+    if (answer) {
+        SOCKET.emit('request', {'msg':'deleteBoard'});
+    }
 }
 
-function Left() {
-
+// 플로깅 참가
+function joinPlogging(e) {
+    let answer = confirm('해당 플로깅에 참가하시겠습니까?')
+    if (answer) {
+        SOCKET.emit('request', {'msg':'joinPlogging', 'data':e.target.value});
+    }
 }
 
+// 플로깅 참가 철회
+function leftPlogging(e) {
+    let answer = confirm('해당 플로깅에 참가를 취소하시겠습니까?')
+    if (answer) {
+        SOCKET.emit('request', {'msg':'leftPlogging', 'data':e.target.value});
+    }
+}
+
+// 플로깅 신고 (미구현)
+function reportPost(e) {
+    let answer = confirm('해당 플로깅을 신고하시겠습니까?')
+    if (answer) {
+        // 미구현
+    }
+}
+
+// 게시글 자세히 보기
 function detailPost(e) {
     let userPost = document.getElementById('userPost');
 
@@ -439,26 +513,74 @@ function detailPost(e) {
         userPost.style.display = "none";
     }
     else {
-        let userPostInfo = BOARD_LIST[e.target.id];
-        let startDate = userPostInfo['date']['y'] + "년 " + userPostInfo['date']['M'] + "월 " + userPostInfo['date']['d'] + "일 ("
-        + userPostInfo['date']['w'] + ") " + userPostInfo['date']['h'] + "시 " + userPostInfo['date']['m'] + "분";
-        let userPostTitle = document.getElementById('userPostTitle');
-        let postWritter = document.getElementById('postWritter');
-        let postUploadDate = document.getElementById('postUploadDate');
-        let ploggingLocation = document.getElementById('ploggingLocation');
-        let ploggingStartDate = document.getElementById('ploggingStartDate');
-        let currentMembers = document.getElementById('currentMembers');
-        let userPostContext = document.getElementById('userPostContext');
+        let clickedPost = e.target.id;
+        if (e.target.id === "myPost") {
+            clickedPost = USERID;
+        }
+        else if (e.target.id === "joiningPlogging") {
+            if (CURRENTPLOGGING !== '') {
+                clickedPost = CURRENTPLOGGING;
+            }
+            else {
+                actionMessage("참가중인 플로깅이 없습니다.");
+                return;
+            }
+        }
+        let userPostInfo = BOARD_LIST[clickedPost];
+        if (BOARD_LIST[clickedPost] !== undefined) {
+            let startDate = userPostInfo['date']['y'] + "년 " + userPostInfo['date']['M'] + "월 " + userPostInfo['date']['d'] + "일 ("
+            + userPostInfo['date']['w'] + ") " + userPostInfo['date']['h'] + "시 " + userPostInfo['date']['m'] + "분";
+            let userPostTitle = document.getElementById('userPostTitle');
+            let postWritter = document.getElementById('postWritter');
+            let postUploadDate = document.getElementById('postUploadDate');
+            let ploggingLocation = document.getElementById('ploggingLocation');
+            let ploggingStartDate = document.getElementById('ploggingStartDate');
+            let currentMembers = document.getElementById('currentMembers');
+            let userPostContext = document.getElementById('userPostContext');
+            let ploggingDelete = document.getElementById('ploggingDelete');
+            let ploggingJoin = document.getElementById('ploggingJoin');
+            let ploggingLeft = document.getElementById('ploggingLeft');
+            let ploggingReport = document.getElementById('ploggingReport');
+    
+            userPostTitle.innerHTML = userPostInfo['postTitle'];
+            postWritter.innerHTML = "작성자 : " + userPostInfo['host'];
+            postWritter.value = userPostInfo['host'];
+            postUploadDate.innerHTML = "작성일자 : " + userPostInfo['uploadDate'];
+            ploggingLocation.innerHTML = "지역 : " + userPostInfo['state'] + ' ' + userPostInfo['country'] + ' ' + userPostInfo['zone'];
+            ploggingStartDate.innerHTML = "시작 날짜 : " + startDate;
+            currentMembers.innerHTML = "인원 현황 : " + userPostInfo['memberList'].length + " / " + userPostInfo['maxMember'] + " 명";
+            userPostContext.innerHTML = userPostInfo['postContext'];
+            ploggingJoin.value = clickedPost;
+            ploggingLeft.value = clickedPost;
+            ploggingReport.value = clickedPost;
+    
+            if (userPostInfo['host'] === USERID) {
+                ploggingDelete.style.display = "block";
+                ploggingJoin.style.display = "none";
+                ploggingLeft.style.display = "none";
+                ploggingReport.style.display = "none";
+                // 참가했던 인원들에게 개인 메일 발송
+            }
+            else if (userPostInfo['memberList'].indexOf(USERID) >= 0) {
+                ploggingDelete.style.display = "none";
+                ploggingJoin.style.display = "none";
+                ploggingLeft.style.display = "block";
+                ploggingReport.style.display = "block";
+                // 방장에게 개인 메일 발송
+            }
+            else {
+                ploggingDelete.style.display = "none";
+                ploggingJoin.style.display = "block";
+                ploggingLeft.style.display = "none";
+                ploggingReport.style.display = "block";
+                // 방장에게 개인 메일 발송
+            }
 
-        userPostTitle.innerHTML = userPostInfo['postTitle'];
-        postWritter.innerHTML = "작성자 : " + userPostInfo['host'];
-        postUploadDate.innerHTML = "작성일자 : " + userPostInfo['uploadDate'];
-        ploggingLocation.innerHTML = "지역 : " + userPostInfo['state'] + ' ' + userPostInfo['country'] + ' ' + userPostInfo['zone'];
-        ploggingStartDate.innerHTML = "시작 날짜 : " + startDate;
-        currentMembers.innerHTML = "인원 현황 : " + userPostInfo['memberList'].length + " / " + userPostInfo['maxMember'] + " 명";
-        userPostContext.innerHTML = userPostInfo['postContext'];
-
-        userPost.style.display = "block";
+            userPost.style.display = "block";
+        }
+        else {
+            actionMessage("작성된 글이 없습니다.");
+        }
     }
 }
 
@@ -468,10 +590,10 @@ function searchPost() {
     while (boardList.hasChildNodes()) {
         boardList.firstChild.remove();
     }
-    SOCKET.emit('getBoard');
+    SOCKET.emit('request', {'msg':'getBoard'});
 }
 
-// 게시글 작성
+// 게시글 작성 폼 토글
 function writePost() {
     let post = document.getElementById('post');
 
@@ -485,60 +607,63 @@ function writePost() {
 
 // 게시글 업로드 요청
 function uploadPost() {
-    let user_state = document.getElementById('setState').value;
-    let user_country = document.getElementById('setCountry');
-    let user_zone = document.getElementById('setZone');
-    let member = parseInt(document.getElementById('setMember').value);
-    let startDate = document.getElementById('setDate').value;
-    let title = document.getElementById('title').value;
-    let context = document.getElementById('context').value.replaceAll('\n', "<br>");
-
-    if (user_state === "" || user_state === "전체") {
-        actionMessage("[시/도]를 선택해주세요.");
-    }
-    else if (user_country.hasChildNodes() && user_country.value === "전체") {
-        actionMessage("[시/구]를 선택해주세요.");
-    }
-    else if (user_zone.hasChildNodes() && user_zone.value === "전체") {
-        actionMessage("[구]를 선택해주세요.");
-    }
-    else if (member === NaN) {
-        actionMessage("멤버 모집 수가 잘못되었습니다.");
-    }
-    else if (startDate === "") {
-        actionMessage("플로깅 시작 날짜를 입력해주세요.");
-    }
-    else if (Date.parse(startDate) <= Date.now()) {
-        actionMessage("플로깅 시작 날짜는 1시간 후부터 설정 가능합니다.");
-    }
-    else if (title === "") {
-        actionMessage("제목을 입력해주세요.");
-    }
-    else if (context === "") {
-        actionMessage("내용을 입력해주세요.");
-    }
-    else {
-        user_country = user_country.value;
-        user_zone = user_zone.value;
-        let week = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
-        let dateObj = new Date(Date.parse(startDate));
-        let dateJson = {
-            "y" : dateObj.getFullYear(),
-            "M" : dateObj.getMonth() + 1,
-            "d" : dateObj.getDate(),
-            "w" : week[dateObj.getDay()],
-            "h" : dateObj.getHours(),
-            "m" : dateObj.getMinutes()
-        };
-        SOCKET.emit("writeBoard", {
-            state : user_state,
-            country : user_country,
-            zone : user_zone,
-            maxMember : member,
-            date : dateJson,
-            postTitle : title,
-            postContext : context,
-            uploadDate : Date.now()
-        });
+    let answer = confirm('글을 게시하시겠습니까?');
+    if (answer) {
+        let user_state = document.getElementById('setState').value;
+        let user_country = document.getElementById('setCountry');
+        let user_zone = document.getElementById('setZone');
+        let member = parseInt(document.getElementById('setMember').value);
+        let startDate = document.getElementById('setDate').value;
+        let title = document.getElementById('title').value;
+        let context = document.getElementById('context').value.replaceAll('\n', "<br>");
+    
+        if (user_state === "" || user_state === "전체") {
+            actionMessage("[시/도]를 선택해주세요.");
+        }
+        else if (user_country.hasChildNodes() && user_country.value === "전체") {
+            actionMessage("[시/구]를 선택해주세요.");
+        }
+        else if (user_zone.hasChildNodes() && user_zone.value === "전체") {
+            actionMessage("[구]를 선택해주세요.");
+        }
+        else if (member === NaN || member < 2 || member > MAX_MEMBER) {
+            actionMessage("멤버 모집 수가 잘못되었습니다.");
+        }
+        else if (startDate === "") {
+            actionMessage("플로깅 시작 날짜를 입력해주세요.");
+        }
+        else if (Date.parse(startDate) <= (Date.now() + 3600000)) {
+            actionMessage("플로깅 시작 날짜는 1시간 후부터 설정 가능합니다.");
+        }
+        else if (title === "") {
+            actionMessage("제목을 입력해주세요.");
+        }
+        else if (context === "") {
+            actionMessage("내용을 입력해주세요.");
+        }
+        else {
+            user_country = user_country.value;
+            user_zone = user_zone.value;
+            let week = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+            let dateObj = new Date(Date.parse(startDate));
+            let dateJson = {
+                "y" : dateObj.getFullYear(),
+                "M" : dateObj.getMonth() + 1,
+                "d" : dateObj.getDate(),
+                "w" : week[dateObj.getDay()],
+                "h" : dateObj.getHours(),
+                "m" : dateObj.getMinutes()
+            };
+            SOCKET.emit('request', {'msg':"writeBoard", 'data':{
+                state : user_state,
+                country : user_country,
+                zone : user_zone,
+                maxMember : member,
+                date : dateJson,
+                postTitle : title,
+                postContext : context,
+                uploadDate : Date.now()
+            }});
+        }
     }
 }

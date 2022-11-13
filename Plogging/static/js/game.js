@@ -1,16 +1,69 @@
+let USERID = '';
+let CURRENTPLOGGING = '';
+let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 const MENU_COUNT = 5;
 const MENU_FX = [ploggingBoard, null, null, null, null];
-let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
-
 const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
 
 SOCKET.on('response', function(data) {
-    if (data.msg === 'successUpload') {
-        writePost();
+    if (data.msg === 'initialize') {
+        USERID = data['data']['userID'];
+        CURRENTPLOGGING = data['data']['currentPlogging'];
+    }
+    else if (data.msg === 'successUpload') {
+        CURRENTPLOGGING = USERID;
+        let post = document.getElementById('post');
+    
+        if (post.style.display !== "none") {
+            post.style.display = "none";
+        }
+        searchPost();
         alert('게시글을 올렸습니다.');
+    }
+    else if (data.msg === 'deletePost') {
+        CURRENTPLOGGING = '';
+        let userPost = document.getElementById('userPost');
+    
+        if (userPost.style.display !== "none") {
+            userPost.style.display = "none";
+        }
+        searchPost();
+        alert('게시글이 삭제되었습니다.');
+    }
+    else if (data.msg === 'joinPlogging') {
+        CURRENTPLOGGING = data['data'];
+        let userPost = document.getElementById('userPost');
+    
+        if (userPost.style.display !== "none") {
+            userPost.style.display = "none";
+        }
+        searchPost();
+        alert('플로깅에 참가가 완료되었습니다.');
+    }
+    else if (data.msg === 'leftPlogging') {
+        CURRENTPLOGGING = '';
+        let userPost = document.getElementById('userPost');
+    
+        if (userPost.style.display !== "none") {
+            userPost.style.display = "none";
+        }
+        searchPost();
+        alert('해당 플로깅의 참가 취소가 완료되었습니다.');
     }
     else if (data.msg === 'alreadyPost') {
         alert('더이상 게시글을 올릴 수 없습니다.');
+    }
+    else if (data.msg === 'postNotExist') {
+        alert('게시글이 존재하지 않습니다.');
+    }
+    else if (data.msg === 'fullMember') {
+        alert('이미 인원이 가득 찼습니다.');
+    }
+    else if (data.msg === 'notExistMember') {
+        alert('해당 플로깅에 참가중이지 않습니다.');
+    }
+    else if (data.msg === 'alreadyPlogging') {
+        alert('이미 플로깅에 참가중입니다.');
     }
     else if (data.msg === 'sessionFail') {
         alert('세션이 끊어졌습니다. 다시 로그인 해주세요.');
@@ -19,12 +72,18 @@ SOCKET.on('response', function(data) {
         alert('존재하지 않는 유저입니다. 로그인 먼저 해주세요.');
     }
     else if (data.msg === 'boardList') {
-        boardUpdate(data.data);
+        boardUpdate(data['data']);
+    }
+    else if (data.msg === 'send!') {
+        console.log("response!");
     }
 });
 
 // 메인 요소 생성
 function loadMain() {
+
+    SOCKET.emit('request', {'msg':'initialize'});
+
     const BODY = document.getElementsByTagName('body').item(0);
 
     // 배경
@@ -208,5 +267,6 @@ function renderingMobile() {
 
 // 개발전용
 function test(msg="msg") {
-    SOCKET.emit('my event', {data:msg});
+    SOCKET.emit('request', {'msg':'test', 'data':msg});
+    console.log('request!');
 }
