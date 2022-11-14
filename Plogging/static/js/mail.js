@@ -1,4 +1,5 @@
 let MAIL_BOX = [];
+let CHECKED_COUNT = 0;
 
 // 받은 메일함 요소 생성
 function loadMailBox() {
@@ -22,11 +23,26 @@ function loadMailBox() {
 
     // 받은 메일 갯수
     let receiveMailCount = document.createElement('div');
+    receiveMailCount.innerHTML = '메일 : N개';
     receiveMailCount.id = 'receiveMailCount';
 
     // 안읽은 메일 갯수
     let notReadMailCount = document.createElement('div');
+    notReadMailCount.innerHTML = '안읽은 메일 : N개';
     notReadMailCount.id = 'notReadMailCount';
+
+    // 메일 삭제
+    let deleteMail = document.createElement('div');
+    deleteMail.onclick = deleteSelectedMail;
+    deleteMail.innerHTML = '삭제';
+    deleteMail.id = 'deleteMail';
+
+    // 전체삭제
+    let deleteAllMail = document.createElement('input');
+    deleteAllMail.onclick = selectAllMail;
+    deleteAllMail.style.opacity = 0;
+    deleteAllMail.type = 'checkbox';
+    deleteAllMail.id = 'deleteAllMail';
 
     // 메일 목록
     let receiveMailList = document.createElement('div');
@@ -36,6 +52,8 @@ function loadMailBox() {
     mailBoxHeader.appendChild(notReadMailCount);
     mailBox.appendChild(back);
     mailBox.appendChild(mailBoxHeader);
+    mailBox.appendChild(deleteAllMail);
+    mailBox.appendChild(deleteMail);
     mailBox.appendChild(receiveMailList);
     BACKGROUND.appendChild(mailBox);
 }
@@ -77,9 +95,11 @@ function loadReceiveMailForm() {
     let receiveMailContext = document.createElement('div');
     receiveMailContext.id = 'receiveMailContext';
 
-    // 삭제
-
     // 신고
+    let reportMail = document.createElement('div');
+    reportMail.onclick = mailReport;
+    reportMail.innerHTML = "신고";
+    reportMail.id = 'reportMail';
 
     receiveMailInfo.appendChild(mailSender);
     receiveMailInfo.appendChild(sendDate);
@@ -87,7 +107,16 @@ function loadReceiveMailForm() {
     receiveMail.appendChild(receiveMailInfo);
     receiveMail.appendChild(receiveMailTitle);
     receiveMail.appendChild(receiveMailContext);
+    receiveMail.appendChild(reportMail);
     MAILBOX.appendChild(receiveMail);
+}
+
+// 메일 신고 (미구현)
+function mailReport() {
+    let answer = confirm('해당 메일을 신고하시겠습니까?');
+    if (answer) {
+
+    }
 }
 
 // 메일 보내기 폼 요소 생성
@@ -134,6 +163,107 @@ function loadMailForm() {
     BODY.appendChild(mail);
 }
 
+// 선택 메일 삭제
+function deleteSelectedMail(e) {
+    let deleteMail = document.getElementById('deleteMail');
+    let deleteAllMail = document.getElementById('deleteAllMail');
+    let mailCheckBox = document.getElementsByClassName('user_mail_checkbox');
+    let OPACITY = 0;
+
+    if (deleteAllMail.style.opacity !== '0') {
+        if (CHECKED_COUNT > 0) {
+            let answer = confirm('선택한 메일을 삭제하시겠습니까?');
+            if (answer) {
+                // 선택한 메일들 삭제처리!
+                // 이 후에 메일 목록 다시 가져옴.
+                let deletingMail = {};
+                let idx = 1;
+                for (let c of mailCheckBox) {
+                    if (c.checked) {
+                        deletingMail[idx] = idx;
+                    }
+                    idx++;
+                }
+                SOCKET.emit('request', {'msg':'deleteMail', 'data':deletingMail});
+            }
+            else {
+                return;
+            }
+        }
+        deleteMail.innerHTML = '삭제';
+        deleteAllMail.style.opacity = 0;
+        OPACITY = 0;
+    }
+    else {
+        deleteMail.innerHTML = '취소';
+        deleteAllMail.style.opacity = 1;
+        OPACITY = 1;
+        CHECKED_COUNT = 0;
+    }
+
+    for (let elem of mailCheckBox) {
+        elem.style.opacity = OPACITY;
+    }
+}
+
+// 메일 한 개 선택함
+function selectMail(e) {
+    let deleteMail = document.getElementById('deleteMail');
+    let deleteAllMail = document.getElementById('deleteAllMail');
+    let mailCheckBox = document.getElementsByClassName('user_mail_checkbox');
+
+    if (e.target.checked) {
+        CHECKED_COUNT++;
+    }
+    else {
+        CHECKED_COUNT--;
+    }
+
+    if (CHECKED_COUNT === 0) {
+        deleteMail.innerHTML = '취소';
+    }
+    else if (CHECKED_COUNT > 0) {
+        deleteMail.innerHTML = '삭제';
+    }
+    else {
+        CHECKED_COUNT = 0;
+    }
+
+    if (CHECKED_COUNT === mailCheckBox.length && mailCheckBox.length > 0) {
+        deleteAllMail.checked = true;
+    }
+    else {
+        deleteAllMail.checked = false;
+    }
+
+}
+
+// 모든 메일 선택함
+function selectAllMail() {
+    let deleteMail = document.getElementById('deleteMail');
+    let deleteAllMail = document.getElementById('deleteAllMail');
+    let mailCheckBox = document.getElementsByClassName('user_mail_checkbox');
+    let CHECK = deleteAllMail.checked ? true : false;
+    let ACC = deleteAllMail.checked ? 1 : -1;
+
+    for (let elem of mailCheckBox) {
+        if (elem.checked !== CHECK) {
+            elem.checked = CHECK;
+            CHECKED_COUNT += ACC;
+        }
+    }
+
+    if (CHECKED_COUNT === 0) {
+        deleteMail.innerHTML = '취소';
+    }
+    else if (CHECKED_COUNT > 0) {
+        deleteMail.innerHTML = '삭제';
+    }
+    else {
+        CHECKED_COUNT = 0;
+    }
+}
+
 // 메일 목록 창
 function openMailBox() {
     let mailBox = document.getElementById('mailBox');
@@ -146,7 +276,7 @@ function openMailBox() {
         while (receiveMailList.hasChildNodes()) {
             receiveMailList.firstChild.remove();
         }
-        SOCKET.emit('request', {'msg':"getMailList"});
+        SOCKET.emit('request', {'msg':"getMailList"}, (response) => {console.log(response);});
         mailBox.style.display = 'block';
     }
 }
@@ -159,7 +289,6 @@ function openReceiveMail(e) {
         receiveMail.style.display = "none";
     }
     else {
-
         let data = MAIL_BOX[e.target.value];
         let mailSender = document.getElementById('mailSender');
         let sendDate = document.getElementById('sendDate');
@@ -221,23 +350,44 @@ function mailBoxUpdate(data) {
     let receiveMailList = document.getElementById('receiveMailList');
 
     const CREATE_MAIL = (mail, idx) => {
+        let mailPkg = document.createElement('div');
         let mailIdx = document.createElement('div');
+        let checkbox = document.createElement('input');
+        mailPkg.className = 'mailPkg';
         mailIdx.onclick = openReceiveMail;
-        mailIdx.id = mail['receiver'];
         mailIdx.value = idx;
         mailIdx.className = 'user_mail';
         mailIdx.innerHTML = mail['title'];
-        receiveMailList.appendChild(mailIdx);
+        checkbox.onclick = selectMail;
+        checkbox.value = idx;
+        checkbox.className = 'user_mail_checkbox';
+        checkbox.style.opacity = 0;
+        checkbox.type = 'checkbox';
+        mailPkg.appendChild(checkbox);
+        mailPkg.appendChild(mailIdx);
+        receiveMailList.appendChild(mailPkg);
     };
+
+    while (receiveMailList.hasChildNodes()) {
+        receiveMailList.firstChild.remove();
+    }
 
     for (let i = 0; i < data.length; i++) {
         CREATE_MAIL(data[i], i);
     }
+
+    // 안읽은 메일, 총 메일 갯수 업데이트
 }
 
 /**
- * 받은메일폼 요소 생성하는 함수에서 삭제와 신고 구현하기
  * 받은메일 한 개 확인 창 함수에서 해당 함수 실행 시, 읽음처리 구현하기.
  * ㄴ (읽은 메일은 디자인적인 요소를 통해 읽었다고 유저에게 알려주기 위함.)
  * 받은 메일함 요소 생성하는 함수에서 안읽은 메일 갯수 하는 부분도 구현하기
+ * 
+ * 와 대박 중대오류 찾음 플라스크쪽에서 emit을 하면 해당 서버에 접속중인 모든 유저에게 Broadcast함.
+ * Room기능 이용해서 각 유저의 고유id로 room을 만들어서 사용해야 됨.
+ * A 유저가 B 유저의 room에 접속할 경우 서버쪽에서 비교하여 퇴치함.
+ * <참고문서>
+ * flask-socketio 문서 : https://flask-socketio.readthedocs.io/en/latest/getting_started.html#rooms
+ * socketio 문서 : https://socket.io/docs/v4/server-api/#serversocketsjoinrooms
  */

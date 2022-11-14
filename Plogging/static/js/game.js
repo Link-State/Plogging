@@ -60,6 +60,10 @@ SOCKET.on('response', function(data) {
         }
         alert('메일이 전송되었습니다.');
     }
+    else if (data.msg === 'deletedMail') {
+        SOCKET.emit('request', {'msg':"getMailList"});
+        alert('메일이 삭제되었습니다.');
+    }
     else if (data.msg === 'alreadyPost') {
         alert('더이상 게시글을 올릴 수 없습니다.');
     }
@@ -295,6 +299,6 @@ function renderingMobile() {
 
 // 개발전용
 function test(msg="msg") {
-    SOCKET.emit('request', {'msg':'test', 'data':msg});
+    SOCKET.emit('request', {'msg':'clientToclient', 'data':msg});
     console.log('request!');
 }
