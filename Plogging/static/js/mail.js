@@ -390,4 +390,9 @@ function mailBoxUpdate(data) {
  * <참고문서>
  * flask-socketio 문서 : https://flask-socketio.readthedocs.io/en/latest/getting_started.html#rooms
  * socketio 문서 : https://socket.io/docs/v4/server-api/#serversocketsjoinrooms
+ * 
+ * 1. 버그픽스
+ * 2. 메일 마저 구현
+ * 3. 이번주 내로 플로깅 기능만 구축, 나머지는 미구현.
+ * 4. 플로깅 기능 구축 후 바로 디자인 시작
  */
