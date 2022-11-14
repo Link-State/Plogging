@@ -398,72 +398,6 @@ function loadUserPost() {
     BOARD.appendChild(userPost);
 }
 
-// 메일 요소 생성
-function loadMailForm() {
-    const BOARD = document.getElementById('board');
-
-    // 메일
-    let mail = document.createElement('div');
-    mail.style.display = 'none';
-    mail.id = 'mail';
-
-    // 닫기
-    let back = document.createElement('div');
-    back.onclick = writeMail;
-    back.id = "mailBack";
-    back.className = "back";
-    back.innerHTML = "X";
-
-    // 받는이 (고정)
-    let mailReceiver = document.createElement('div');
-    mailReceiver.id = 'mailReceiver';
-
-    // 제목
-    let mailTitle = document.createElement('input');
-    mailTitle.type = "text";
-    mailTitle.id = 'mailTitle';
-
-    // 내용
-    let mailContext = document.createElement('textarea');
-    mailContext.id = 'mailContext';
-
-    // 전송
-    let mailSend = document.createElement('div');
-    mailSend.onclick = sendMail;
-    mailSend.id = 'mailSend';
-
-    mail.appendChild(back);
-    mail.appendChild(mailReceiver);
-    mail.appendChild(mailTitle);
-    mail.appendChild(mailContext);
-    mail.appendChild(mailSend);
-
-    BOARD.appendChild(mail);
-}
-
-// 메일 폼 토글
-function writeMail(e) {
-    let mail = document.getElementById('mail');
-
-    if (mail.style.display !== 'none') {
-        mail.style.display = 'none';
-    }
-    else {
-        let mailSend = document.getElementById('mailSend');
-        mailSend.value = e.target.value;
-        mail.style.display = 'block';
-    }
-}
-
-// 메일 보내기
-function sendMail(e) {
-    // - 백엔드에서 처리해야하는 것들 -
-    // 해당 타겟이 존재하는 유저인지 확인
-    // 자기 자신한테는 보낼 수 없음
-    let target = e.target.value;
-    SOCKET.emit('request', {'msg':"sendMail", 'data':{}});
-}
-
 // 게시판 폼 토글
 function ploggingBoard() {
 
@@ -645,6 +579,8 @@ function detailPost(e) {
 // 게시글 검색
 function searchPost() {
     let boardList = document.getElementById('boardList');
+    let searchBtn = document.getElementById('search');
+    searchBtn.onclick = '';
     while (boardList.hasChildNodes()) {
         boardList.firstChild.remove();
     }

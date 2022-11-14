@@ -2,7 +2,7 @@ let USERID = '';
 let CURRENTPLOGGING = '';
 let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 const MENU_COUNT = 5;
-const MENU_FX = [ploggingBoard, null, null, null, null];
+const MENU_FX = [ploggingBoard, openMailBox, null, null, null];
 const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
 
 SOCKET.on('response', function(data) {
@@ -50,6 +50,16 @@ SOCKET.on('response', function(data) {
         searchPost();
         alert('해당 플로깅의 참가 취소가 완료되었습니다.');
     }
+    else if (data.msg === 'sendMail') {
+        let mail = document.getElementById('mail');
+        let sendBtn = document.getElementById('mailSend');
+        sendBtn.onclick = sendMail;
+
+        if (mail.style.display !== "none") {
+            mail.style.display = "none";
+        }
+        alert('메일이 전송되었습니다.');
+    }
     else if (data.msg === 'alreadyPost') {
         alert('더이상 게시글을 올릴 수 없습니다.');
     }
@@ -65,6 +75,12 @@ SOCKET.on('response', function(data) {
     else if (data.msg === 'alreadyPlogging') {
         alert('이미 플로깅에 참가중입니다.');
     }
+    else if (data.msg === 'noSendSelf') {
+        alert('자기 자신에게는 메일을 보낼 수 없습니다.');
+    }
+    else if (data.msg === 'notExistUser') {
+        alert('존재 하지 않는 유저입니다.');
+    }
     else if (data.msg === 'sessionFail') {
         alert('세션이 끊어졌습니다. 다시 로그인 해주세요.');
     }
@@ -72,6 +88,8 @@ SOCKET.on('response', function(data) {
         alert('존재하지 않는 유저입니다. 로그인 먼저 해주세요.');
     }
     else if (data.msg === 'boardList') {
+        let searchBtn = document.getElementById('search');
+        searchBtn.onclick = searchPost;
         boardUpdate(data['data']);
     }
     else if (data.msg === 'send!') {
@@ -117,6 +135,8 @@ function loadMain() {
     loadBoard();
     loadPost();
     loadUserPost();
+    loadMailBox();
+    loadReceiveMailForm();
     loadMailForm();
 
     background.style.display = "block";
