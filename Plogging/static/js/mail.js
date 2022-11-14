@@ -16,16 +16,26 @@ function loadMailBox() {
     back.className = "back";
 
     // 메일함 메뉴
+    let mailBoxHeader = document.createElement('div');
+    mailBoxHeader.id = 'mailBoxHeader';
 
     // 받은 메일 갯수
+    let receiveMailCount = document.createElement('div');
+    receiveMailCount.id = 'receiveMailCount';
 
     // 안읽은 메일 갯수
-
-    // 메일함 메인
+    let notReadMailCount = document.createElement('div');
+    notReadMailCount.id = 'notReadMailCount';
 
     // 메일 목록 receiveMailList
+    let receiveMailList = document.createElement('div');
+    receiveMailList.id = 'receiveMailList';
 
+    mailBoxHeader.appendChild(receiveMailCount);
+    mailBoxHeader.appendChild(notReadMailCount);
     mailBox.appendChild(back);
+    mailBox.appendChild(mailBoxHeader);
+    mailBox.appendChild(receiveMailList);
     BACKGROUND.appendChild(mailBox);
 }
 

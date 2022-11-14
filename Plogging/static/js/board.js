@@ -123,6 +123,7 @@ function loadBoard() {
     boardList.id = "boardList";
 
     // 페이징
+    // 2022/11/14 페이징 없애고 스크롤로!
     let paging = document.createElement('div');
     paging.id = "paging";
 
