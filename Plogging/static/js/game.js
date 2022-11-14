@@ -92,6 +92,9 @@ SOCKET.on('response', function(data) {
         searchBtn.onclick = searchPost;
         boardUpdate(data['data']);
     }
+    else if (data.msg == 'mailList') {
+        mailBoxUpdate(data['data']);
+    }
     else if (data.msg === 'send!') {
         console.log("response!");
     }

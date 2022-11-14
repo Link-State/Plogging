@@ -27,7 +27,7 @@ function loadMailBox() {
     let notReadMailCount = document.createElement('div');
     notReadMailCount.id = 'notReadMailCount';
 
-    // 메일 목록 receiveMailList
+    // 메일 목록
     let receiveMailList = document.createElement('div');
     receiveMailList.id = 'receiveMailList';
 
@@ -55,21 +55,39 @@ function loadReceiveMailForm() {
     back.id = "receiveMailBack";
     back.className = "back";
 
+    // 메일 정보
+    let receiveMailInfo = document.createElement('div');
+    receiveMailInfo.id = 'receiveMailInfo';
+
     // 보낸이
     // 보낸이 누르면 답장할 수 있도록!
+    let mailSender = document.createElement('div');
+    mailSender.id = 'mailSender';
 
     // 보낸 시각
+    let sendDate = document.createElement('div');
+    sendDate.id = 'sendDate';
 
     // 제목
+    let receiveMailTitle = document.createElement('div');
+    receiveMailTitle.id = 'receiveMailTitle';
 
+    // 내용
+    let receiveMailContext = document.createElement('div');
+    receiveMailContext.id = 'receiveMailContext';
 
+    receiveMailInfo.appendChild(mailSender);
+    receiveMailInfo.appendChild(sendDate);
     receiveMail.appendChild(back);
+    receiveMail.appendChild(receiveMailInfo);
+    receiveMail.appendChild(receiveMailTitle);
+    receiveMail.appendChild(receiveMailContext);
     BACKGROUND.appendChild(receiveMail);
 }
 
 // 메일 폼 요소 생성
 function loadMailForm() {
-    const BOARD = document.getElementById('background');
+    const BOARD = document.getElementById('board');
 
     // 메일
     let mail = document.createElement('div');
@@ -119,18 +137,22 @@ function openMailBox() {
         mailBox.style.display = 'none';
     }
     else {
+        SOCKET.emit('request', {'msg':"getMailList"});
         mailBox.style.display = 'block';
     }
 }
 
 // 받은메일 토글
-function openReceiveMail() {
+function openReceiveMail(e) {
     let receiveMail = document.getElementById('receiveMail');
     
     if (receiveMail.style.display !== "none") {
         receiveMail.style.display = "none";
     }
     else {
+        let mailSender = document.getElementById('mailSender');
+        mailSender.value = e.target.id;
+
         receiveMail.style.display = "block";
     }
 }
@@ -169,4 +191,10 @@ function sendMail(e) {
         sendBtn.onclick = '';
         SOCKET.emit('request', {'msg':"sendMail", 'data':{'receiver':target, 'title':title, 'context':context, 'date':date}});
     }
+}
+
+// 메일함 업데이트
+function mailBoxUpdate(data) {
+    // 0번째 우편은 제외
+    // ADMIN만 mailbox 있음, 나는 없어서 mailbox없기 때문에 오류 안나게 해야함.
 }
