@@ -1,10 +1,11 @@
+let MAIL_BOX = [];
 
 // 받은 메일함 요소 생성
 function loadMailBox() {
     const BACKGROUND = document.getElementById('background');
 
     // 메일함
-    let mailBox = document.createElement('mailBox');
+    let mailBox = document.createElement('div');
     mailBox.style.display = 'none';
     mailBox.id = "mailBox";
 
@@ -41,7 +42,7 @@ function loadMailBox() {
 
 // 받은 메일 폼 요소 생성
 function loadReceiveMailForm() {
-    const BACKGROUND = document.getElementById('background');
+    const MAILBOX = document.getElementById('mailBox');
 
     // 받은 메일
     let receiveMail = document.createElement('div');
@@ -60,8 +61,8 @@ function loadReceiveMailForm() {
     receiveMailInfo.id = 'receiveMailInfo';
 
     // 보낸이
-    // 보낸이 누르면 답장할 수 있도록!
     let mailSender = document.createElement('div');
+    mailSender.onclick = writeMail;
     mailSender.id = 'mailSender';
 
     // 보낸 시각
@@ -76,18 +77,22 @@ function loadReceiveMailForm() {
     let receiveMailContext = document.createElement('div');
     receiveMailContext.id = 'receiveMailContext';
 
+    // 삭제
+
+    // 신고
+
     receiveMailInfo.appendChild(mailSender);
     receiveMailInfo.appendChild(sendDate);
     receiveMail.appendChild(back);
     receiveMail.appendChild(receiveMailInfo);
     receiveMail.appendChild(receiveMailTitle);
     receiveMail.appendChild(receiveMailContext);
-    BACKGROUND.appendChild(receiveMail);
+    MAILBOX.appendChild(receiveMail);
 }
 
-// 메일 폼 요소 생성
+// 메일 보내기 폼 요소 생성
 function loadMailForm() {
-    const BOARD = document.getElementById('board');
+    const BODY = document.getElementsByTagName('body').item(0);
 
     // 메일
     let mail = document.createElement('div');
@@ -126,10 +131,10 @@ function loadMailForm() {
     mail.appendChild(mailContext);
     mail.appendChild(mailSend);
 
-    BOARD.appendChild(mail);
+    BODY.appendChild(mail);
 }
 
-// 메일함 토글
+// 메일 목록 창
 function openMailBox() {
     let mailBox = document.getElementById('mailBox');
 
@@ -137,12 +142,16 @@ function openMailBox() {
         mailBox.style.display = 'none';
     }
     else {
+        let receiveMailList = document.getElementById('receiveMailList');
+        while (receiveMailList.hasChildNodes()) {
+            receiveMailList.firstChild.remove();
+        }
         SOCKET.emit('request', {'msg':"getMailList"});
         mailBox.style.display = 'block';
     }
 }
 
-// 받은메일 토글
+// 받은메일 한 개 확인 창
 function openReceiveMail(e) {
     let receiveMail = document.getElementById('receiveMail');
     
@@ -150,14 +159,24 @@ function openReceiveMail(e) {
         receiveMail.style.display = "none";
     }
     else {
+
+        let data = MAIL_BOX[e.target.value];
         let mailSender = document.getElementById('mailSender');
-        mailSender.value = e.target.id;
+        let sendDate = document.getElementById('sendDate');
+        let receiveMailTitle = document.getElementById('receiveMailTitle');
+        let receiveMailContext = document.getElementById('receiveMailContext');
+
+        mailSender.innerHTML = "보낸이 : " + data['receiver'];
+        mailSender.value = data['receiver'];
+        sendDate.innerHTML = "보낸시간 : " + data['date'];
+        receiveMailTitle.innerHTML = data['title'];
+        receiveMailContext.innerHTML = data['context'];
 
         receiveMail.style.display = "block";
     }
 }
 
-// 메일 폼 토글
+// 메일 작성 창
 function writeMail(e) {
     let mail = document.getElementById('mail');
 
@@ -173,7 +192,7 @@ function writeMail(e) {
     }
 }
 
-// 메일 보내기
+// 메일 보내기 창
 function sendMail(e) {
     let target = e.target.value;
     let title = document.getElementById('mailTitle').value;
@@ -193,8 +212,32 @@ function sendMail(e) {
     }
 }
 
-// 메일함 업데이트
+// 메일 목록 업데이트
 function mailBoxUpdate(data) {
     // 0번째 우편은 제외
     // ADMIN만 mailbox 있음, 나는 없어서 mailbox없기 때문에 오류 안나게 해야함.
+    MAIL_BOX = data;
+    console.log(data);
+    let receiveMailList = document.getElementById('receiveMailList');
+
+    const CREATE_MAIL = (mail, idx) => {
+        let mailIdx = document.createElement('div');
+        mailIdx.onclick = openReceiveMail;
+        mailIdx.id = mail['receiver'];
+        mailIdx.value = idx;
+        mailIdx.className = 'user_mail';
+        mailIdx.innerHTML = mail['title'];
+        receiveMailList.appendChild(mailIdx);
+    };
+
+    for (let i = 0; i < data.length; i++) {
+        CREATE_MAIL(data[i], i);
+    }
 }
+
+/**
+ * 받은메일폼 요소 생성하는 함수에서 삭제와 신고 구현하기
+ * 받은메일 한 개 확인 창 함수에서 해당 함수 실행 시, 읽음처리 구현하기.
+ * ㄴ (읽은 메일은 디자인적인 요소를 통해 읽었다고 유저에게 알려주기 위함.)
+ * 받은 메일함 요소 생성하는 함수에서 안읽은 메일 갯수 하는 부분도 구현하기
+ */
