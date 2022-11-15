@@ -78,20 +78,22 @@ body {
     position: absolute;
     aspect-ratio: 1 / 1;
     right: 2%;
+    text-align: center;
+    vertical-align: middle;
     border-radius: 5px;
-    background-color: skyblue;
+    background-color: #a7d692;
     z-index: 4;
 }
 
 #menu {
     position: absolute;
-    background-color: aqua;
+    background-color: #eff0ea;
     z-index: 4;
 }
 
 .menuElem {
     aspect-ratio: 1 / 1;
     display: inline-block;
-    background-color: tomato;
+    background-color: #5fa281;
     margin: 0 auto;
 }
