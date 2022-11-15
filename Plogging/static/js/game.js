@@ -45,6 +45,8 @@ function loadMain() {
     loadMailBox();
     loadReceiveMailForm();
     loadMailForm();
+    loadPlogging();
+    loadPloggingTimer();
 
     background.style.display = "block";
 
