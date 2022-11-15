@@ -37,4 +37,23 @@
  * 플로깅을 진짜로 했는지 어떤 방법으로 증명할 것인가?
  */
 
+// 플로깅 생성 요소
+function loadPlogging() {
+    const BODY = document.getElementsByTagName('body').item(0);
+    
+    // 플로깅
+    let plogging = document.createElement('div');
+    plogging.style.display = "none";
+    plogging.id = "plogging";
+
+    let getLocationView = document.createElement('getLocationView');
+    getLocationView.id = 'getLocationView';
+
+    BODY.appendChild(plogging);
+}
+
+// 플로깅 타이머 생성
+function loadPloggingTimer() {
+}
+
 console.log('loaded plogging.js');
