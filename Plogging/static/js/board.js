@@ -662,3 +662,5 @@ function uploadPost() {
         }
     }
 }
+
+console.log('loaded board.js');

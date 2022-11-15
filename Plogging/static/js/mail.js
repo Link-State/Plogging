@@ -174,8 +174,6 @@ function deleteSelectedMail(e) {
         if (CHECKED_COUNT > 0) {
             let answer = confirm('선택한 메일을 삭제하시겠습니까?');
             if (answer) {
-                // 선택한 메일들 삭제처리!
-                // 이 후에 메일 목록 다시 가져옴.
                 let deletingMail = {};
                 let idx = 1;
                 for (let c of mailCheckBox) {
@@ -276,7 +274,7 @@ function openMailBox() {
         while (receiveMailList.hasChildNodes()) {
             receiveMailList.firstChild.remove();
         }
-        SOCKET.emit('request', {'msg':"getMailList"}, (response) => {console.log(response);});
+        SOCKET.emit('request', {'msg':"getMailList"});
         mailBox.style.display = 'block';
     }
 }
@@ -302,6 +300,10 @@ function openReceiveMail(e) {
         receiveMailContext.innerHTML = data['context'];
 
         receiveMail.style.display = "block";
+
+        if (data['isRead'] === 'False') {
+            SOCKET.emit('request', {'msg':'readMail', 'data':{'idx':e.target.value+1, 'date':Date.now()}});
+        }
     }
 }
 
@@ -343,11 +345,11 @@ function sendMail(e) {
 
 // 메일 목록 업데이트
 function mailBoxUpdate(data) {
-    // 0번째 우편은 제외
-    // ADMIN만 mailbox 있음, 나는 없어서 mailbox없기 때문에 오류 안나게 해야함.
     MAIL_BOX = data;
-    console.log(data);
+    let receiveMailCount = document.getElementById('receiveMailCount');
+    let notReadMailCount = document.getElementById('notReadMailCount');
     let receiveMailList = document.getElementById('receiveMailList');
+    let notread = 0;
 
     const CREATE_MAIL = (mail, idx) => {
         let mailPkg = document.createElement('div');
@@ -357,6 +359,12 @@ function mailBoxUpdate(data) {
         mailIdx.onclick = openReceiveMail;
         mailIdx.value = idx;
         mailIdx.className = 'user_mail';
+        if (mail['isRead'] !== 'False') {
+            mailIdx.style.color = 'gray';
+        }
+        else {
+            notread++;
+        }
         mailIdx.innerHTML = mail['title'];
         checkbox.onclick = selectMail;
         checkbox.value = idx;
@@ -376,23 +384,27 @@ function mailBoxUpdate(data) {
         CREATE_MAIL(data[i], i);
     }
 
-    // 안읽은 메일, 총 메일 갯수 업데이트
+    receiveMailCount.innerHTML = "메일 : " + data.length + "건";
+    receiveMailCount.value = data.length;
+    notReadMailCount.innerHTML = "안읽음 : " + notread + "건";
+    notReadMailCount.value = notread;
 }
 
+console.log('loaded mail.js');
+
 /**
- * 받은메일 한 개 확인 창 함수에서 해당 함수 실행 시, 읽음처리 구현하기.
- * ㄴ (읽은 메일은 디자인적인 요소를 통해 읽었다고 유저에게 알려주기 위함.)
- * 받은 메일함 요소 생성하는 함수에서 안읽은 메일 갯수 하는 부분도 구현하기
- * 
- * 와 대박 중대오류 찾음 플라스크쪽에서 emit을 하면 해당 서버에 접속중인 모든 유저에게 Broadcast함.
+ * <문제> - (해결)
+ * 와 대박 중대오류 발견, 플라스크쪽에서 emit을 하면 해당 서버에 접속중인 모든 유저에게 Broadcast함.
  * Room기능 이용해서 각 유저의 고유id로 room을 만들어서 사용해야 됨.
- * A 유저가 B 유저의 room에 접속할 경우 서버쪽에서 비교하여 퇴치함.
- * <참고문서>
+ * A 유저가 B 유저의 room에 접속할 경우 서버쪽에서 비교하여 퇴치함. 
+ * <참고해야 할 문서>
  * flask-socketio 문서 : https://flask-socketio.readthedocs.io/en/latest/getting_started.html#rooms
- * socketio 문서 : https://socket.io/docs/v4/server-api/#serversocketsjoinrooms
+ * socketio 문서 : https://socket.io/docs/v4/client-api/#io
+ * <해결>
+ * flask쪽에서 socketio.emit(..args)이 아닌 flask에서 emit만 import받은 후, emit(..args)를 사용했더니 됨.
  * 
- * 1. 버그픽스
- * 2. 메일 마저 구현
+ * 1. 버그픽스 <해결>
+ * 2. 메일 마저 구현 <해결>
  * 3. 이번주 내로 플로깅 기능만 구축, 나머지는 미구현.
  * 4. 플로깅 기능 구축 후 바로 디자인 시작
  */
