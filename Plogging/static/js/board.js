@@ -248,6 +248,12 @@ function loadPost() {
     let setZone = document.createElement('select');
     setZone.id = "setZone";
 
+    // 상세 위치
+    let setDetailSection = document.createElement('input');
+    setDetailSection.placeholder = '상세 위치(직접 입력)';
+    setDetailSection.type = 'text';
+    setDetailSection.id = "setDetailSection";
+
     // 인원
     let setMember = document.createElement('input');
     setMember.type = 'text';
@@ -281,6 +287,7 @@ function loadPost() {
     setLocation.appendChild(setState);
     setLocation.appendChild(setCountry);
     setLocation.appendChild(setZone);
+    setLocation.appendChild(setDetailSection);
     postHeader.appendChild(setLocation);
     postHeader.appendChild(setMember);
     postHeader.appendChild(setDate);
@@ -443,7 +450,7 @@ function boardUpdate(data) {
 
         // 미리보기 위치
         let postPreviewLocation = document.createElement('div');
-        postPreviewLocation.innerHTML = data[key]['state'] + " " + data[key]['country'] + " " + data[key]['zone'];
+        postPreviewLocation.innerHTML = data[key]['state'] + " " + data[key]['country'] + " " + data[key]['zone'] + " " + data[key]['section'];
         postPreviewLocation.className = 'postPreviewLocation';
         postPreviewLocation.value = key;
 
@@ -581,7 +588,7 @@ function detailPost(e) {
             postWritter.innerHTML = "작성자 : " + userPostInfo['host'];
             postWritter.value = userPostInfo['host'];
             postUploadDate.innerHTML = "작성일자 : " + userPostInfo['uploadDate'];
-            ploggingLocation.innerHTML = "지역 : " + userPostInfo['state'] + ' ' + userPostInfo['country'] + ' ' + userPostInfo['zone'];
+            ploggingLocation.innerHTML = "지역 : " + userPostInfo['state'] + ' ' + userPostInfo['country'] + ' ' + userPostInfo['zone'] + ' ' + userPostInfo['section'];
             ploggingStartDate.innerHTML = "시작 날짜 : " + startDate;
             currentMembers.innerHTML = "인원 현황 : " + userPostInfo['memberList'].length + " / " + userPostInfo['maxMember'] + " 명";
             userPostContext.innerHTML = userPostInfo['postContext'];
@@ -649,6 +656,7 @@ function uploadPost() {
         let user_state = document.getElementById('setState').value;
         let user_country = document.getElementById('setCountry');
         let user_zone = document.getElementById('setZone');
+        let user_section = document.getElementById('setDetailSection').value;
         let member = parseInt(document.getElementById('setMember').value);
         let startDate = document.getElementById('setDate').value;
         let title = document.getElementById('title').value;
@@ -662,6 +670,9 @@ function uploadPost() {
         }
         else if (user_zone.hasChildNodes() && user_zone.value === "전체") {
             actionMessage("[구]를 선택해주세요.");
+        }
+        else if (user_section === '') {
+            actionMessage("상세 위치를 입력해주세요.");
         }
         else if (isNaN(member)) {
             actionMessage("멤버 모집 수가 잘못되었습니다.");
@@ -695,6 +706,7 @@ function uploadPost() {
                 state : user_state,
                 country : user_country,
                 zone : user_zone,
+                section : user_section,
                 maxMember : member,
                 date : dateJson,
                 postTitle : title,
