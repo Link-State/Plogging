@@ -100,15 +100,12 @@ function loadPloggingTimer() {
 }
 
 function getLocation() {
-    let getLocationBtn = document.getElementById('getLocationBtn');
-    
-    // 위치 찍어서 보냄
     if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position.coords.latitude, position.coords.longitude);
+        let getLocationBtn = document.getElementById('getLocationBtn');
+        getLocationBtn.onclick = '';
 
-            // getLocationBtn.onclick = ''; // 위치찍혔으면 비활성화
-            // SOCKET.emit('request', {'msg':'getLocation', 'data':});
+        navigator.geolocation.getCurrentPosition((position) => {
+            SOCKET.emit('request', {'msg':'getLocation', 'data':{'latitude':position.coords.latitude, 'longitude':position.coords.longitude}});
         }, (e) => {
             // 권한 없음
             if (e.code === 1) {
@@ -122,13 +119,14 @@ function getLocation() {
             else if (e.code === 3) {
                 actionMessage("위치를 가져오는데에 너무 오래걸립니다. 다시 시도해주세요.");
             }
-        }, (data) => {
-            // 고정밀 데이터
-            console.log(data);
+            getLocationBtn.onclick = getLocation;
+        }, {
+            enableHighAccuracy : true,
+            timeout : 180000
         });
     }
     else {
-        actionMessage("이 브라우저로 플로깅에 참여할 수 없습니다. 다른 브라우저로 다시 시도해주세요.");
+        actionMessage("현재 브라우저로 플로깅에 참여할 수 없습니다. 다른 브라우저로 다시 시도해주세요.");
     }
 }
 

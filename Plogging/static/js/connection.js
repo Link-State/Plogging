@@ -10,8 +10,8 @@ SOCKET.on('response', function(data) {
             let day = data['data']['startPloggingTime']['d'];
             let hour = data['data']['startPloggingTime']['h'];
             let min = data['data']['startPloggingTime']['m'];
-            START_TIME = new Date(year, month-1, day, hour, min).getTime();
-            // START_TIME = Date.now()+5000;
+            // START_TIME = new Date(year, month-1, day, hour, min).getTime();
+            START_TIME = Date.now()+5000;
             loadPloggingTimer();
         }
     }
@@ -77,6 +77,14 @@ SOCKET.on('response', function(data) {
         mail.item(idx).style.color = "gray";
         notReadMailCount.innerHTML = "안읽음 : " + (notReadMailCount.value - 1) + "건";
     }
+    else if (data.msg === 'hostPinLocation') {
+        // 플로깅 시작
+        alert("호스트(나)가 위치 찍음");
+    }
+    else if (data.msg === 'userPinLocation') {
+        // 플로깅 시작
+        alert("유저(나)가 위치 찍음");
+    }
     else if (data.msg === 'alreadyPost') {
         alert('더이상 게시글을 올릴 수 없습니다.');
     }
@@ -100,6 +108,13 @@ SOCKET.on('response', function(data) {
     }
     else if (data.msg === 'notExistUser') {
         alert('존재 하지 않는 유저입니다.');
+    }
+    else if (data.msg === 'hostNotPinLocation') {
+        getLocationBtn.onclick = getLocation;
+        alert("호스트가 아직 위치 안찍음");
+    }
+    else if (data.msg === 'alreadyPinLocation') {
+        alert("이미 위치 찍음");
     }
     else if (data.msg === 'sessionFail') {
         alert('세션이 끊어졌습니다. 다시 로그인 해주세요.');

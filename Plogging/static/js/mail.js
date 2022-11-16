@@ -23,12 +23,12 @@ function loadMailBox() {
 
     // 받은 메일 갯수
     let receiveMailCount = document.createElement('div');
-    receiveMailCount.innerHTML = '메일 : N개';
+    receiveMailCount.innerHTML = '메일 : N건';
     receiveMailCount.id = 'receiveMailCount';
 
     // 안읽은 메일 갯수
     let notReadMailCount = document.createElement('div');
-    notReadMailCount.innerHTML = '안읽은 메일 : N개';
+    notReadMailCount.innerHTML = '안읽음 : N건';
     notReadMailCount.id = 'notReadMailCount';
 
     // 메일 삭제
