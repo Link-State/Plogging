@@ -10,8 +10,8 @@ SOCKET.on('response', function(data) {
             let day = data['data']['startPloggingTime']['d'];
             let hour = data['data']['startPloggingTime']['h'];
             let min = data['data']['startPloggingTime']['m'];
-            // START_TIME = new Date(year, month-1, day, hour, min).getTime();
-            START_TIME = Date.now()+5000;
+            START_TIME = new Date(year, month-1, day, hour, min).getTime();
+            // START_TIME = Date.now()+5000;
             loadPloggingTimer();
         }
     }
