@@ -857,11 +857,18 @@ function detailPost(e) {
       let ploggingJoin = document.getElementById("ploggingJoin");
       let ploggingLeft = document.getElementById("ploggingLeft");
       let ploggingReport = document.getElementById("ploggingReport");
+      let recordedDate = new Date(userPostInfo['uploadDate']);
 
       userPostTitle.innerHTML = userPostInfo["postTitle"];
       postWritter.innerHTML = "작성자 : " + userPostInfo["host"];
       postWritter.value = userPostInfo["host"];
-      postUploadDate.innerHTML = "작성일자 : " + userPostInfo["uploadDate"];
+      postUploadDate.innerHTML = "작성일자 : " +
+      recordedDate.getFullYear() + "년 " +
+      (recordedDate.getMonth() + 1) + "월 " +
+      recordedDate.getDate() + "일 " +
+      recordedDate.getHours() + "시 " +
+      recordedDate.getMinutes() + "분 " +
+      recordedDate.getSeconds() + "초 ";
       ploggingLocation.innerHTML =
         "지역 : " +
         userPostInfo["state"] +
