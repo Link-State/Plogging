@@ -31,7 +31,6 @@ const ZONE = {
     '포항':['전체', '남구', '북구'],
     '창원':['전체', '의창구', '성산구', '마산합포구', '마산회원구', '진해구']
 };
-const MAX_MEMBER = 10;
 let BOARD_LIST = {};
 
 // 게시판 요소 생성
@@ -250,14 +249,9 @@ function loadPost() {
     setZone.id = "setZone";
 
     // 인원
-    let setMember = document.createElement('select');
+    let setMember = document.createElement('input');
+    setMember.type = 'text';
     setMember.id = "setMember";
-    for (let i = 1; i < MAX_MEMBER; i++) {
-        let option = document.createElement('option');
-        option.value = i+1;
-        option.innerHTML = i+1;
-        setMember.appendChild(option);
-    }
 
     // 시작 일시
     let setDate = document.createElement('input');
@@ -432,36 +426,42 @@ function boardUpdate(data) {
         // 미리보기
         let post = document.createElement('div');
         post.onclick = detailPost;
-        post.id = key;
+        post.value = key;
         post.className = "user_post";
 
         // 미리보기 제목
         let postPreviewTitle = document.createElement('div');
         postPreviewTitle.innerHTML = data[key]['postTitle'];
         postPreviewTitle.className = 'postPreviewTitle';
+        postPreviewTitle.value = key;
 
         // 미리보기 날짜
         let postPreviewDate = document.createElement('div');
         postPreviewDate.innerHTML = data[key]['date']['M'] + "월 " + data[key]['date']['d'] + "일 (" + data[key]['date']['w'][0] + ") " + data[key]['date']['h'] + "시 " + data[key]['date']['m'] + "분";
         postPreviewDate.className = 'postPreviewDate';
+        postPreviewDate.value = key;
 
         // 미리보기 위치
         let postPreviewLocation = document.createElement('div');
         postPreviewLocation.innerHTML = data[key]['state'] + " " + data[key]['country'] + " " + data[key]['zone'];
         postPreviewLocation.className = 'postPreviewLocation';
+        postPreviewLocation.value = key;
 
         // 미리보기 인원 정보
         let postPreviewMemberInfo = document.createElement('div');
         postPreviewMemberInfo.className = 'postPreviewMemberInfo';
+        postPreviewMemberInfo.value = key;
 
         // 미리보기 인원 아이콘
         let postPreviewMemberIco = document.createElement('i');
         postPreviewMemberIco.className = 'fa-solid fa-person';
+        postPreviewMemberIco.value = key;
 
         // 미리보기 인원 수 현황
         let postPreviewMembers = document.createElement('div');
         postPreviewMembers.innerHTML = data[key]['memberList'].length + " / " + data[key]['maxMember'];
         postPreviewMembers.className = 'postPreviewMembers';
+        postPreviewMembers.value = key;
 
         postPreviewMemberInfo.appendChild(postPreviewMemberIco);
         postPreviewMemberInfo.appendChild(postPreviewMembers);
@@ -548,7 +548,7 @@ function detailPost(e) {
         userPost.style.display = "none";
     }
     else {
-        let clickedPost = e.target.id;
+        let clickedPost = e.target.value;
         if (e.target.id === "myPost") {
             clickedPost = USERID;
         }
@@ -614,7 +614,7 @@ function detailPost(e) {
             userPost.style.display = "block";
         }
         else {
-            actionMessage("작성된 글이 없습니다.");
+            actionMessage("작성 된 글이 없습니다.");
         }
     }
 }
@@ -663,7 +663,7 @@ function uploadPost() {
         else if (user_zone.hasChildNodes() && user_zone.value === "전체") {
             actionMessage("[구]를 선택해주세요.");
         }
-        else if (member === NaN || member < 2 || member > MAX_MEMBER) {
+        else if (isNaN(member)) {
             actionMessage("멤버 모집 수가 잘못되었습니다.");
         }
         else if (startDate === "") {
