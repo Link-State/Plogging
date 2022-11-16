@@ -275,7 +275,7 @@ function loadPost() {
     context.placeholder = "1. 욕설/비방/광고 등 목적에 맞지 않는 글은 임의로 삭제될 수 있습니다." +
     "\n2. 신고 누적횟수에 따라 이용에 제한이 있을 수 있습니다." +
     "\n3. 모집글은 1명 당 동시에 최대 1개만 게시할 수 있습니다." +
-    "\n4. 플로깅 참가 신청 후 노쇼로 인한 불이익은 당사가 책임지지 않습니다.";
+    "\n4. 플로깅 참가 신청 후 노쇼할 경우, 불이익이 있을 수 있습니다.";
     context.id = "context";
 
     // 게시 버튼
@@ -428,17 +428,53 @@ function boardUpdate(data) {
 
     const KEYS = Object.keys(data);
     const CREATE_POST = (key) => {
+
+        // 미리보기
         let post = document.createElement('div');
         post.onclick = detailPost;
         post.id = key;
         post.className = "user_post";
-        post.innerHTML = data[key]['postTitle'];
+
+        // 미리보기 제목
+        let postPreviewTitle = document.createElement('div');
+        postPreviewTitle.innerHTML = data[key]['postTitle'];
+        postPreviewTitle.className = 'postPreviewTitle';
+
+        // 미리보기 날짜
+        let postPreviewDate = document.createElement('div');
+        postPreviewDate.innerHTML = data[key]['date']['M'] + "월 " + data[key]['date']['d'] + "일 (" + data[key]['date']['w'][0] + ") " + data[key]['date']['h'] + "시 " + data[key]['date']['m'] + "분";
+        postPreviewDate.className = 'postPreviewDate';
+
+        // 미리보기 위치
+        let postPreviewLocation = document.createElement('div');
+        postPreviewLocation.innerHTML = data[key]['state'] + " " + data[key]['country'] + " " + data[key]['zone'];
+        postPreviewLocation.className = 'postPreviewLocation';
+
+        // 미리보기 인원 정보
+        let postPreviewMemberInfo = document.createElement('div');
+        postPreviewMemberInfo.className = 'postPreviewMemberInfo';
+
+        // 미리보기 인원 아이콘
+        let postPreviewMemberIco = document.createElement('i');
+        postPreviewMemberIco.className = 'fa-solid fa-person';
+
+        // 미리보기 인원 수 현황
+        let postPreviewMembers = document.createElement('div');
+        postPreviewMembers.innerHTML = data[key]['memberList'].length + " / " + data[key]['maxMember'];
+        postPreviewMembers.className = 'postPreviewMembers';
+
+        postPreviewMemberInfo.appendChild(postPreviewMemberIco);
+        postPreviewMemberInfo.appendChild(postPreviewMembers);
+        post.appendChild(postPreviewTitle);
+        post.appendChild(postPreviewDate);
+        post.appendChild(postPreviewLocation);
+        post.appendChild(postPreviewMemberInfo);
         boardList.appendChild(post);
         count++;
     };
 
     for (let key of KEYS) {
-        // 조건
+        // 검색 조건
         if (state !== "전체") {
             if (data[key]['state'] === state) {
                 if (country !== "전체") {
@@ -476,14 +512,20 @@ function deletePost(e) {
 
 // 플로깅 참가
 function joinPlogging(e) {
-    let answer = confirm('해당 플로깅에 참가하시겠습니까?')
-    if (answer) {
-        SOCKET.emit('request', {'msg':'joinPlogging', 'data':e.target.value});
+    if ('geolocation' in navigator) {
+        let answer = confirm('해당 플로깅에 참가하시겠습니까?')
+        if (answer) {
+            SOCKET.emit('request', {'msg':'joinPlogging', 'data':e.target.value});
+        }
+    }
+    else {
+        actionMessage("이 브라우저로 플로깅에 참여할 수 없습니다. 다른 브라우저로 다시 시도해주세요.");
     }
 }
 
 // 플로깅 참가 철회
 function leftPlogging(e) {
+    // 시작 1시간 전 취소는 약간의 패널티
     let answer = confirm('해당 플로깅에 참가를 취소하시겠습니까?')
     if (answer) {
         SOCKET.emit('request', {'msg':'leftPlogging', 'data':e.target.value});

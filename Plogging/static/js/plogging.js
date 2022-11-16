@@ -1,4 +1,5 @@
-
+let START_TIME = -1;
+let TIMER = -1;
 /**
  * <초기화>
  * 
@@ -46,14 +47,89 @@ function loadPlogging() {
     plogging.style.display = "none";
     plogging.id = "plogging";
 
-    let getLocationView = document.createElement('getLocationView');
-    getLocationView.id = 'getLocationView';
+    // 플로깅 타이틀
+    let ploggingTitle = document.createElement('div');
+    ploggingTitle.innerHTML = '플로깅';
+    ploggingTitle.id = 'ploggingTitle';
+
+    // 그림
+    let getLocationImg = document.createElement('img');
+    getLocationImg.id = 'getLocationImg';
+
+    // 플로깅 안내문
+    let ploggingNotice = document.createElement('div');
+    ploggingNotice.innerHTML = '주최자의 위치를 기다리는 중 입니다.';
+    ploggingNotice.id = 'ploggingNotice';
+
+    // 위치받기
+    let getLocationBtn = document.createElement('div');
+    getLocationBtn.onclick = getLocation;
+    getLocationBtn.innerHTML = '위치 받기';
+    getLocationBtn.id = 'getLocationBtn';
+
+    plogging.appendChild(ploggingTitle);
+    plogging.appendChild(getLocationImg);
+    plogging.appendChild(ploggingNotice);
+    plogging.appendChild(getLocationBtn);
 
     BODY.appendChild(plogging);
 }
 
 // 플로깅 타이머 생성
 function loadPloggingTimer() {
+    // 입장 시 타이머 자동 생성
+    // 플로깅 참가 시, 타이머 생성
+    // 플로깅 참가 취소 시, 타이머도 삭제
+    if (TIMER === -1) {
+        TIMER = setInterval(() => {
+            if (CURRENTPLOGGING !== '') {
+                if (Date.now() >= START_TIME) {
+                    let plogging = document.getElementById('plogging');
+                    plogging.style.display = 'block';
+
+                    clearInterval(TIMER);
+                    TIMER = -1;
+                }
+            }
+            else {
+                clearInterval(TIMER);
+                TIMER = -1;
+            }
+        }, 1000);
+    }
+}
+
+function getLocation() {
+    let getLocationBtn = document.getElementById('getLocationBtn');
+    
+    // 위치 찍어서 보냄
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position.coords.latitude, position.coords.longitude);
+
+            // getLocationBtn.onclick = ''; // 위치찍혔으면 비활성화
+            // SOCKET.emit('request', {'msg':'getLocation', 'data':});
+        }, (e) => {
+            // 권한 없음
+            if (e.code === 1) {
+                actionMessage("위치 권한이 필요합니다.");
+            }
+            // 위치 가져오기 실패
+            else if (e.code === 2) {
+                actionMessage("위치를 가져오는데에 실패했습니다.");
+            }
+            // 시간 초과
+            else if (e.code === 3) {
+                actionMessage("위치를 가져오는데에 너무 오래걸립니다. 다시 시도해주세요.");
+            }
+        }, (data) => {
+            // 고정밀 데이터
+            console.log(data);
+        });
+    }
+    else {
+        actionMessage("이 브라우저로 플로깅에 참여할 수 없습니다. 다른 브라우저로 다시 시도해주세요.");
+    }
 }
 
 console.log('loaded plogging.js');
