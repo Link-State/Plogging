@@ -675,7 +675,10 @@ function uploadPost() {
             actionMessage("상세 위치를 입력해주세요.");
         }
         else if (isNaN(member)) {
-            actionMessage("멤버 모집 수가 잘못되었습니다.");
+            actionMessage("멤버 모집 수는 '숫자'만 기재해주세요.");
+        }
+        else if (member < 2) {
+            actionMessage("멤버 모집은 2명 이상부터 가능합니다.");
         }
         else if (startDate === "") {
             actionMessage("플로깅 시작 날짜를 입력해주세요.");
