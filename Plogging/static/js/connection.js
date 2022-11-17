@@ -10,7 +10,7 @@ SOCKET.on('response', function(data) {
             let day = data['data']['startPloggingTime']['d'];
             let hour = data['data']['startPloggingTime']['h'];
             let min = data['data']['startPloggingTime']['m'];
-            START_TIME = new Date(year, month-1, day, hour, min).getTime();
+            // START_TIME = new Date(year, month-1, day, hour, min).getTime();
             // START_TIME = Date.now()+5000;
             loadPloggingTimer();
         }
@@ -79,7 +79,21 @@ SOCKET.on('response', function(data) {
     }
     else if (data.msg === 'hostPinLocation') {
         // 플로깅 시작
-        alert("호스트(나)가 위치 찍음");
+        if (data['data']['code'] == "0") {
+            alert("호스트(나)가 위치 찍음");
+        }
+        else {
+            // 플로깅 시각요소 변화 = 호스트가 위치를 찍었습니다. 위치를 찍으세요. 남은시간 : NNN초
+            clearInterval(TIMER);
+            TIMER = -1;
+
+            let ploggingNotice = document.getElementById('ploggingNotice');
+            let getLocationBtn = document.getElementById('getLocationBtn');
+            
+            ploggingNotice.innerHTML = '위치를 찍으세요.';
+            getLocationBtn.onclick = getLocation;
+            getLocationBtn.style.color = 'black';
+        }
     }
     else if (data.msg === 'userPinLocation') {
         // 플로깅 시작
@@ -110,8 +124,10 @@ SOCKET.on('response', function(data) {
         alert('존재 하지 않는 유저입니다.');
     }
     else if (data.msg === 'hostNotPinLocation') {
-        getLocationBtn.onclick = getLocation;
-        alert("호스트가 아직 위치 안찍음");
+        if (data['data']['code'] == "0") {
+            getLocationBtn.onclick = getLocation;
+            alert("호스트가 아직 위치 안찍음");
+        }
     }
     else if (data.msg === 'alreadyPinLocation') {
         alert("이미 위치 찍음");

@@ -63,7 +63,7 @@ function loadPlogging() {
 
     // 위치받기
     let getLocationBtn = document.createElement('div');
-    getLocationBtn.onclick = getLocation;
+    getLocationBtn.style.color = 'gray';
     getLocationBtn.innerHTML = '위치 받기';
     getLocationBtn.id = 'getLocationBtn';
 
@@ -89,6 +89,19 @@ function loadPloggingTimer() {
 
                     clearInterval(TIMER);
                     TIMER = -1;
+                    if (CURRENTPLOGGING !== USERID) {
+                        TIMER = setInterval(() => {
+                            SOCKET.emit('request', {'msg':'getHostLocation'});
+                        }, 3000);
+                    }
+                    else {
+                        let ploggingNotice = document.getElementById('ploggingNotice');
+                        let getLocationBtn = document.getElementById('getLocationBtn');
+
+                        ploggingNotice.innerHTML = '위치를 찍으세요<br>남은시간 : nnn초';
+                        getLocationBtn.onclick = getLocation;
+                        getLocationBtn.style.color = 'black';
+                    }
                 }
             }
             else {
@@ -100,6 +113,7 @@ function loadPloggingTimer() {
 }
 
 function getLocation() {
+    // pc에서는 비활성화 할 것
     if ('geolocation' in navigator) {
         let getLocationBtn = document.getElementById('getLocationBtn');
         getLocationBtn.onclick = '';
@@ -131,3 +145,12 @@ function getLocation() {
 }
 
 console.log('loaded plogging.js');
+
+/**
+ * 1. 주최자 한정 '남은시간 NNN초' 타이머 기능 작성
+ *  1.1 주최자가 제한 시간 내에 기준위치를 찍지 않을 경우, 랜덤한 유저에게 기준위치를 찍도록 하는 기능 작성.
+ *  1.1 이 때 모든 유저를 1번씩 순회하고, 모든 유저가 제한시간 내에 기준위치를 찍지 않은 경우 해당 플로깅 취소처리하는 기능 작성. (Agora에서 플로깅 삭제)
+ * 2. 일반유저 위치 받아서 적법한 위치인지 계산 후 반환하는 기능 작성.
+ * 3. 유저 게임 시작 시, DB currentPlogging에 값은 있지만 해당 플로깅이 Agora에 없을 경우 패널티 처리하는 기능 작성.
+ * 4. 일단 플로깅에 위치를 찍고 참여한 유저는 패널티부과 안하도록 해야함.
+ */
