@@ -476,9 +476,26 @@ function loadPost() {
   let postHeader = document.createElement("div");
   postHeader.id = "postHeader";
 
+  // 게시 버튼
+  let upload = document.createElement("div");
+  upload.onclick = uploadPost;
+  upload.innerHTML = "게시";
+  upload.id = "upload";
+
+  // 제목
+  let title = document.createElement("input");
+  title.placeholder = "글 제목";
+  title.type = "text";
+  title.id = "title";
+
   // 위치
-  let setLocation = document.createElement("div");
-  setLocation.id = "setLocation";
+  let locationGroup = document.createElement("div");
+  locationGroup.id = "locationGroup";
+
+  // 위치 텍스트
+  let locationText = document.createElement("div");
+  locationText.id = "locationText";
+  locationText.innerHTML = "위치";
 
   // 광역시/도
   let setState = document.createElement("select");
@@ -506,21 +523,35 @@ function loadPost() {
   setDetailSection.type = "text";
   setDetailSection.id = "setDetailSection";
 
-  // 인원
-  let setMember = document.createElement("input");
-  setMember.type = "text";
-  setMember.id = "setMember";
+  // 시작 일시 그룹
+  let dateGroup = document.createElement("div");
+  dateGroup.id = "dateGroup";
+
+  // 시작 일시 텍스트
+  let dateText = document.createElement("div");
+  dateText.id = "dateText";
+  dateText.innerHTML = "진행일";
 
   // 시작 일시
   let setDate = document.createElement("input");
+  setDate.placeholder = "날짜 및 시간 선택";
   setDate.type = "datetime-local";
   setDate.id = "setDate";
 
-  // 제목
-  let title = document.createElement("input");
-  title.placeholder = "제목";
-  title.type = "text";
-  title.id = "title";
+  // 인원 그룹
+  let memberGroup = document.createElement("div");
+  memberGroup.id = "memberGroup";
+
+  // 인원 텍스트
+  let memberText = document.createElement("div");
+  memberText.id = "memberText";
+  memberText.innerHTML = "모집 인원";
+
+  // 인원
+  let setMember = document.createElement("input");
+  setMember.placeholder = "숫자만 입력 ex) 9";
+  setMember.type = "text";
+  setMember.id = "setMember";
 
   // 내용
   let context = document.createElement("textarea");
@@ -531,23 +562,33 @@ function loadPost() {
     "\n4. 플로깅 참가 신청 후 노쇼할 경우, 불이익이 있을 수 있습니다.";
   context.id = "context";
 
-  // 게시 버튼
-  let upload = document.createElement("div");
-  upload.onclick = uploadPost;
-  upload.innerHTML = "게시";
-  upload.id = "upload";
+  // 구분선
+  let createLine = () => {
+    let line = document.createElement("hr");
+    line.className = "line";
+    return line;
+  };
 
-  setLocation.appendChild(setState);
-  setLocation.appendChild(setCountry);
-  setLocation.appendChild(setZone);
-  setLocation.appendChild(setDetailSection);
-  postHeader.appendChild(setLocation);
-  postHeader.appendChild(setMember);
-  postHeader.appendChild(setDate);
+  locationGroup.appendChild(locationText);
+  locationGroup.appendChild(setState);
+  locationGroup.appendChild(setCountry);
+  locationGroup.appendChild(setZone);
+  locationGroup.appendChild(setDetailSection);
+  dateGroup.appendChild(dateText);
+  dateGroup.appendChild(setDate);
+  memberGroup.appendChild(memberText);
+  memberGroup.appendChild(setMember);
+  postHeader.appendChild(upload);
   postHeader.appendChild(title);
+  postHeader.appendChild(createLine());
+  postHeader.appendChild(locationGroup);
+  postHeader.appendChild(createLine());
+  postHeader.appendChild(dateGroup);
+  postHeader.appendChild(createLine());
+  postHeader.appendChild(memberGroup);
+  postHeader.appendChild(createLine());
   postSection.appendChild(postHeader);
   postSection.appendChild(context);
-  postSection.appendChild(upload);
   post.appendChild(back);
   post.appendChild(postSection);
 
@@ -857,18 +898,25 @@ function detailPost(e) {
       let ploggingJoin = document.getElementById("ploggingJoin");
       let ploggingLeft = document.getElementById("ploggingLeft");
       let ploggingReport = document.getElementById("ploggingReport");
-      let recordedDate = new Date(userPostInfo['uploadDate']);
+      let recordedDate = new Date(userPostInfo["uploadDate"]);
 
       userPostTitle.innerHTML = userPostInfo["postTitle"];
       postWritter.innerHTML = "작성자 : " + userPostInfo["host"];
       postWritter.value = userPostInfo["host"];
-      postUploadDate.innerHTML = "작성일자 : " +
-      recordedDate.getFullYear() + "년 " +
-      (recordedDate.getMonth() + 1) + "월 " +
-      recordedDate.getDate() + "일 " +
-      recordedDate.getHours() + "시 " +
-      recordedDate.getMinutes() + "분 " +
-      recordedDate.getSeconds() + "초 ";
+      postUploadDate.innerHTML =
+        "작성일자 : " +
+        recordedDate.getFullYear() +
+        "년 " +
+        (recordedDate.getMonth() + 1) +
+        "월 " +
+        recordedDate.getDate() +
+        "일 " +
+        recordedDate.getHours() +
+        "시 " +
+        recordedDate.getMinutes() +
+        "분 " +
+        recordedDate.getSeconds() +
+        "초 ";
       ploggingLocation.innerHTML =
         "지역 : " +
         userPostInfo["state"] +

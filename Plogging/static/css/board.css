@@ -33,24 +33,24 @@
 }
 
 #locationMenu > #state {
-    width: 9%;
+    width: 75px;
     border: solid 2px #5fa281;
     border-radius: 1em;
-    margin-left: 10%;
+    margin-left: 100px;
 }
 
 #locationMenu > #country {
-    width: 13%;
+    width: 110px;
     border: solid 2px #5fa281;
     border-radius: 1em;
-    margin-left: 1%;
+    margin-left: 10px;
 }
 
 #locationMenu > #zone {
-    width: 13%;
+    width: 110px;
     border: solid 2px #5fa281;
     border-radius: 1em;
-    margin-left: 1%;
+    margin-left: 10px;
 }
 
 #search {
@@ -160,58 +160,151 @@
     height: 100%;
     left: 0;
     top: 0;
-    background-color: aquamarine;
+    background-color: #eff0ea;
     z-index: 2;
 }
 
 #postSection {
     position: relative;
-    width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 #postHeader {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    border: dashed 1px black;
     margin-top: 5%;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 #postHeader > * {
     display: inline-block;
 }
 
-#setLocation {
-    width: 95%;
-    display: flex;
-    justify-content: space-around;
-    border: solid 1px green;
+#upload {
+    width: 50px;
+    color: white;
+    margin-left: auto;
+    text-align: center;
+    border-radius: 1em;
+    background-color: #5fa281;
+    padding: 5px;
 }
-
-#setLocation > * {
-    display: inline-block;
-}
-
-#setMember {
-    width: 15%;
-    border: solid 1px red;
-}
-
-#setDate {
-    width: 80%;
-    border: solid 1px blue;
+#upload:hover {
+    background-color: #416e58;
 }
 
 #title {
-    width: 95%;
-    border: solid 1px yellow;
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    border: 0px;
+}
+
+#locationGroup {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 11pt;
+}
+
+#locationGroup > * {
+    display: inline-block;
+    background-color: transparent;
+}
+
+#locationGroup > #locationText {
+    min-width: 80px;
+}
+
+#locationGroup > #setState {
+    width: 75px;
+    height: 30px;
+}
+
+#locationGroup > #setCountry {
+    width: 110px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+#locationGroup > #setZone {
+    width: 110px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+#locationGroup > #setDetailSection {
+    width: 300px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+#dateGroup {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 11pt;
+}
+
+#dateGroup > * {
+    display: inline-block;
+    background-color: transparent;
+}
+
+#dateGroup > #dateText {
+    min-width: 80px;
+}
+
+#dateGroup > #setDate {
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    border: 0px;
+    color: grey;
+}
+
+#memberGroup {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 11pt;
+}
+
+#memberGroup > * {
+    display: inline-block;
+    background-color: transparent;
+}
+
+#memberGroup > #memberText {
+    min-width: 80px;
+}
+
+#memberGroup > #setMember {
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    border: 0px;
+}
+
+.line {
+    width: 100%;
+    color: #5fa281;
+    border: solid 1px #5fa281;
 }
 
 #context {
     width: 100%;
-    height: 50%;
-    resize: none;
+    min-height: 200px;
+    border: 0px;
+    background-color: #eff0ea;
+    margin-top: 15px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .user_post {
@@ -252,6 +345,6 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: brown;
+    background-color: #eff0ea;
     z-index: 3;
 }
