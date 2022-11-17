@@ -100,7 +100,7 @@ SOCKET.on('response', function(data) {
         alert("유저(나)가 위치 찍음");
     }
     else if (data.msg === 'alreadyPost') {
-        alert('더이상 게시글을 올릴 수 없습니다.');
+        alert('더 이상 게시글을 올릴 수 없습니다.');
     }
     else if (data.msg === 'postNotExist') {
         alert('게시글이 존재하지 않습니다.');

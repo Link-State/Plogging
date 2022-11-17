@@ -22,6 +22,32 @@
     background-color: coral;
 }
 
+#mailBoxHeader {
+    width: 100%;
+    height: min-content;
+}
+
+#deleteAllMail {
+    width: min-content;
+    aspect-ratio: 1 / 1;
+}
+
+#deleteMail {
+    width: 100%;
+    height: min-content;
+}
+
+#receiveMailList {
+    width: 100%;
+    height: 50%;
+    overflow-y: scroll;
+}
+
+.mailPkg {
+    width: 100%;
+    height: min-content;
+}
+
 #receiveMail {
     position: absolute;
     top: 0;

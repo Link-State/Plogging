@@ -299,7 +299,7 @@ function openReceiveMail(e) {
         receiveMailTitle.innerHTML = data['title'];
         receiveMailContext.innerHTML = data['context'];
 
-        receiveMail.style.display = "block";
+        receiveMail.style.display = "inline-block";
 
         if (data['isRead'] === 'False') {
             SOCKET.emit('request', {'msg':'readMail', 'data':{'idx':e.target.value+1, 'date':Date.now()}});
