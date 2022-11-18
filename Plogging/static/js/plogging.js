@@ -1,5 +1,6 @@
 let START_TIME = -1;
 let TIMER = -1;
+let TIMECOUNT = -1;
 /**
  * <초기화>
  * 
@@ -67,6 +68,14 @@ function loadPlogging() {
     getLocationBtn.innerHTML = '위치 받기';
     getLocationBtn.id = 'getLocationBtn';
 
+    // 종료하기
+    let stopPloggingBtn = document.createElement('div');
+    stopPloggingBtn.onclick = stopPlogging;
+    stopPloggingBtn.style.display = 'none';
+    stopPloggingBtn.innerHTML = '종료하기';
+    stopPloggingBtn.id = 'stopPloggingBtn';
+
+    plogging.appendChild(stopPloggingBtn);
     plogging.appendChild(ploggingTitle);
     plogging.appendChild(getLocationImg);
     plogging.appendChild(ploggingNotice);
@@ -75,43 +84,74 @@ function loadPlogging() {
     BODY.appendChild(plogging);
 }
 
-// 플로깅 타이머 생성
-function loadPloggingTimer() {
-    // 입장 시 타이머 자동 생성
-    // 플로깅 참가 시, 타이머 생성
-    // 플로깅 참가 취소 시, 타이머도 삭제
-    if (TIMER === -1) {
-        TIMER = setInterval(() => {
-            if (CURRENTPLOGGING !== '') {
-                if (Date.now() >= START_TIME) {
-                    let plogging = document.getElementById('plogging');
-                    plogging.style.display = 'block';
+// 플로깅 종료
+function stopPlogging() {
+    let answer = confirm("플로깅을 종료하시겠습니까?");
+    if (answer) {
+        SOCKET.emit('request', {'msg':'stopPlogging'});
+    }
+}
 
-                    clearInterval(TIMER);
-                    TIMER = -1;
+// 플로깅 시작 타이머 생성
+function loadPloggingTimer() {
+    if (CURRENTPLOGGING !== '' && TIMER === -1) {
+        TIMER = setInterval(() => {
+            if (Date.now() >= START_TIME) {
+                let ploggingNotice = document.getElementById('ploggingNotice');
+                let getLocationBtn = document.getElementById('getLocationBtn');
+
+                ploggingView();
+                clearPloggingTimer();
+
+                if (Date.now() - START_TIME <= 180000) {
                     if (CURRENTPLOGGING !== USERID) {
+                        TIMECOUNT = 60;
                         TIMER = setInterval(() => {
-                            SOCKET.emit('request', {'msg':'getHostLocation'});
+                            TIMECOUNT--;
+                            if (TIMECOUNT <= 0) {
+                                clearPloggingTimer();
+
+                                ploggingNotice.innerHTML = '선착순 위치 받기';
+                                getLocationBtn.onclick = getLocation;
+                                getLocationBtn.style.color = 'black';
+                            }
+                            else {
+                                SOCKET.emit('request', {'msg':'getHostLocation'});
+                            }
                         }, 3000);
                     }
                     else {
-                        let ploggingNotice = document.getElementById('ploggingNotice');
-                        let getLocationBtn = document.getElementById('getLocationBtn');
-
-                        ploggingNotice.innerHTML = '위치를 찍으세요<br>남은시간 : nnn초';
-                        getLocationBtn.onclick = getLocation;
                         getLocationBtn.style.color = 'black';
+                        getLocationBtn.onclick = getLocation;
+                        TIMECOUNT = 180;
+                        TIMER = setInterval(() => {
+                            TIMECOUNT--;
+                            ploggingNotice.innerHTML = '기준위치를 찍으세요. 남은시간 : ' + TIMECOUNT + '초';
+                            if (TIMECOUNT <= 0) {
+                                clearPloggingTimer();
+                                ploggingNotice.innerHTML = '선착순 위치 받기';
+                            }
+                        }, 1000);
                     }
                 }
-            }
-            else {
-                clearInterval(TIMER);
-                TIMER = -1;
+                else {
+                    getLocationBtn.onclick = getLocation;
+                    getLocationBtn.style.color = 'black';
+                    ploggingNotice.innerHTML = '조금 늦었지만 바로 참가할 수 있어요!';
+                }
             }
         }, 1000);
     }
 }
 
+// 플로깅 종료 타이머 생성
+function loadPloggingFinishTimer() {
+    if (TIMER !== -1) {
+        // 타임아웃시
+    }
+}
+
+// 위치 받아오기
 function getLocation() {
     // pc에서는 비활성화 할 것
     if ('geolocation' in navigator) {
@@ -144,13 +184,45 @@ function getLocation() {
     }
 }
 
+// 플로깅 타이머 강제종료
+function clearPloggingTimer() {
+    clearInterval(TIMER);
+    TIMER = -1;
+    TIMECOUNT = -1;
+}
+
+// 플로깅 페이지 토글
+function ploggingView(t) {
+    let plogging = document.getElementById('plogging');
+
+    if (t === true) {
+        plogging.style.display = 'block';
+    }
+    else if (t === false) {
+        plogging.style.display = 'none';
+    }
+    else {
+        if (plogging.style.display !== 'none') {
+            plogging.style.display = 'none';
+        }
+        else {
+            plogging.style.display = 'block';
+        }
+    }
+}
+
 console.log('loaded plogging.js');
 
 /**
- * 1. 주최자 한정 '남은시간 NNN초' 타이머 기능 작성
- *  1.1 주최자가 제한 시간 내에 기준위치를 찍지 않을 경우, 랜덤한 유저에게 기준위치를 찍도록 하는 기능 작성.
  *  1.1 이 때 모든 유저를 1번씩 순회하고, 모든 유저가 제한시간 내에 기준위치를 찍지 않은 경우 해당 플로깅 취소처리하는 기능 작성. (Agora에서 플로깅 삭제)
  * 2. 일반유저 위치 받아서 적법한 위치인지 계산 후 반환하는 기능 작성.
  * 3. 유저 게임 시작 시, DB currentPlogging에 값은 있지만 해당 플로깅이 Agora에 없을 경우 패널티 처리하는 기능 작성.
- * 4. 일단 플로깅에 위치를 찍고 참여한 유저는 패널티부과 안하도록 해야함.
+ * 4. 일단 플로깅에 위치를 찍고 참여한 유저는 패널티부과 안하도록 해야함. (완)
+ * 유저 위치 계산, 패널티 부여
+ * 
+ * 그 누구도 시작을 안누르고 있는 경우 => User에 currentPlogging 삭제 >>안하고<< 강제종료
+ * 그 누구도 종료를 안누르고 있는 경우 => User에 currentPlogging 삭제 >>하고<< 강제종료
+ * 
+ * 플로깅 시작 1시간 전에는 플로깅 게시글 삭제, 플로깅 취소 불가하게 하는거 (완)
+ * 플로깅 게시글 삭제하면 참여했던 유저들한테 메일 날리는거 (완)
  */

@@ -293,8 +293,8 @@ function openReceiveMail(e) {
         let receiveMailTitle = document.getElementById('receiveMailTitle');
         let receiveMailContext = document.getElementById('receiveMailContext');
 
-        mailSender.innerHTML = "보낸이 : " + data['receiver'];
-        mailSender.value = data['receiver'];
+        mailSender.innerHTML = "보낸이 : " + data['sender'];
+        mailSender.value = data['sender'];
         sendDate.innerHTML = "보낸시간 : " + data['date'];
         receiveMailTitle.innerHTML = data['title'];
         receiveMailContext.innerHTML = data['context'];
