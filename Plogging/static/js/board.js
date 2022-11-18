@@ -604,16 +604,16 @@ function loadUserPost() {
   userPost.id = "userPost";
   userPost.style.display = "none";
 
+  // 게시글 전체
+  let postContext = document.createElement("div");
+  postContext.id = "postContext";
+
   // 닫기
   let back = document.createElement("div");
   back.className = "back";
   back.id = "userPostBack";
   back.innerHTML = "X";
   back.onclick = detailPost;
-
-  // 제목
-  let userPostTitle = document.createElement("div");
-  userPostTitle.id = "userPostTitle";
 
   // 글 관련 정보
   let postInfo = document.createElement("div");
@@ -639,6 +639,14 @@ function loadUserPost() {
   // 시작 일자
   let ploggingStartDate = document.createElement("div");
   ploggingStartDate.id = "ploggingStartDate";
+
+  // 게시글 메인 정보
+  let userPostMain = document.createElement("div");
+  userPostMain.id = "userPostMain";
+
+  // 제목
+  let userPostTitle = document.createElement("div");
+  userPostTitle.id = "userPostTitle";
 
   // 인원 현황
   let currentMembers = document.createElement("div");
@@ -676,20 +684,31 @@ function loadUserPost() {
   ploggingReport.innerHTML = "신고";
   ploggingReport.id = "ploggingReport";
 
+  // 구분선
+  let createLine = () => {
+    let line = document.createElement("hr");
+    line.className = "line";
+    return line;
+  };
+
   postInfo.appendChild(postWritter);
   postInfo.appendChild(postUploadDate);
-  ploggingInfo.appendChild(ploggingLocation);
+  userPostMain.appendChild(userPostTitle);
+  userPostMain.appendChild(currentMembers);
   ploggingInfo.appendChild(ploggingStartDate);
-  ploggingInfo.appendChild(currentMembers);
+  ploggingInfo.appendChild(ploggingLocation);
+  postContext.appendChild(ploggingDelete);
+  postContext.appendChild(ploggingReport);
+  postContext.appendChild(postInfo);
+  postContext.appendChild(userPostMain);
+  postContext.appendChild(createLine());
+  postContext.appendChild(ploggingInfo);
+  postContext.appendChild(createLine());
+  postContext.appendChild(userPostContext);
+  postContext.appendChild(ploggingJoin);
+  postContext.appendChild(ploggingLeft);
   userPost.appendChild(back);
-  userPost.appendChild(userPostTitle);
-  userPost.appendChild(postInfo);
-  userPost.appendChild(ploggingInfo);
-  userPost.appendChild(userPostContext);
-  userPost.appendChild(ploggingDelete);
-  userPost.appendChild(ploggingJoin);
-  userPost.appendChild(ploggingLeft);
-  userPost.appendChild(ploggingReport);
+  userPost.appendChild(postContext);
 
   BOARD.appendChild(userPost);
 }
@@ -890,8 +909,8 @@ function detailPost(e) {
       let userPostTitle = document.getElementById("userPostTitle");
       let postWritter = document.getElementById("postWritter");
       let postUploadDate = document.getElementById("postUploadDate");
-      let ploggingLocation = document.getElementById("ploggingLocation");
       let ploggingStartDate = document.getElementById("ploggingStartDate");
+      let ploggingLocation = document.getElementById("ploggingLocation");
       let currentMembers = document.getElementById("currentMembers");
       let userPostContext = document.getElementById("userPostContext");
       let ploggingDelete = document.getElementById("ploggingDelete");
@@ -901,10 +920,9 @@ function detailPost(e) {
       let recordedDate = new Date(userPostInfo["uploadDate"]);
 
       userPostTitle.innerHTML = userPostInfo["postTitle"];
-      postWritter.innerHTML = "작성자 : " + userPostInfo["host"];
+      postWritter.innerHTML = userPostInfo["host"];
       postWritter.value = userPostInfo["host"];
       postUploadDate.innerHTML =
-        "작성일자 : " +
         recordedDate.getFullYear() +
         "년 " +
         (recordedDate.getMonth() + 1) +
@@ -918,7 +936,7 @@ function detailPost(e) {
         recordedDate.getSeconds() +
         "초 ";
       ploggingLocation.innerHTML =
-        "지역 : " +
+        "어디서?&nbsp;&nbsp;&nbsp;" +
         userPostInfo["state"] +
         " " +
         userPostInfo["country"] +
@@ -926,13 +944,9 @@ function detailPost(e) {
         userPostInfo["zone"] +
         " " +
         userPostInfo["section"];
-      ploggingStartDate.innerHTML = "시작 날짜 : " + startDate;
+      ploggingStartDate.innerHTML = "언제?&nbsp;&nbsp;&nbsp;" + startDate;
       currentMembers.innerHTML =
-        "인원 현황 : " +
-        userPostInfo["memberList"].length +
-        " / " +
-        userPostInfo["maxMember"] +
-        " 명";
+        userPostInfo["memberList"].length + " / " + userPostInfo["maxMember"];
       userPostContext.innerHTML = userPostInfo["postContext"];
       ploggingJoin.value = clickedPost;
       ploggingLeft.value = clickedPost;

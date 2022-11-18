@@ -345,6 +345,131 @@
     top: 0;
     width: 100%;
     height: 100%;
+    font-size: 11pt;
     background-color: #eff0ea;
     z-index: 3;
+}
+
+#postContext {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#ploggingDelete {
+    width: 40px;
+    color: firebrick;
+    text-align: center;
+    font-weight: bold;
+    background-color: ghostwhite;
+    box-shadow: 1px 1px 5px grey;
+    border-radius: 1em;
+    margin-top: 50px;
+    margin-left: auto;
+    padding: 7px;
+}
+#ploggingDelete:hover {
+    color: ghostwhite;
+    background-color: firebrick;
+}
+
+#ploggingReport {
+    width: 40px;
+    color: firebrick;
+    text-align: center;
+    font-weight: bold;
+    background-color: ghostwhite;
+    box-shadow: 1px 1px 5px grey;
+    border-radius: 1em;
+    margin-top: 50px;
+    margin-left: auto;
+    padding: 7px;
+}
+#ploggingReport:hover {
+    color: ghostwhite;
+    background-color: firebrick;
+}
+
+#postInfo {
+    display: block;
+}
+
+#postWritter {
+    width: fit-content;
+    font-size: 12pt;
+}
+
+#postUploadDate {
+    width: fit-content;
+    color: grey;
+    font-size: 9pt;
+}
+
+#userPostMain {
+    display:flex;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#userPostTitle {
+    width: 75%;
+    flex-wrap: wrap;
+    font-size: 16pt;
+}
+
+#currentMembers {
+    width: 25%;
+    flex-wrap: wrap;
+    text-align: right;
+    font-size: 13pt;
+    margin-right: 10px;
+}
+
+#ploggingInfo {
+    display:flex;
+    font-size: 13pt;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#ploggingStartDate {
+    width: 50%;
+    flex-wrap: wrap;
+}
+
+#ploggingLocation {
+    width: 50%;
+    left: 50%;
+    flex-wrap: wrap;
+    margin-left: 30px;
+}
+
+#userPostContext {
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+
+#ploggingJoin {
+    width: 100px;
+    color: white;
+    margin: auto;
+    text-align: center;
+    border-radius: 1em;
+    background-color: #5fa281;
+    padding: 10px;
+}
+#ploggingJoin:hover {
+    background-color: #416e58;
+}
+
+#ploggingLeft {
+    width: 100px;
+    color: white;
+    margin: auto;
+    text-align: center;
+    border-radius: 1em;
+    background-color: #5fa281;
+    padding: 10px;
+}
+#ploggingLeft:hover {
+    background-color: #416e58;
 }
