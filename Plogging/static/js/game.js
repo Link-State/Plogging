@@ -1,5 +1,6 @@
 let USERID = '';
 let CURRENTPLOGGING = '';
+let BLOCK = false;
 let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 const MENU_COUNT = 5;
 const MENU_FX = [ploggingBoard, openMailBox, null, null, null];

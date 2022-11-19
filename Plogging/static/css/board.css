@@ -2,6 +2,8 @@
     width: 100%;
     height: 100%;
     background-color: #eff0ea;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .back {
@@ -62,6 +64,16 @@
     background-color: #5fa281;
     margin-left: 3%;
 }
+
+#searchResult {
+    width: 100%;
+    height: 100%;
+    line-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #search:hover {
     background-color: #416e58;
 }
@@ -110,10 +122,6 @@
 #write:hover {
     color: white;
     background-color: #5fa281;
-}
-
-#totalCount {
-    visibility: hidden;
 }
 
 #boardBody {

@@ -333,8 +333,12 @@ function loadBoard() {
   // 지역 검색
   let search = document.createElement("div");
   search.onclick = searchPost;
-  search.innerHTML = "0";
   search.id = "search";
+
+  // 결과 수
+  let searchResult = document.createElement("span");
+  searchResult.id = "searchResult";
+  searchResult.innerHTML = "0";
 
   //
   let postMenu = document.createElement("div");
@@ -360,11 +364,6 @@ function loadBoard() {
   let boardRibon = document.createElement("div");
   boardRibon.id = "boardRibon";
 
-  // 총 게시글 수
-  let totalCount = document.createElement("div");
-  totalCount.innerHTML = "총 N건";
-  totalCount.id = "totalCount";
-
   // 모집글 작성
   let write = document.createElement("div");
   write.onclick = writePost;
@@ -380,8 +379,8 @@ function loadBoard() {
   let paging = document.createElement("div");
   paging.id = "paging";
 
+  search.appendChild(searchResult);
   boardRibon.appendChild(write);
-  boardRibon.appendChild(totalCount);
   boardBody.appendChild(boardRibon);
   boardBody.appendChild(boardList);
   locationMenu.appendChild(state);
@@ -734,8 +733,8 @@ function boardUpdate(data) {
   let state = document.getElementById("state").value;
   let country = document.getElementById("country").value;
   let zone = document.getElementById("zone").value;
-  let totalCount = document.getElementById("totalCount");
   let boardList = document.getElementById("boardList");
+  let searchResult = document.getElementById("searchResult");
   let count = 0;
 
   const KEYS = Object.keys(data);
@@ -813,6 +812,9 @@ function boardUpdate(data) {
       boardList.appendChild(post);
       count++;
     }
+    else if (Date.now() - date >= 14400000) {
+      SOCKET.emit("request", {'msg':"overTimePlogging", 'data':key});
+    }
   };
 
   for (let key of KEYS) {
@@ -838,7 +840,7 @@ function boardUpdate(data) {
     }
   }
 
-  totalCount.innerHTML = "총 " + count + "건";
+  searchResult.innerHTML = count;
 }
 
 // 내 게시글 삭제
