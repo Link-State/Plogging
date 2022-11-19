@@ -6,19 +6,6 @@
     overflow-y: scroll;
 }
 
-.back {
-    margin-left: 98%;
-    width: 2%;
-    aspect-ratio: 4 / 3;
-    text-align: center;
-    right: 0%;
-    z-index: 1;
-    color: white;
-    border: solid 1px black;
-    background-color: red;
-    cursor: default;
-}
-
 #locationMenu {
     position: relative;
     display: flex;

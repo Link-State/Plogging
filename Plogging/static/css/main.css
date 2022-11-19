@@ -3,6 +3,24 @@
     src: local('../font/ROKA_Bold.ttf') format('truetype');
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 * {
     font-family: 'roka';
+}
+
+.back {
+    margin-left: calc(100% - 25px);
+    right: 0;
+    width: 24px;
+    aspect-ratio: 4 / 3;
+    text-align: center;
+    right: 0%;
+    z-index: 1;
+    color: white;
+    border: solid 1px black;
+    background-color: red;
+    cursor: default;
 }

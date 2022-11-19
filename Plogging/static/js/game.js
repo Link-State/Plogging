@@ -33,6 +33,27 @@ function loadMain() {
     let slot4 = document.createElement('div');
     slot4.id = "slot4";
 
+    // 배경 -> 풀떼기들
+    let grass1 = document.createElement('div');
+    grass1.id = 'grass1';
+    grass1.className = 'grass';
+
+    let grass2 = document.createElement('div');
+    grass2.id = 'grass2';
+    grass2.className = 'grass';
+
+    let grass3 = document.createElement('div');
+    grass3.id = 'grass3';
+    grass3.className = 'grass';
+
+    let grass4 = document.createElement('div');
+    grass4.id = 'grass4';
+    grass4.className = 'grass';
+
+    background.appendChild(grass1);
+    background.appendChild(grass2);
+    background.appendChild(grass3);
+    background.appendChild(grass4);
     background.appendChild(slot4);
     background.appendChild(slot3);
     background.appendChild(slot2);
@@ -128,18 +149,25 @@ function renderingPC() {
     let slot1 = document.getElementById("slot1");
     let slot2 = document.getElementById("slot2");
     let slot4 = document.getElementById("slot4");
+    let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
     let menu = document.getElementById('menu');
 
     background.style.width = '100%';
     background.style.height = '';
 
-    slot1.style.bottom = "25%";
-    slot2.style.width = "15%";
-    slot2.style.bottom = "20%";
+    slot1.style.bottom = "23.5%";
+    slot2.style.width = "25%";
+    slot2.style.bottom = "22%";
     slot4.style.width = "10%";
-    slot4.style.left = "35%";
-    slot4.style.bottom = "15%";
+    slot4.style.left = "41%";
+    slot4.style.bottom = "12%";
+
+    if (grass.item(0).style.display === 'none') {
+        for (let elem of grass) {
+            elem.style.display = "block";
+        }
+    }
 
     menuBtn.style.width = "5%";
     menuBtn.style.top = "1%";
@@ -167,18 +195,25 @@ function renderingMobile() {
     let slot1 = document.getElementById("slot1");
     let slot2 = document.getElementById("slot2");
     let slot4 = document.getElementById("slot4");
+    let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
     let menu = document.getElementById('menu');
 
     background.style.width = '';
     background.style.height = '100%';
 
-    slot1.style.bottom = "30%";
-    slot2.style.width = "20%";
-    slot2.style.bottom = "28.5%";
+    slot1.style.bottom = "26%";
+    slot2.style.width = "45%";
+    slot2.style.bottom = "20%";
     slot4.style.width = "15%";
     slot4.style.left = "32.5%";
-    slot4.style.bottom = "26.5%";
+    slot4.style.bottom = "15%";
+
+    if (grass.item(0).style.display !== 'none') {
+        for (let elem of grass) {
+            elem.style.display = "none";
+        }
+    }
 
     menuBtn.style.width = "10%";
     menuBtn.style.top = "";
