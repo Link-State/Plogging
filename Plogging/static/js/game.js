@@ -3,7 +3,7 @@ let CURRENTPLOGGING = '';
 let BLOCK = false;
 let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 const MENU_COUNT = 5;
-const MENU_FX = [ploggingBoard, openMailBox, null, null, null];
+const MENU_FX = [ploggingBoard, openMailBox, showView, null, null];
 
 // 메인 요소 생성
 function loadMain() {
