@@ -25,7 +25,7 @@ function loadShop() {
 
     // 보유 플라스틱
     let plasticAmount = document.createElement('span');
-    plasticAmount.innerHTML = " : N";
+    plasticAmount.innerHTML = " : N개";
     plasticAmount.id = 'plasticAmount';
 
     // 아이템 리스트
@@ -33,7 +33,7 @@ function loadShop() {
     shopItemList.id = 'shopItemList';
 
     // 아이템 생성
-    let items = ["ConvergenceHall", "StatueFloor", "Statue"];
+    let items = ["Hall", "Statue", "CommingSoon"];
     let registItem = (item) => {
         let itemSlot = document.createElement('div');
         itemSlot.onclick = buyItem;

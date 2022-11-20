@@ -98,6 +98,10 @@ function loadButton() {
     menuBtn.onclick = onClickMenu;
     menuBtn.id = "menuBtn";
 
+    let menuIco = document.createElement('i');
+    menuIco.className = "fa-solid fa-bars";
+    menuIco.id = "menuIco";
+
     let menu = document.createElement('div');
     menu.style.display = "none";
     menu.id = "menu";
@@ -105,11 +109,12 @@ function loadButton() {
     for (let i = 0; i < MENU_COUNT; i++) {
         let div = document.createElement('div');
         div.onclick = MENU_FX[i];
-        div.id = "menu:" + i;
+        div.id = "menu_" + i;
         div.className = "menuElem";
         menu.appendChild(div);
     }
 
+    menuBtn.appendChild(menuIco);
     BACKGROUND.appendChild(menu);
     BACKGROUND.appendChild(menuBtn);
 
@@ -169,7 +174,7 @@ function renderingPC() {
         }
     }
 
-    menuBtn.style.width = "5%";
+    // menuBtn.style.width = "5%";
     menuBtn.style.top = "1%";
     menuBtn.style.right = "1%";
     menuBtn.style.bottom = "";
@@ -215,7 +220,7 @@ function renderingMobile() {
         }
     }
 
-    menuBtn.style.width = "10%";
+    // menuBtn.style.width = "10%";
     menuBtn.style.top = "";
     menuBtn.style.right = "2%";
     menuBtn.style.bottom = "2%";

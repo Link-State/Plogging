@@ -6,3 +6,30 @@
     height: 100%;
     background-color: violet;
 }
+
+#Hall {
+    width: 30%;
+    aspect-ratio: 8 / 3;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../image/hall.png");
+}
+
+#Statue {
+    width: 15%;
+    aspect-ratio: 10 / 17;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../image/statue.png");
+}
+
+#CommingSoon {
+    width: 15%;
+    aspect-ratio: 1 / 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../image/commingSoon.png");
+}

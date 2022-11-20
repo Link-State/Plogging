@@ -92,7 +92,7 @@ function loginForm(code) {
 
     let loginIcon = document.createElement('i');
     loginIcon.style.fontSize = "32pt";
-    loginIcon.onclick = () => {location.href = "http://localhost:5000/login";};
+    loginIcon.onclick = () => {location.href = "http://" + document.domain + ":" + location.port + "/login";};
     loginIcon.innerText = "";
     loginIcon.className = "fa-brands fa-google";
     loginIcon.id = "loginIcon"

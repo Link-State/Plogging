@@ -94,7 +94,6 @@ body {
     right: 18.3%;
     background-image: url("../image/grass1.png");
 }
-
 #grass3 {
     width: 13.5%;
     aspect-ratio: 9 / 7;
@@ -113,6 +112,7 @@ body {
 
 #menuBtn {
     position: absolute;
+    width: 45px;
     aspect-ratio: 1 / 1;
     right: 2%;
     text-align: center;
@@ -121,6 +121,15 @@ body {
     border-radius: 5px;
     background-color: #a7d692;
     z-index: 5;
+}
+
+#menuIco {
+    height: 100%;
+    line-height: 100%;
+    font-size: 21pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #menu {
