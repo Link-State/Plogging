@@ -1,9 +1,23 @@
 const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
+const PATH = "http://" + document.domain + ":" + location.port + "";
+let INVENTORY = {};
 
 SOCKET.on('response', function(data) {
     if (data.msg === 'initialize') {
         USERID = data['data']['userID'];
         CURRENTPLOGGING = data['data']['currentPlogging'];
+        let items = data['data']['items'];
+        console.log(items);
+
+        let amount = Object.keys(items);
+        for (let i = 1; i < amount; i++) {
+            if (items["slot"+i] != "" && items["slot"+i] != undefined) {
+                let img = new Image();
+                img.src = PATH + "/static/image/" + items["slot"+i] + ".png";
+                INVENTORY["slot"+i] = img;
+            }
+        }
+
         if (CURRENTPLOGGING !== '') {
             if (data['data']['startPloggingTime'] !== null) {
                 let year = data['data']['startPloggingTime']['y'];
