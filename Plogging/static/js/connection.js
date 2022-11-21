@@ -6,6 +6,7 @@ let EQUIPED = {};
 SOCKET.on('response', function(data) {
     if (data.msg === 'initialize') {
 
+        // 변수 초기화
         USERID = data['data']['userID'];
         CURRENTPLOGGING = data['data']['currentPlogging'];
         EQUIPED = data['data']['equipItems'];
@@ -22,16 +23,18 @@ SOCKET.on('response', function(data) {
         loadPlogging();
         loadShop();
 
-        // 장착중인 아이템 이미지 불러옴
+        // 장착중인 아이템 이미지 로드
         let keys = Object.keys(EQUIPED);
         for (let key of keys) {
             let slot = document.getElementById(key);
             slot.style.backgroundImage = "url(" + PATH + "/static/image/" + EQUIPED[key] + ".png" + ")";
         }
 
+        // 메인화면 ON
         let background = document.getElementById('background');
         background.style.display = "block";
 
+        // 플로깅 화면 구성
         if (CURRENTPLOGGING !== '') {
             if (data['data']['startPloggingTime'] !== null) {
                 let year = data['data']['startPloggingTime']['y'];
@@ -271,6 +274,11 @@ SOCKET.on('response', function(data) {
         let searchBtn = document.getElementById('search');
         searchBtn.onclick = searchPost;
         boardUpdate(data['data']);
+    }
+    else if (data.msg === 'updateShop') {
+        INVENTORY = data['data']['inventory'];
+        ITEMLIST = data['data']['itemList'];
+        updateItemList();
     }
     else if (data.msg === 'mailList') {
         mailBoxUpdate(data['data']);

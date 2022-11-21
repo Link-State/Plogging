@@ -33,33 +33,6 @@ function loadShop() {
     let shopItemList = document.createElement('div');
     shopItemList.id = 'shopItemList';
 
-    // 아이템 생성
-    let registItem = (item) => {
-        let itemSlot = document.createElement('div');
-        let name = document.createElement('span');
-        let cost = document.createElement('span');
-
-        name.innerHTML = ITEMLIST[item]['name'];
-        name.id = item + "_name";
-        name.className = "itemName";
-        cost.innerHTML = "가격 : " + ITEMLIST[item]['cost'] + "개";
-        cost.id = item + "_cost";
-        cost.className = 'itemCost';
-        itemSlot.onclick = buyItem;
-        itemSlot.id = item;
-        itemSlot.className = "itemSlot";
-        itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + item + ".png" + ")";
-
-        itemSlot.appendChild(name);
-        itemSlot.appendChild(cost);
-        return itemSlot;
-    };
-
-    let keys = Object.keys(ITEMLIST);
-    for (let key of keys) {
-        shopItemList.appendChild(registItem(key));
-    }
-
     plastic.appendChild(plasticIco);
     plastic.appendChild(plasticAmount);
     shop.appendChild(back);
@@ -74,6 +47,7 @@ function showView(t = undefined) {
 
     if (t === true) {
         shop.style.display = 'block';
+        SOCKET.emit('request', {'msg':'updateShop'});
     }
     else if (t === false) {
         shop.style.display = 'none';
@@ -84,14 +58,70 @@ function showView(t = undefined) {
         }
         else {
             shop.style.display = 'block';
+            SOCKET.emit('request', {'msg':'updateShop'});
         }
     }
 }
 
+function updateItemList() {
+    let shopItemList = document.getElementById('shopItemList');
+    
+    while (shopItemList.hasChildNodes()) {
+        shopItemList.firstChild.remove();
+    }
+
+    // 아이템 생성
+    let registItem = (item) => {
+        let itemSlot = document.createElement('div');
+        let name = document.createElement('span');
+        let cost = document.createElement('span');
+
+        if (INVENTORY[item] !== undefined) {
+            name.innerHTML = "이미 보유중";
+            itemSlot.onclick = itemEquip;
+        }
+        else {
+            name.innerHTML = ITEMLIST[item]['name'];
+            cost.innerHTML = "가격 : " + ITEMLIST[item]['cost'] + "개";
+            itemSlot.onclick = buyItem;
+        }
+        name.id = item + "_name";
+        name.className = "itemName";
+        cost.id = item + "_cost";
+        cost.className = 'itemCost';
+        itemSlot.id = item;
+        itemSlot.className = "itemSlot";
+        itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + item + ".png" + ")";
+
+        itemSlot.appendChild(name);
+        itemSlot.appendChild(cost);
+        return itemSlot;
+    };
+
+    let keys = Object.keys(ITEMLIST);
+    for (let key of keys) {
+        shopItemList.appendChild(registItem(key));
+    }
+}
+
+// 아이템 구매
 function buyItem(e) {
     let answer = confirm("아이템을 구매하시겠습니까?");
+    e.target.onclick = '';
+
     if (answer) {
-        
+        SOCKET.emit('request', {'msg':'buyItem'});
+    }
+    else {
+        e.target.onclick = buyItem;
+    }
+}
+
+// 아이템 장착 / 해제
+function itemEquip() {
+    let answer = confirm("아이템을 장착 / 해제하시겠습니까?");
+    if (answer) {
+
     }
 }
 
