@@ -12,6 +12,7 @@
 }
 
 .back {
+    display: block;
     margin-left: calc(100% - 25px);
     right: 0;
     width: 24px;

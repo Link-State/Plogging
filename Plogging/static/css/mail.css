@@ -13,47 +13,176 @@
 }
 
 #mailBox {
+    flex-direction: column;
     position: fixed;
     top: 0;
     right: 0;
     width: 50%;
     height: 50%;
     z-index: 7;
-    background-color: coral;
+    background-color: white;
+    border: solid 1px black;
+    border-radius: 25px 0em 0em 25px;
 }
 
 #mailBoxHeader {
     width: 100%;
     height: min-content;
+    background-color: #d9ead3;
+    border-radius: 25px 0em 0em 0em;
+}
+
+#mailBoxHeader > * {
+    position: relative;
+}
+
+#mailBoxInfoHeader {
+    display: flex;
+    width: 100%;
+    height: min-content;
+    justify-content: space-between;
+}
+
+#mailBoxInfoHeader > * {
+    display: inline-block;
+    font-size: 10pt;
+    margin-bottom: 15px;
+}
+
+#notReadMailCount {
+    text-align: left;
+    margin-left: 30px;
+}
+
+#receiveMailCount {
+    text-align: right;
+    margin-right: 30px;
+}
+
+#mailBoxMenuHeader {
+    height: auto;
+    display: flex;
+    margin-top: 15px;
+    margin-left: 30px;
+    margin-bottom: 15px;
 }
 
 #deleteAllMail {
     width: min-content;
     aspect-ratio: 1 / 1;
+    margin-left: 15px;
+    margin-right: 10px;
 }
 
 #deleteMail {
-    width: 100%;
-    height: min-content;
+    width: 50px;
+    height: fit-content;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #5fa281;
+    padding: 5px;
+}
+#deleteMail:hover {
+    background-color: #416e58;
 }
 
 #receiveMailList {
-    width: 100%;
-    height: 50%;
+    width: auto;
+    flex-grow: 1;
     overflow-y: scroll;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .mailPkg {
-    width: 100%;
+    display: flex;
     height: min-content;
+    background-color: #eff0ea;
+    margin-bottom: 5px;
+    padding: 7px 10px 7px 10px;
+}
+.mailPkg:hover {
+    background-color: #e2e3dd;
+}
+
+.user_mail {
+    font-size: 12pt;
+}
+
+.user_mail_checkbox {
+    margin-right: 10px;
 }
 
 #receiveMail {
+    flex-direction: column;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: darkkhaki;
     z-index: 8;
+    background-color: white;
+    border-radius: 25px 0em 0em 25px;
+}
+
+#receiveMailHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#receiveMailHeader > * {
+    display: inline-block;
+}
+
+#receiveMailTitle {
+    font-size: 18pt;
+    margin-left: 30px;
+}
+
+#reportMail {
+    width: 40px;
+    color: firebrick;
+    text-align: center;
+    font-weight: bold;
+    background-color: ghostwhite;
+    box-shadow: 1px 1px 5px grey;
+    border-radius: 1em;
+    margin-right: 30px;
+    padding: 7px;
+}
+#reportMail:hover {
+    color: ghostwhite;
+    background-color: firebrick;
+}
+
+#receiveMailInfo {
+    display: block;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 15px;
+}
+
+#mailSender {
+    width: fit-content;
+    font-size: 12pt;
+}
+
+#sendDate {
+    width: fit-content;
+    color: grey;
+    font-size: 9pt;
+}
+
+#receiveMailContext {
+    flex-grow: 1;
+    overflow-y: scroll;
+    background-color: #eff0ea;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    padding: 7px 10px 7px 10px;
 }

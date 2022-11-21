@@ -340,12 +340,12 @@
     top: 0;
     width: 100%;
     height: 100%;
-    font-size: 11pt;
     background-color: #eff0ea;
     z-index: 3;
 }
 
 #postContext {
+    font-size: 11pt;
     margin-left: 50px;
     margin-right: 50px;
 }
