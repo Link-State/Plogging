@@ -1,3 +1,4 @@
+let INVENTORY = {};
 
 function loadShop() {
     const BODY = document.getElementsByTagName('body').item(0);
@@ -33,17 +34,30 @@ function loadShop() {
     shopItemList.id = 'shopItemList';
 
     // 아이템 생성
-    let items = ["Hall", "Statue", "CommingSoon"];
     let registItem = (item) => {
         let itemSlot = document.createElement('div');
+        let name = document.createElement('span');
+        let cost = document.createElement('span');
+
+        name.innerHTML = ITEMLIST[item]['name'];
+        name.id = item + "_name";
+        name.className = "itemName";
+        cost.innerHTML = "가격 : " + ITEMLIST[item]['cost'] + "개";
+        cost.id = item + "_cost";
+        cost.className = 'itemCost';
         itemSlot.onclick = buyItem;
         itemSlot.id = item;
         itemSlot.className = "itemSlot";
+        itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + item + ".png" + ")";
+
+        itemSlot.appendChild(name);
+        itemSlot.appendChild(cost);
         return itemSlot;
     };
 
-    for (let item of items) {
-        shopItemList.appendChild(registItem(item));
+    let keys = Object.keys(ITEMLIST);
+    for (let key of keys) {
+        shopItemList.appendChild(registItem(key));
     }
 
     plastic.appendChild(plasticIco);

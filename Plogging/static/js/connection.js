@@ -1,22 +1,36 @@
 const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
 const PATH = "http://" + document.domain + ":" + location.port + "";
-let INVENTORY = {};
+let ITEMLIST = {};
+let EQUIPED = {};
 
 SOCKET.on('response', function(data) {
     if (data.msg === 'initialize') {
+
         USERID = data['data']['userID'];
         CURRENTPLOGGING = data['data']['currentPlogging'];
-        let items = data['data']['items'];
-        console.log(items);
+        EQUIPED = data['data']['equipItems'];
+        ITEMLIST = data['data']['itemList'];
 
-        let amount = Object.keys(items);
-        for (let i = 1; i < amount; i++) {
-            if (items["slot"+i] != "" && items["slot"+i] != undefined) {
-                let img = new Image();
-                img.src = PATH + "/static/image/" + items["slot"+i] + ".png";
-                INVENTORY["slot"+i] = img;
-            }
+        // 요소 렌더링
+        loadButton();
+        loadBoard();
+        loadPost();
+        loadUserPost();
+        loadMailBox();
+        loadReceiveMailForm();
+        loadMailForm();
+        loadPlogging();
+        loadShop();
+
+        // 장착중인 아이템 이미지 불러옴
+        let keys = Object.keys(EQUIPED);
+        for (let key of keys) {
+            let slot = document.getElementById(key);
+            slot.style.backgroundImage = "url(" + PATH + "/static/image/" + EQUIPED[key] + ".png" + ")";
         }
+
+        let background = document.getElementById('background');
+        background.style.display = "block";
 
         if (CURRENTPLOGGING !== '') {
             if (data['data']['startPloggingTime'] !== null) {

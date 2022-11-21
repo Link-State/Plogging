@@ -7,9 +7,6 @@ const MENU_FX = [ploggingBoard, openMailBox, showView, null, null];
 
 // 메인 요소 생성
 function loadMain() {
-
-    SOCKET.emit('request', {'msg':'initialize'});
-
     const BODY = document.getElementsByTagName('body').item(0);
 
     // 배경
@@ -60,17 +57,19 @@ function loadMain() {
     background.appendChild(slot1);
     BODY.appendChild(background);
 
-    loadButton();
-    loadBoard();
-    loadPost();
-    loadUserPost();
-    loadMailBox();
-    loadReceiveMailForm();
-    loadMailForm();
-    loadPlogging();
-    loadShop();
+    // loadButton();
+    // loadBoard();
+    // loadPost();
+    // loadUserPost();
+    // loadMailBox();
+    // loadReceiveMailForm();
+    // loadMailForm();
+    // loadPlogging();
+    // loadShop();
 
-    background.style.display = "block";
+    SOCKET.emit('request', {'msg':'initialize'});
+    // background.style.display = "block";
+
 
     // [완료] 배경화면 div 크기 고정해서 브라우저 크기 줄이면 화면 잘리게끔 (ex.네이버 메인화면)
     // [완료] 화면 가로가 세로보다 더 짧아질 경우 배경화면 div의 height를 100%로 변경

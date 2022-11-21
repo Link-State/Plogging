@@ -7,22 +7,22 @@
     background-color: violet;
 }
 
-#Hall {
+#hall {
     width: 30%;
     aspect-ratio: 8 / 3;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../image/hall.png");
+    /* background-image: url("../image/hall.png"); */
 }
 
-#Statue {
+#statue {
     width: 15%;
     aspect-ratio: 10 / 17;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../image/statue.png");
+    /* background-image: url("../image/statue.png"); */
 }
 
 #CommingSoon {
@@ -31,5 +31,5 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../image/commingSoon.png");
+    /* background-image: url("../image/commingSoon.png"); */
 }

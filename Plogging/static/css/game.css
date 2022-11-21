@@ -29,7 +29,7 @@ body {
     position: absolute;
     width: 100%;
     aspect-ratio: 8 / 3;
-    background-image: url("../image/hall.png");
+    /* background-image: url("../image/hall.png"); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -41,7 +41,7 @@ body {
     aspect-ratio: 10 / 17;
     left: 50%;
     transform: translateX(-50%);
-    background-image: url("../image/statue.png");
+    /* background-image: url("../image/statue.png"); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -64,7 +64,7 @@ body {
 #slot4 {
     position: absolute;
     aspect-ratio: 1 / 1;
-    background-image: url("../image/dog.png");
+    /* background-image: url("../image/dog.png"); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
