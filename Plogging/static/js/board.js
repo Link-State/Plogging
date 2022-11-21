@@ -380,8 +380,8 @@ function loadBoard() {
   paging.id = "paging";
 
   search.appendChild(searchResult);
-  boardRibon.appendChild(write);
-  boardBody.appendChild(boardRibon);
+  // boardRibon.appendChild(write);
+  // boardBody.appendChild(boardRibon);
   boardBody.appendChild(boardList);
   locationMenu.appendChild(state);
   locationMenu.appendChild(country);
@@ -389,6 +389,7 @@ function loadBoard() {
   locationMenu.appendChild(search);
   postMenu.appendChild(myPost);
   postMenu.appendChild(joiningPlogging);
+  postMenu.appendChild(write);
   board.appendChild(back);
   board.appendChild(locationMenu);
   board.appendChild(postMenu);
@@ -618,6 +619,14 @@ function loadUserPost() {
   let postInfo = document.createElement("div");
   postInfo.id = "postInfo";
 
+  // 프로필 사진
+  let postProfile = document.createElement("div");
+  postProfile.id = "postProfile";
+
+  // 작성자 + 작성 일자
+  let postMeta = document.createElement("div");
+  postMeta.id = "postMeta";
+
   // 작성자
   let postWritter = document.createElement("div");
   postWritter.onclick = writeMail;
@@ -650,6 +659,14 @@ function loadUserPost() {
   // 인원 현황
   let currentMembers = document.createElement("div");
   currentMembers.id = "currentMembers";
+
+  // 인원 현황 아이콘
+  let currentMemberIco = document.createElement("i");
+  currentMemberIco.className = "fa-solid fa-person";
+  currentMemberIco.id = "currentMemberIco";
+  
+  let currentMemberAmount = document.createElement("span");
+  currentMemberAmount.id = "currentMemberAmount";
 
   // 내용
   let userPostContext = document.createElement("div");
@@ -690,9 +707,13 @@ function loadUserPost() {
     return line;
   };
 
-  postInfo.appendChild(postWritter);
-  postInfo.appendChild(postUploadDate);
+  postMeta.appendChild(postWritter);
+  postMeta.appendChild(postUploadDate);
+  postInfo.appendChild(postProfile);
+  postInfo.appendChild(postMeta);
   userPostMain.appendChild(userPostTitle);
+  currentMembers.appendChild(currentMemberIco);
+  currentMembers.appendChild(currentMemberAmount);
   userPostMain.appendChild(currentMembers);
   ploggingInfo.appendChild(ploggingStartDate);
   ploggingInfo.appendChild(ploggingLocation);
@@ -933,7 +954,7 @@ function detailPost(e) {
       let postUploadDate = document.getElementById("postUploadDate");
       let ploggingStartDate = document.getElementById("ploggingStartDate");
       let ploggingLocation = document.getElementById("ploggingLocation");
-      let currentMembers = document.getElementById("currentMembers");
+      let currentMemberAmount = document.getElementById("currentMemberAmount");
       let userPostContext = document.getElementById("userPostContext");
       let ploggingDelete = document.getElementById("ploggingDelete");
       let ploggingJoin = document.getElementById("ploggingJoin");
@@ -967,7 +988,7 @@ function detailPost(e) {
         " " +
         userPostInfo["section"];
       ploggingStartDate.innerHTML = "언제?&nbsp;&nbsp;&nbsp;" + startDate;
-      currentMembers.innerHTML =
+      currentMemberAmount.innerHTML =
         userPostInfo["memberList"].length + " / " + userPostInfo["maxMember"];
       userPostContext.innerHTML = userPostInfo["postContext"];
       ploggingJoin.value = clickedPost;

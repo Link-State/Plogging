@@ -138,6 +138,25 @@
     display: inline-block;
 }
 
+#senderProfile {
+    display: block;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../image/profile.png");
+}
+
+#senderInfo {
+    display: block;
+}
+
+#senderInfo > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+}
+
 #receiveMailTitle {
     font-size: 18pt;
     margin-left: 30px;
@@ -160,7 +179,9 @@
 }
 
 #receiveMailInfo {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    /* display: block; */
     margin-left: 30px;
     margin-right: 30px;
     margin-bottom: 15px;
@@ -168,13 +189,11 @@
 
 #mailSender {
     width: fit-content;
-    font-size: 12pt;
 }
 
 #sendDate {
     width: fit-content;
     color: grey;
-    font-size: 9pt;
 }
 
 #receiveMailContext {

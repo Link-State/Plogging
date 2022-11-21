@@ -102,6 +102,14 @@ function loadReceiveMailForm() {
   let receiveMailInfo = document.createElement("div");
   receiveMailInfo.id = "receiveMailInfo";
 
+  // 받은메일 프로필
+  let senderProfile = document.createElement("div");
+  senderProfile.id = "senderProfile";
+
+  // 보낸이 정보
+  let senderInfo = document.createElement("div");
+  senderInfo.id = "senderInfo";
+
   // 보낸이
   let mailSender = document.createElement("div");
   mailSender.onclick = writeMail;
@@ -117,8 +125,10 @@ function loadReceiveMailForm() {
 
   receiveMailHeader.appendChild(receiveMailTitle);
   receiveMailHeader.appendChild(reportMail);
-  receiveMailInfo.appendChild(mailSender);
-  receiveMailInfo.appendChild(sendDate);
+  senderInfo.appendChild(mailSender);
+  senderInfo.appendChild(sendDate);
+  receiveMailInfo.appendChild(senderProfile);
+  receiveMailInfo.appendChild(senderInfo);
   receiveMail.appendChild(back);
   receiveMail.appendChild(receiveMailHeader);
   receiveMail.appendChild(receiveMailInfo);
@@ -295,10 +305,16 @@ function openReceiveMail(e) {
     let sendDate = document.getElementById("sendDate");
     let receiveMailTitle = document.getElementById("receiveMailTitle");
     let receiveMailContext = document.getElementById("receiveMailContext");
+    let dateF = new Date(data["date"]);
 
     mailSender.innerHTML = data["sender"];
     mailSender.value = data["sender"];
-    sendDate.innerHTML = data["date"];
+    sendDate.innerHTML = dateF.getFullYear() + "년 " +
+      (dateF.getMonth() + 1) + "월 " +
+      dateF.getDate() + "일 " +
+      dateF.getHours() + "시 " +
+      dateF.getMinutes() + "분 " +
+      dateF.getSeconds() + "초";
     receiveMailTitle.innerHTML = data["title"];
     receiveMailContext.innerHTML = data["context"];
 
@@ -398,20 +414,3 @@ function mailBoxUpdate(data) {
 }
 
 console.log("loaded mail.js");
-
-/**
- * <문제> - (해결)
- * 와 대박 중대오류 발견, 플라스크쪽에서 emit을 하면 해당 서버에 접속중인 모든 유저에게 Broadcast함.
- * Room기능 이용해서 각 유저의 고유id로 room을 만들어서 사용해야 됨.
- * A 유저가 B 유저의 room에 접속할 경우 서버쪽에서 비교하여 퇴치함.
- * <참고해야 할 문서>
- * flask-socketio 문서 : https://flask-socketio.readthedocs.io/en/latest/getting_started.html#rooms
- * socketio 문서 : https://socket.io/docs/v4/client-api/#io
- * <해결>
- * flask쪽에서 socketio.emit(..args)이 아닌 flask에서 emit만 import받은 후, emit(..args)를 사용했더니 됨.
- *
- * 1. 버그픽스 <해결>
- * 2. 메일 마저 구현 <해결>
- * 3. 이번주 내로 플로깅 기능만 구축, 나머지는 미구현.
- * 4. 플로깅 기능 구축 후 바로 디자인 시작
- */

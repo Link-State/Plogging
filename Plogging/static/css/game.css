@@ -52,8 +52,8 @@ body {
     position: absolute;
     width: 15%;
     aspect-ratio: 1 / 1;
-    top: 25%;
-    right: 5%;
+    top: 16%;
+    right: 1.5%;
     background-image: url("../image/sun.png");
     background-position: center;
     background-size: cover;

@@ -47,6 +47,15 @@ function loadMain() {
     grass4.id = 'grass4';
     grass4.className = 'grass';
 
+    // 배경음악
+    let bgm = document.createElement('audio');
+    bgm.src = PATH + "/static/sound/bgm.mp3";
+    bgm.controls = true;
+    bgm.autoplay = true;
+    bgm.loop = true;
+    bgm.id = "bgm";
+
+    // background.appendChild(bgm);
     background.appendChild(grass1);
     background.appendChild(grass2);
     background.appendChild(grass3);
@@ -116,9 +125,6 @@ function loadButton() {
     menuBtn.appendChild(menuIco);
     BACKGROUND.appendChild(menu);
     BACKGROUND.appendChild(menuBtn);
-
-    onResize(false);
-    window.addEventListener("resize", onResize);
 }
 
 // 메뉴 버튼
@@ -156,6 +162,11 @@ function renderingPC() {
     let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
     let menu = document.getElementById('menu');
+    let mailBox = document.getElementById('mailBox');
+    let senderProfile = document.getElementById('senderProfile');
+    let senderInfo = document.getElementById('senderInfo');
+    let mailSender = document.getElementById('mailSender');
+    let sendDate = document.getElementById('sendDate');
 
     background.style.width = '100%';
     background.style.height = '';
@@ -190,6 +201,13 @@ function renderingPC() {
         elem.style.height = (100 / MENU_COUNT) + "%";
     }
 
+    mailBox.style.width = "50%";
+    senderProfile.style.width = "50px";
+    senderProfile.style.height = "50px";
+    senderInfo.style.height = "50px";
+    mailSender.style.fontSize = "12pt";
+    sendDate.style.fontSize = "9pt";
+
     console.log("PC 모드");
 }
 
@@ -202,6 +220,11 @@ function renderingMobile() {
     let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
     let menu = document.getElementById('menu');
+    let mailBox = document.getElementById('mailBox');
+    let senderProfile = document.getElementById('senderProfile');
+    let senderInfo = document.getElementById('senderInfo');
+    let mailSender = document.getElementById('mailSender');
+    let sendDate = document.getElementById('sendDate');
 
     background.style.width = '';
     background.style.height = '100%';
@@ -236,7 +259,20 @@ function renderingMobile() {
         elem.style.height = "";
     }
 
+    mailBox.style.width = "100%";
+    senderProfile.style.width = "30px";
+    senderProfile.style.height = "30px";
+    senderInfo.style.height = "30px";
+    mailSender.style.fontSize = "11pt";
+    sendDate.style.fontSize = "8pt";
+
     console.log("모바일 모드");
+}
+
+function audioPlay() {
+    window.removeEventListener('click', audioPlay);
+    let bgm = document.getElementById("bgm");
+    bgm.play();
 }
 
 // 개발전용

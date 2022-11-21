@@ -2,6 +2,7 @@ const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
 const PATH = "http://" + document.domain + ":" + location.port + "";
 let ITEMLIST = {};
 let EQUIPED = {};
+let PLASTIC = 0;
 
 SOCKET.on('response', function(data) {
     if (data.msg === 'initialize') {
@@ -11,6 +12,7 @@ SOCKET.on('response', function(data) {
         CURRENTPLOGGING = data['data']['currentPlogging'];
         EQUIPED = data['data']['equipItems'];
         ITEMLIST = data['data']['itemList'];
+        PLASTIC = data['data']['plastic'];
 
         // 요소 렌더링
         loadButton();
@@ -22,6 +24,11 @@ SOCKET.on('response', function(data) {
         loadMailForm();
         loadPlogging();
         loadShop();
+        loadTutorial();
+        onResize(false);
+        window.addEventListener("resize", onResize);
+
+        // window.addEventListener('click', audioPlay);
 
         // 장착중인 아이템 이미지 로드
         let keys = Object.keys(EQUIPED);
@@ -215,6 +222,24 @@ SOCKET.on('response', function(data) {
             START_TIME = -1;
         }
     }
+    else if (data.msg === 'buyItem') {
+        INVENTORY[data['data']['itemName']] = data['data']['slot'];
+        let plasticAmount = document.getElementById('plasticAmount');
+        let item = document.getElementById(data['data']['itemName']);
+        let item_name = document.getElementById(data['data']['itemName']+"_name");
+        let item_cost = document.getElementById(data['data']['itemName']+"_cost");
+        plasticAmount.innerHTML = PLASTIC - ITEMLIST[data['data']['itemName']]['cost'] + "개";
+        item_name.innerHTML = '이미 보유중';
+        item_cost.innerHTML = '';
+        item.onclick = itemEquip;
+        alert('물건 구매 완료');
+    }
+    else if (data.msg === 'equipItem') {
+        actionMessage("아이템을 장착하였습니다.");
+    }
+    else if (data.msg === 'unmountItem') {
+        actionMessage("아이템을 해제하였습니다.");
+    }
     else if (data.msg === 'alreadyPost') {
         alert('더 이상 게시글을 올릴 수 없습니다.');
     }
@@ -264,6 +289,9 @@ SOCKET.on('response', function(data) {
     else if (data.msg === 'alreadyPinLocation') {
         alert("이미 위치 찍음");
     }
+    else if (data.msg === 'notEnoughPlastic') {
+        alert("플라스틱 부족함.");
+    }
     else if (data.msg === 'sessionFail') {
         alert('세션이 끊어졌습니다. 다시 로그인 해주세요.');
     }
@@ -278,6 +306,7 @@ SOCKET.on('response', function(data) {
     else if (data.msg === 'updateShop') {
         INVENTORY = data['data']['inventory'];
         ITEMLIST = data['data']['itemList'];
+        PLASTIC = data['data']['plastic'];
         updateItemList();
     }
     else if (data.msg === 'mailList') {

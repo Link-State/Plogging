@@ -26,7 +26,7 @@ function loadShop() {
 
     // 보유 플라스틱
     let plasticAmount = document.createElement('span');
-    plasticAmount.innerHTML = " : N개";
+    plasticAmount.innerHTML = " : " + PLASTIC + "개";
     plasticAmount.id = 'plasticAmount';
 
     // 아이템 리스트
@@ -63,12 +63,16 @@ function showView(t = undefined) {
     }
 }
 
+// 상점 아이템리스트 업데이트
 function updateItemList() {
+    let plasticAmount = document.getElementById('plasticAmount');
     let shopItemList = document.getElementById('shopItemList');
     
     while (shopItemList.hasChildNodes()) {
         shopItemList.firstChild.remove();
     }
+
+    plasticAmount.innerHTML = " : " + PLASTIC + "개";
 
     // 아이템 생성
     let registItem = (item) => {
@@ -110,7 +114,7 @@ function buyItem(e) {
     e.target.onclick = '';
 
     if (answer) {
-        SOCKET.emit('request', {'msg':'buyItem'});
+        SOCKET.emit('request', {'msg':'buyItem', 'data':{'itemName':e.target.id}});
     }
     else {
         e.target.onclick = buyItem;
@@ -118,10 +122,23 @@ function buyItem(e) {
 }
 
 // 아이템 장착 / 해제
-function itemEquip() {
-    let answer = confirm("아이템을 장착 / 해제하시겠습니까?");
+function itemEquip(e) {
+    let slot = "slot" + ITEMLIST[e.target.id]['slot'];
+    let msg = EQUIPED[slot] === undefined ? "장착" : "해제";
+    let answer = confirm("아이템을 " + msg + "하시겠습니까?");
     if (answer) {
-
+        if (msg === "장착") {
+            let itemSlot = document.getElementById(slot);
+            itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + e.target.id + ".png" + ")";
+            EQUIPED[slot] = e.target.id;
+            SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"equip", 'itemName':e.target.id}});
+        }
+        else {
+            let itemSlot = document.getElementById(slot);
+            itemSlot.style.backgroundImage = "";
+            delete EQUIPED[slot];
+            SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"unmountItem", 'itemName':e.target.id}});
+        }
     }
 }
 
