@@ -145,7 +145,7 @@ function mailReport() {
 
 // 메일 보내기 폼 요소 생성
 function loadMailForm() {
-  const BODY = document.getElementsByTagName("body").item(0);
+  const BACKGROUND = document.getElementById("background");
 
   // 메일
   let mail = document.createElement("div");
@@ -159,32 +159,44 @@ function loadMailForm() {
   back.className = "back";
   back.innerHTML = "X";
 
-  // 받는이
-  let mailReceiver = document.createElement("div");
-  mailReceiver.id = "mailReceiver";
-
-  // 제목
-  let mailTitle = document.createElement("input");
-  mailTitle.type = "text";
-  mailTitle.id = "mailTitle";
-
-  // 내용
-  let mailContext = document.createElement("textarea");
-  mailContext.id = "mailContext";
-
   // 전송
   let mailSend = document.createElement("div");
   mailSend.onclick = sendMail;
   mailSend.id = "mailSend";
   mailSend.innerHTML = "보내기";
 
+  // 받는 사람
+  let mailReceiver = document.createElement("div");
+  mailReceiver.id = "mailReceiver";
+
+  // 받는 사람 텍스트
+  let mailReceiverText = document.createElement("div");
+  mailReceiverText.innerHTML = "받는 사람";
+  mailReceiverText.id = "mailReceiverText";
+
+  // 받는 사람 사용자명
+  let mailReceiverUser = document.createElement("div");
+  mailReceiverUser.id = "mailReceiverUser";
+
+  // 제목
+  let mailTitle = document.createElement("input");
+  mailTitle.type = "text";
+  mailTitle.placeholder = "제목";
+  mailTitle.id = "mailTitle";
+
+  // 내용
+  let mailContext = document.createElement("textarea");
+  mailContext.id = "mailContext";
+
+  mailReceiver.appendChild(mailReceiverText);
+  mailReceiver.appendChild(mailReceiverUser);
   mail.appendChild(back);
+  mail.appendChild(mailSend);
   mail.appendChild(mailReceiver);
   mail.appendChild(mailTitle);
   mail.appendChild(mailContext);
-  mail.appendChild(mailSend);
 
-  BODY.appendChild(mail);
+  BACKGROUND.appendChild(mail);
 }
 
 // 선택 메일 삭제
@@ -309,12 +321,19 @@ function openReceiveMail(e) {
 
     mailSender.innerHTML = data["sender"];
     mailSender.value = data["sender"];
-    sendDate.innerHTML = dateF.getFullYear() + "년 " +
-      (dateF.getMonth() + 1) + "월 " +
-      dateF.getDate() + "일 " +
-      dateF.getHours() + "시 " +
-      dateF.getMinutes() + "분 " +
-      dateF.getSeconds() + "초";
+    sendDate.innerHTML =
+      dateF.getFullYear() +
+      "년 " +
+      (dateF.getMonth() + 1) +
+      "월 " +
+      dateF.getDate() +
+      "일 " +
+      dateF.getHours() +
+      "시 " +
+      dateF.getMinutes() +
+      "분 " +
+      dateF.getSeconds() +
+      "초";
     receiveMailTitle.innerHTML = data["title"];
     receiveMailContext.innerHTML = data["context"];
 
@@ -336,11 +355,11 @@ function writeMail(e) {
   if (mail.style.display !== "none") {
     mail.style.display = "none";
   } else {
-    let mailReceiver = document.getElementById("mailReceiver");
+    let mailReceiverUser = document.getElementById("mailReceiverUser");
     let mailSend = document.getElementById("mailSend");
-    mailReceiver.innerHTML = e.target.value;
+    mailReceiverUser.innerHTML = e.target.value;
     mailSend.value = e.target.value;
-    mail.style.display = "block";
+    mail.style.display = "flex";
   }
 }
 
