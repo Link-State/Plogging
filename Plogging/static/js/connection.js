@@ -13,6 +13,8 @@ SOCKET.on('response', function(data) {
         EQUIPED = data['data']['equipItems'];
         ITEMLIST = data['data']['itemList'];
         PLASTIC = data['data']['plastic'];
+        PLOGGING_START_TIME = data['data']['startPloggingTime']
+        PLOGGING_START_POINT = data['data']['ploggingStartPoint'];
 
         // 요소 렌더링
         loadButton();
@@ -43,14 +45,14 @@ SOCKET.on('response', function(data) {
 
         // 플로깅 화면 구성
         if (CURRENTPLOGGING !== '') {
-            if (data['data']['startPloggingTime'] !== null) {
-                let year = data['data']['startPloggingTime']['y'];
-                let month = data['data']['startPloggingTime']['M'];
-                let day = data['data']['startPloggingTime']['d'];
-                let hour = data['data']['startPloggingTime']['h'];
-                let min = data['data']['startPloggingTime']['m'];
+            if (PLOGGING_START_TIME !== null) {
+                let year = PLOGGING_START_TIME['y'];
+                let month = PLOGGING_START_TIME['M'];
+                let day = PLOGGING_START_TIME['d'];
+                let hour = PLOGGING_START_TIME['h'];
+                let min = PLOGGING_START_TIME['m'];
                 START_TIME = new Date(year, month-1, day, hour, min).getTime();
-                // START_TIME = Date.now()+3000;
+                // START_TIME = Date.now()+500;
                 if (data['data']['alreadyJoin']) {
                     let ploggingNotice = document.getElementById('ploggingNotice');
                     let getLocationBtn = document.getElementById('getLocationBtn');
@@ -69,8 +71,8 @@ SOCKET.on('response', function(data) {
                     let ploggingNotice = document.getElementById('ploggingNotice');
                     let getLocationBtn = document.getElementById('getLocationBtn');
 
-                    ploggingNotice.innerHTML = '주최자가 기준위치를 찍었습니다. 위치를 찍으세요.';
-                    getLocationBtn.style.color = 'black';
+                    ploggingNotice.innerHTML = '주최자가 기준위치를 입력하였습니다.<br>현재 위치를 인증받으세요.';
+                    getLocationBtn.style.color = 'white';
                     getLocationBtn.onclick = getLocation;
 
                     ploggingView(true);
@@ -171,7 +173,7 @@ SOCKET.on('response', function(data) {
                 let ploggingNotice = document.getElementById('ploggingNotice');
                 let getLocationBtn = document.getElementById('getLocationBtn');
                 
-                ploggingNotice.innerHTML = '주최자가 기준위치를 찍었습니다. 위치를 찍으세요.';
+                ploggingNotice.innerHTML = '주최자가 기준위치를 입력하였습니다.<br>현재 위치를 인증받으세요.';
                 getLocationBtn.onclick = getLocation;
                 getLocationBtn.style.color = 'black';
             }
@@ -185,7 +187,7 @@ SOCKET.on('response', function(data) {
                 getLocationBtn.style.display = 'none';
                 stopPloggingBtn.style.display = 'block';
                 stopPloggingBtn.onclick = stopPlogging;
-                actionMessage("위치를 찍었습니다.");
+                actionMessage("위치를 인증받았습니다.");
             }
         }
     }
@@ -198,7 +200,7 @@ SOCKET.on('response', function(data) {
         getLocationBtn.style.display = 'none';
         stopPloggingBtn.style.display = 'block';
         stopPloggingBtn.onclick = stopPlogging;
-        actionMessage("위치를 찍었습니다.");
+        actionMessage("위치를 인증받았습니다.");
     }
     else if (data.msg === 'stopPlogging') {
         CURRENTPLOGGING = '';
@@ -216,7 +218,7 @@ SOCKET.on('response', function(data) {
                 actionMessage('플로깅을 종료합니다.');
             }
             else {
-                actionMessage('주최자에 의해 플로깅이 종료되었습니다.');
+                actionMessage('주최자에 의해 플로깅이 종료됐습니다.');
             }
             CURRENTPLOGGING = '';
             START_TIME = -1;
@@ -232,7 +234,7 @@ SOCKET.on('response', function(data) {
         item_name.innerHTML = '이미 보유중';
         item_cost.innerHTML = '';
         item.onclick = itemEquip;
-        actionMessage('물건 구매 완료');
+        actionMessage('아이템을 구매하였습니다.');
     }
     else if (data.msg === 'equipItem') {
         actionMessage("아이템을 장착하였습니다.");
@@ -270,10 +272,17 @@ SOCKET.on('response', function(data) {
         stopPloggingBtn.onclick = stopPlogging;
         actionMessage('플로깅 시작 전 입니다.');
     }
+    else if (data.msg === 'mustFirstStep') {
+        let getLocationBtn = document.getElementById('getLocationBtn');
+        let stopPloggingBtn = document.createElement('div');
+        getLocationBtn.onclick = getLocation;
+        stopPloggingBtn.onclick = stopPlogging;
+        actionMessage('먼저 위치 인증을 받아야 합니다.');
+    }
     else if (data.msg === 'distanceTooFar') {
         let getLocationBtn = document.getElementById('getLocationBtn');
         getLocationBtn.onclick = getLocation;
-        actionMessage('기준위치의 거리로부터 너무 멀리 떨어져있습니다.\n다시 위치를 찍어주세요.');
+        actionMessage('기준 위치로부터 너무 멀리 떨어져있습니다.\n다시 위치를 인증해주세요.');
     }
     else if (data.msg === 'notExistMail') {
         actionMessage('존재하지 않는 메일입니다.');
@@ -284,13 +293,13 @@ SOCKET.on('response', function(data) {
     else if (data.msg === 'hostNotPinLocation') {
         let getLocationBtn = document.getElementById('getLocationBtn');
         getLocationBtn.onclick = getLocation;
-        actionMessage("호스트가 아직 위치 안찍음");
+        actionMessage("주최자가 아직 위치를 인증하지 않았습니다.");
     }
     else if (data.msg === 'alreadyPinLocation') {
-        actionMessage("이미 위치 찍음");
+        actionMessage("이미 위치를 인증하였습니다.");
     }
     else if (data.msg === 'notEnoughPlastic') {
-        actionMessage("플라스틱 부족함.");
+        actionMessage("플라스틱이 부족합니다.");
     }
     else if (data.msg === 'sessionFail') {
         actionMessage('세션이 끊어졌습니다. 다시 로그인 해주세요.');
@@ -314,7 +323,7 @@ SOCKET.on('response', function(data) {
     }
     else if (data.msg === 'hasBlock') {
         BLOCK = true;
-        actionMessage('일시적으로 사용이 제한되었습니다.');
+        actionMessage('일시적으로 사용이 제한됐습니다.');
     }
     else if (data.msg === 'send!') {
         console.log("response!");

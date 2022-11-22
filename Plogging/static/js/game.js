@@ -1,5 +1,7 @@
 let USERID = '';
 let CURRENTPLOGGING = '';
+let PLOGGING_START_POINT = null;
+let PLOGGING_START_TIME = null;
 let BLOCK = false;
 let TOGGLE = window.innerWidth / window.innerHeight > 1 ? "Mobile" : "PC";
 const MENU_COUNT = 5;
@@ -48,12 +50,12 @@ function loadMain() {
     grass4.className = 'grass';
 
     // 배경음악
-    let bgm = document.createElement('audio');
-    bgm.src = PATH + "/static/sound/bgm.mp3";
-    bgm.controls = true;
-    bgm.autoplay = true;
-    bgm.loop = true;
-    bgm.id = "bgm";
+    // let bgm = document.createElement('audio');
+    // bgm.src = PATH + "/static/sound/bgm.mp3";
+    // bgm.controls = true;
+    // bgm.autoplay = true;
+    // bgm.loop = true;
+    // bgm.id = "bgm";
 
     // background.appendChild(bgm);
     background.appendChild(grass1);
@@ -77,6 +79,7 @@ function loadMain() {
     // loadShop();
 
     SOCKET.emit('request', {'msg':'initialize'});
+    console.log("loaded main window");
     // background.style.display = "block";
 
 
@@ -125,6 +128,7 @@ function loadButton() {
     menuBtn.appendChild(menuIco);
     BACKGROUND.appendChild(menu);
     BACKGROUND.appendChild(menuBtn);
+    console.log("loaded buttons from main window");
 }
 
 // 메뉴 버튼
@@ -143,13 +147,25 @@ function onClickMenu() {
 function onResize(e) {
     let rate = window.innerWidth / window.innerHeight;
 
-    if (rate < 1 && TOGGLE === "PC") {
-        renderingMobile();
-        TOGGLE = "Mobile";
+    if (rate < 1) {
+        if (TOGGLE === "PC") {
+            renderingMobile();
+            TOGGLE = "Mobile";
+        }
     }
-    else if (rate >= 1 && TOGGLE === "Mobile") {
-        renderingPC();
-        TOGGLE = "PC";
+    else if (rate >= 1) {
+        if (TOGGLE === "Mobile") {
+            renderingPC();
+            TOGGLE = "PC";
+        }
+
+        let userPost = document.getElementById('userPost');
+        let mail = document.getElementById('mail');
+        if (userPost.style.display === "none") {
+            let gap = (window.innerHeight-(window.innerWidth*(9/16)))/2;
+            mail.style.marginTop = gap + "px";
+            mail.style.height = "calc(50% - " + gap + "px)";
+        }
     }
 }
 
@@ -163,11 +179,13 @@ function renderingPC() {
     let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
     let menu = document.getElementById('menu');
+    let mail = document.getElementById('mail');
     let mailBox = document.getElementById('mailBox');
     let senderProfile = document.getElementById('senderProfile');
     let senderInfo = document.getElementById('senderInfo');
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
+    let ploggingMetaData = document.getElementById('ploggingMetaData');
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
@@ -207,6 +225,7 @@ function renderingPC() {
         elem.style.height = (100 / MENU_COUNT) + "%";
     }
 
+    mail.style.width = "50%";
     mailBox.style.width = "50%";
     senderProfile.style.width = "3.125rem";
     senderProfile.style.height = "3.125rem";
@@ -214,6 +233,9 @@ function renderingPC() {
     mailSender.style.fontSize = "0.75rem";
     sendDate.style.fontSize = "0.5625rem";
     
+    ploggingMetaData.style.fontSize = "1.5rem";
+    ploggingMetaData.style.justifyContent = "space-around";
+
     noticeBar.style.height = "25%";
     noticeText.style.width = "70%";
     noticeText.style.height = "calc(100% - 3.75rem)";
@@ -240,11 +262,13 @@ function renderingMobile() {
     let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
     let menu = document.getElementById('menu');
+    let mail = document.getElementById('mail');
     let mailBox = document.getElementById('mailBox');
     let senderProfile = document.getElementById('senderProfile');
     let senderInfo = document.getElementById('senderInfo');
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
+    let ploggingMetaData = document.getElementById('ploggingMetaData');
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
@@ -284,12 +308,18 @@ function renderingMobile() {
         elem.style.height = "";
     }
 
+    mail.style.width = "100%";
+    mail.style.height = "";
+    mail.style.marginTop = "";
     mailBox.style.width = "100%";
     senderProfile.style.width = "1.875rem";
     senderProfile.style.height = "1.875rem";
     senderInfo.style.height = "1.875rem";
     mailSender.style.fontSize = "0.6875rem";
     sendDate.style.fontSize = "0.5rem";
+    
+    ploggingMetaData.style.fontSize = "1.25rem";
+    ploggingMetaData.style.justifyContent = "space-between";
 
     noticeBar.style.height = "40%";
     noticeText.style.width = "calc(100% - 2.5rem)";

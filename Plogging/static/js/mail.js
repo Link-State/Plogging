@@ -66,6 +66,7 @@ function loadMailBox() {
   mailBox.appendChild(mailBoxMenuHeader);
   mailBox.appendChild(receiveMailList);
   BACKGROUND.appendChild(mailBox);
+  console.log("loaded mailbox");
 }
 
 // 받은 메일 폼 요소 생성
@@ -134,6 +135,7 @@ function loadReceiveMailForm() {
   receiveMail.appendChild(receiveMailInfo);
   receiveMail.appendChild(receiveMailContext);
   MAILBOX.appendChild(receiveMail);
+  console.log("loaded receive mail form");
 }
 
 // 메일 신고 (미구현)
@@ -145,6 +147,7 @@ function mailReport() {
 
 // 메일 보내기 폼 요소 생성
 function loadMailForm() {
+  const BODY = document.getElementsByTagName('body').item(0);
   const BACKGROUND = document.getElementById("background");
 
   // 메일
@@ -196,7 +199,8 @@ function loadMailForm() {
   mail.appendChild(mailTitle);
   mail.appendChild(mailContext);
 
-  BACKGROUND.appendChild(mail);
+  BODY.appendChild(mail);
+  console.log("loaded write mail form");
 }
 
 // 선택 메일 삭제

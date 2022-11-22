@@ -39,6 +39,7 @@ function loadShop() {
     shop.appendChild(plastic);
     shop.appendChild(shopItemList);
     BODY.appendChild(shop);
+    console.log("loaded shop window");
 }
 
 // 상점 화면 토글

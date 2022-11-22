@@ -287,6 +287,13 @@ const ZONE = {
 };
 let BOARD_LIST = {};
 
+// 구분선 생성 함수
+const CREATE_LINE = () => {
+  let line = document.createElement("hr");
+  line.className = "line";
+  return line;
+};
+
 // 게시판 요소 생성
 function loadBoard() {
   const BODY = document.getElementsByTagName("body").item(0);
@@ -396,6 +403,7 @@ function loadBoard() {
   board.appendChild(boardBody);
   board.appendChild(paging);
   BODY.appendChild(board);
+  console.log("loaded board");
 }
 
 // 시/도 선택
@@ -570,7 +578,7 @@ function loadPost() {
   context.id = "context";
 
   // 구분선
-  let createLine = () => {
+  let CREATE_LINE = () => {
     let line = document.createElement("hr");
     line.className = "line";
     return line;
@@ -589,19 +597,20 @@ function loadPost() {
   memberGroup.appendChild(setMember);
   postHeader.appendChild(upload);
   postHeader.appendChild(title);
-  postHeader.appendChild(createLine());
+  postHeader.appendChild(CREATE_LINE());
   postHeader.appendChild(locationGroup);
-  postHeader.appendChild(createLine());
+  postHeader.appendChild(CREATE_LINE());
   postHeader.appendChild(dateGroup);
-  postHeader.appendChild(createLine());
+  postHeader.appendChild(CREATE_LINE());
   postHeader.appendChild(memberGroup);
-  postHeader.appendChild(createLine());
+  postHeader.appendChild(CREATE_LINE());
   postSection.appendChild(postHeader);
   postSection.appendChild(context);
   post.appendChild(back);
   post.appendChild(postSection);
 
   BOARD.appendChild(post);
+  console.log("loaded write post form");
 }
 
 // 게시글 읽기 요소 생성
@@ -709,13 +718,6 @@ function loadUserPost() {
   ploggingReport.innerHTML = "신고";
   ploggingReport.id = "ploggingReport";
 
-  // 구분선
-  let createLine = () => {
-    let line = document.createElement("hr");
-    line.className = "line";
-    return line;
-  };
-
   postMeta.appendChild(postWritter);
   postMeta.appendChild(postUploadDate);
   postInfo.appendChild(postProfile);
@@ -730,9 +732,9 @@ function loadUserPost() {
   postContext.appendChild(ploggingReport);
   postContext.appendChild(postInfo);
   postContext.appendChild(userPostMain);
-  postContext.appendChild(createLine());
+  postContext.appendChild(CREATE_LINE());
   postContext.appendChild(ploggingInfo);
-  postContext.appendChild(createLine());
+  postContext.appendChild(CREATE_LINE());
   postContext.appendChild(userPostContext);
   postContext.appendChild(ploggingJoin);
   postContext.appendChild(ploggingLeft);
@@ -740,6 +742,7 @@ function loadUserPost() {
   userPost.appendChild(postContext);
 
   BOARD.appendChild(userPost);
+  console.log("loaded read board form");
 }
 
 // 게시판 폼 토글
@@ -910,7 +913,6 @@ function joinPlogging(e) {
 
 // 플로깅 참가 철회
 function leftPlogging(e) {
-  // 시작 1시간 전 취소는 약간의 패널티
   let answer = requestMessage("해당 플로깅에 참가를 취소하시겠습니까?");
   if (answer) {
     SOCKET.emit("request", { msg: "leftPlogging", data: e.target.value });
@@ -943,7 +945,9 @@ function detailPost(e) {
         return;
       }
     }
+    let mail = document.getElementById('mail');
     let userPostInfo = BOARD_LIST[clickedPost];
+
     if (BOARD_LIST[clickedPost] !== undefined) {
       let startDate =
         userPostInfo["date"]["y"] +
@@ -1024,7 +1028,10 @@ function detailPost(e) {
         // 방장에게 개인 메일 발송
       }
 
+      mail.style.marginTop = "";
+      mail.style.height = "";
       userPost.style.display = "block";
+
     } else {
       actionMessage("작성 된 글이 없습니다.");
     }

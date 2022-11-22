@@ -39,6 +39,8 @@ function loadTutorial() {
     tutorial.appendChild(noticeBar);
     BODY.appendChild(tutorial);
 
+    console.log("loaded tutorial window");
+
     if (TUTORIAL === null) {
         TUTORIAL = {
             "EnterEntry":true,

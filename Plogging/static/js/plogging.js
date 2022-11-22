@@ -11,18 +11,27 @@ function loadPlogging() {
     plogging.style.display = "none";
     plogging.id = "plogging";
 
-    // 플로깅 타이틀
-    let ploggingTitle = document.createElement('div');
-    ploggingTitle.innerHTML = '플로깅';
-    ploggingTitle.id = 'ploggingTitle';
+    // 플로깅 위치인증 남은시간
+    let ploggingVerifyRemainTime = document.createElement('div');
+    ploggingVerifyRemainTime.id = 'ploggingVerifyRemainTime';
 
-    // 그림
-    let getLocationImg = document.createElement('img');
-    getLocationImg.id = 'getLocationImg';
+    // 플로깅 정보
+    let ploggingMetaData = document.createElement('div');
+    ploggingMetaData.id = "ploggingMetaData";
+
+    // 플로깅 시작 시간
+    let ploggingNow = document.createElement('div');
+    ploggingNow.innerHTML = "언제?&nbsp;&nbsp;&nbsp;";
+    ploggingNow.id = "ploggingNow";
+
+    // 플로깅 장소
+    let ploggingArea = document.createElement('div');
+    ploggingArea.innerHTML = "어디서?&nbsp;&nbsp;&nbsp;";
+    ploggingArea.id = "ploggingArea";
 
     // 플로깅 안내문
     let ploggingNotice = document.createElement('div');
-    ploggingNotice.innerHTML = '주최자의 위치를 기다리는 중 입니다.';
+    ploggingNotice.innerHTML = '주최자의 기준 위치를 기다리는 중 입니다.';
     ploggingNotice.id = 'ploggingNotice';
 
     // 위치받기
@@ -37,13 +46,23 @@ function loadPlogging() {
     stopPloggingBtn.innerHTML = '종료하기';
     stopPloggingBtn.id = 'stopPloggingBtn';
 
-    plogging.appendChild(ploggingTitle);
-    plogging.appendChild(getLocationImg);
+    if (PLOGGING_START_POINT !== null && PLOGGING_START_TIME !== null) {
+        ploggingArea.innerHTML += LocationToString(PLOGGING_START_POINT);
+        ploggingNow.innerHTML += DateToString(PLOGGING_START_TIME);
+    }
+
+    ploggingMetaData.appendChild(ploggingNow);
+    ploggingMetaData.appendChild(ploggingArea);
+    plogging.appendChild(ploggingVerifyRemainTime);
+    plogging.appendChild(CREATE_LINE());
+    plogging.appendChild(ploggingMetaData);
+    plogging.appendChild(CREATE_LINE());
     plogging.appendChild(ploggingNotice);
     plogging.appendChild(getLocationBtn);
     plogging.appendChild(stopPloggingBtn);
 
     BODY.appendChild(plogging);
+    console.log("loaded plogging window");
 }
 
 // 플로깅 종료
@@ -75,6 +94,7 @@ function loadPloggingTimer() {
     if (CURRENTPLOGGING !== '' && TIMER === -1) {
         TIMER = setInterval(() => {
             if (Date.now() >= START_TIME) {
+                let ploggingVerifyRemainTime = document.getElementById('ploggingVerifyRemainTime');
                 let ploggingNotice = document.getElementById('ploggingNotice');
                 let getLocationBtn = document.getElementById('getLocationBtn');
 
@@ -87,31 +107,33 @@ function loadPloggingTimer() {
                         TIMER = setInterval(() => {
                             TIMECOUNT--;
                             if (TIMECOUNT <= 0) {
-                                ploggingNotice.innerHTML = '선착순 위치 받기';
+                                ploggingNotice.innerHTML = '주최자가 기준위치를 입력하지 않았습니다.<br>선착순 기준위치 입력하기';
                                 getLocationBtn.onclick = getLocation;
-                                getLocationBtn.style.color = 'black';
+                                getLocationBtn.style.color = 'white';
 
                                 clearPloggingTimer();
                             }
                         }, 1000);
                     }
                     else {
-                        getLocationBtn.style.color = 'black';
+                        getLocationBtn.style.color = 'white';
                         getLocationBtn.onclick = getLocation;
+                        ploggingNotice.innerHTML = '기준위치를 입력하세요.';
                         TIMECOUNT = parseInt((180000 - (Date.now() - START_TIME)) / 1000);
                         TIMER = setInterval(() => {
                             TIMECOUNT--;
-                            ploggingNotice.innerHTML = '기준위치를 찍으세요. 남은시간 : ' + TIMECOUNT + '초';
+                            ploggingVerifyRemainTime.innerHTML = '남은 시간: ' + TIMECOUNT + '초';
                             if (TIMECOUNT <= 0) {
                                 clearPloggingTimer();
-                                ploggingNotice.innerHTML = '선착순 위치 받기';
+                                ploggingVerifyRemainTime.innerHTML = '';
+                                ploggingNotice.innerHTML = '선착순 기준위치 입력하기';
                             }
                         }, 1000);
                     }
                 }
                 else {
                     getLocationBtn.onclick = getLocation;
-                    getLocationBtn.style.color = 'black';
+                    getLocationBtn.style.color = 'white';
                     ploggingNotice.innerHTML = '조금 늦었지만 바로 참가할 수 있어요!';
                 }
             }
@@ -178,6 +200,22 @@ function ploggingView(t) {
             plogging.style.display = 'block';
         }
     }
+}
+
+function LocationToString(loc) {
+    return loc['state'] + " " +
+    loc['country'] + " " + 
+    loc['zone'] + " " + 
+    loc['section'];
+}
+
+function DateToString(date) {
+    return date['y'] + "년 " + 
+    date['M'] + "월 " +
+    date['d'] + "일(" +
+    date['w'][0] + ") " +
+    date['h'] + "시 " +
+    date['m'] + "분";
 }
 
 console.log('loaded plogging.js');
