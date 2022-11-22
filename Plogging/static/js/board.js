@@ -501,6 +501,9 @@ function loadPost() {
   let locationInputs = document.createElement("div");
   locationInputs.id = "locationInputs";
 
+  let selectInputs = document.createElement("div");
+  selectInputs.id = "selectInputs";
+
   // 광역시/도
   let setState = document.createElement("select");
   setState.id = "setState";
@@ -573,9 +576,10 @@ function loadPost() {
     return line;
   };
 
-  locationInputs.appendChild(setState);
-  locationInputs.appendChild(setCountry);
-  locationInputs.appendChild(setZone);
+  selectInputs.appendChild(setState);
+  selectInputs.appendChild(setCountry);
+  selectInputs.appendChild(setZone);
+  locationInputs.appendChild(selectInputs);
   locationInputs.appendChild(setDetailSection);
   locationGroup.appendChild(locationText);
   locationGroup.appendChild(locationInputs);

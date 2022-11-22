@@ -25,6 +25,30 @@
     /* background-image: url("../image/statue.png"); */
 }
 
+#dog_stand {
+    width: 10%;
+    aspect-ratio: 1 / 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#dog_down {
+    width: 10%;
+    aspect-ratio: 1 / 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#dog_sit {
+    width: 10%;
+    aspect-ratio: 1 / 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 #CommingSoon {
     width: 15%;
     aspect-ratio: 1 / 1;

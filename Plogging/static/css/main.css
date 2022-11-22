@@ -13,15 +13,13 @@
 
 .back {
     display: block;
-    margin-left: calc(100% - 25px);
-    right: 0;
-    width: 24px;
+    width: 1rem;
     aspect-ratio: 4 / 3;
+    margin-left: calc(100% - 1rem);
     text-align: center;
-    right: 0%;
-    z-index: 1;
     color: white;
-    border: solid 1px black;
+    border: solid 0.0625rem black;
     background-color: red;
     cursor: default;
+    z-index: 1;
 }

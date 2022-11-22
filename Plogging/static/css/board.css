@@ -13,43 +13,42 @@
     padding-bottom: 5%;
     /* justify-content: space-around; */
     flex-wrap: wrap;
-    font-size: 20pt;
+    font-size: 1.25rem;
     margin: 0 auto;
 }
 
 #locationMenu > * {
     display: inline-block;
+    font-size: 1rem;
+    margin-left: 1.25rem;
+    height: 3rem;
 }
 
-#locationMenu > #state {
-    width: 110px;
-    border: solid 2px #5fa281;
-    border-radius: 1em;
-    margin-left: 20px;
+#state {
+    width: 6.875rem;
+    border: solid 0.125rem #5fa281;
+    border-radius: 1rem;
 }
 
-#locationMenu > #country {
-    width: 110px;
-    border: solid 2px #5fa281;
-    border-radius: 1em;
-    margin-left: 20px;
+#country {
+    width: 6.875rem;
+    border: solid 0.125rem #5fa281;
+    border-radius: 1rem;
 }
 
-#locationMenu > #zone {
-    width: 110px;
-    border: solid 2px #5fa281;
-    border-radius: 1em;
-    margin-left: 20px;
+#zone {
+    width: 6.875rem;
+    border: solid 0.125rem #5fa281;
+    border-radius: 1rem;
 }
 
 #search {
-    width: 12%;
-    aspect-ratio: 2 / 1;
+    width: 6.875rem;
+    height: 3rem;
     color: white;
     text-align: center;
-    border-radius: 2em;
+    border-radius: 2rem;
     background-color: #5fa281;
-    margin-left: 20px;
 }
 
 #searchResult {
@@ -68,11 +67,11 @@
 #myPost {
     display: inline-block;
     color: black;
-    border: solid 2px #5fa281;
-    border-radius: 2em;
+    border: solid 0.125rem #5fa281;
+    border-radius: 2rem;
     background-color:white;
     padding: 1%;
-    margin-left: 16px;
+    margin-left: 1rem;
 }
 #myPost:hover {
     color: white;
@@ -82,13 +81,13 @@
 #joiningPlogging {
     display: inline-block;
     color: black;
-    border: solid 2px #5fa281;
-    border-radius: 2em;
+    border: solid 0.125rem #5fa281;
+    border-radius: 2rem;
     background-color: white;
     padding: 1%;
-    margin-left: 16px;
-    /* margin-block-start: 16px;
-    margin-block-end: 16px; */
+    margin-left: 1rem;
+    /* margin-block-start: 1rem;
+    margin-block-end: 1rem; */
 }
 #joiningPlogging:hover {
     color: white;
@@ -98,13 +97,13 @@
 #write {
     display: inline-block;
     color: black;
-    border: solid 2px #5fa281;
-    border-radius: 2em;
+    border: solid 0.125rem #5fa281;
+    border-radius: 2rem;
     background-color: white;
     padding: 1%;
-    margin-left: 16px;
-    /* margin-block-start: 16px;
-    margin-block-end: 16px; */
+    margin-left: 1rem;
+    /* margin-block-start: 1rem;
+    margin-block-end: 1rem; */
 }
 #write:hover {
     color: white;
@@ -114,13 +113,13 @@
 #boardBody {
     position: relative;
     width: 90%;
-    /* height: 800px; */
+    /* height: 800rem; */
     height: 60%;
     /* font-size: 20pt; */
-    /* border: solid 1px black; */
+    /* border: solid 0.0625rem black; */
     /* border-radius: 2%; */
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
 
 #boardRibon {
@@ -139,7 +138,7 @@
     height: 70%;
     /* font-size: 20pt; */
     margin: 0 auto;
-    /* border: solid 1px red; */
+    /* border: solid 0.0625rem red; */
     overflow-y: scroll;
 }
 
@@ -162,12 +161,9 @@
 }
 
 #postSection {
-    position: relative;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    margin-left: 50px;
-    margin-right: 50px;
+    justify-content: center;
     /* overflow-x: scroll; */
 }
 
@@ -175,22 +171,22 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 5%;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 3.125rem;
+    margin-right: 3.125rem;
 }
 
-#postHeader > * {
+/* #postHeader > * {
     display: inline-block;
-}
+} */
 
 #upload {
-    width: 50px;
+    width: 3.125rem;
     color: white;
     margin-left: auto;
     text-align: center;
-    border-radius: 1em;
+    border-radius: 1rem;
     background-color: #5fa281;
-    padding: 5px;
+    padding: 0.3125rem;
 }
 #upload:hover {
     background-color: #416e58;
@@ -198,66 +194,56 @@
 
 #title {
     width: 100%;
-    height: 30px;
+    height: 1.875rem;
     background-color: transparent;
-    border: 0px;
+    border: 0rem;
+    font-size: 1rem;
 }
 
 #locationGroup {
     width: 100%;
     display: flex;
     align-items: center;
-    font-size: 11pt;
+    font-size: 0.6875rem;
 }
 
 #locationInputs > * {
-    display: inline-block;
+    /* display: inline-block; */
     background-color: transparent;
 }
 
 #locationText {
-    min-width: 80px;
-    width: 10%;
+    width: 5rem;
+    font-size: 1rem;
 }
 
 #locationInputs {
+    width: calc(100% - 5rem);
+}
+
+#selectInputs {
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#setState {
-    width: 75px;
-    /* width: 10%; */
-    height: 30px;
-}
-
-#setCountry {
-    width: 110px;
-    /* width: 25%; */
-    height: 30px;
-    margin-left: 10px;
-}
-
-#setZone {
-    width: 110px;
-    /* width: 25%; */
-    height: 30px;
-    margin-left: 10px;
+#selectInputs > * {
+    font-size: 1rem;
+    height: 1.875rem;
 }
 
 #setDetailSection {
-    width: 250px;
-    /* width: 40%; */
-    /* height: 30px; */
-    margin-left: 10px;
+    width: 100%;
+    height: 1.875rem;
+    font-size: 1rem;
 }
 
 #dateGroup {
     width: 100%;
     display: flex;
     align-items: center;
-    font-size: 11pt;
+    font-size: 0.6875rem;
 }
 
 #dateGroup > * {
@@ -265,15 +251,17 @@
     background-color: transparent;
 }
 
-#dateGroup > #dateText {
-    min-width: 80px;
+#dateText {
+    width: 5rem;
+    font-size: 1rem;
 }
 
-#dateGroup > #setDate {
-    width: 100%;
-    height: 30px;
+#setDate {
+    width: calc(100% - 5rem);
+    height: 1.875rem;
+    font-size: 1rem;
     background-color: transparent;
-    border: 0px;
+    border: 0rem;
     color: grey;
 }
 
@@ -281,7 +269,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    font-size: 11pt;
+    font-size: 0.6875rem;
 }
 
 #memberGroup > * {
@@ -289,43 +277,47 @@
     background-color: transparent;
 }
 
-#memberGroup > #memberText {
-    min-width: 80px;
+#memberText {
+    width: 5rem;
+    font-size: 1rem;
 }
 
-#memberGroup > #setMember {
-    width: 100%;
-    height: 30px;
+#setMember {
+    width: calc(100% - 5rem);
+    height: 1.875rem;
+    font-size: 1rem;
     background-color: transparent;
-    border: 0px;
+    border: 0rem;
 }
 
 .line {
     width: 100%;
     color: #5fa281;
-    border: solid 1px #5fa281;
+    border: solid 0.0625rem #5fa281;
 }
 
 #context {
+    display: flex;
     width: 100%;
-    min-height: 200px;
-    border: 0px;
+    min-height: 12.5rem;
+    border: 0rem;
     background-color: #eff0ea;
-    margin-top: 15px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-top: 0.9375rem;
+    margin-left: 3.125rem;
+    margin-right: 3.125rem;
+    font-size: 1rem;
 }
 
 .user_post {
     cursor: pointer;
-    width: 600px;
+    width: 100%;
     display: inline;
     background: white;
-    padding: 12px 12px 20px 20px;
-    margin: 15px 10px;
+    padding: 0.75rem 0.75rem 1.25rem 1.25rem;
+    margin: 0.9375rem 0.625rem;
     margin-bottom: 3%;
-    border-radius: 2em;
-    box-shadow: 3px 3px 15px 0px darkgray;
+    border-radius: 2rem;
+    box-shadow: 0.1875rem 0.1875rem 0.9375rem 0rem darkgray;
 }
 
 .user_post:hover {
@@ -333,15 +325,15 @@
 }
 
 .postPreviewTitle {
-    font-size: 18pt;
+    font-size: 1.125rem;
 }
 
 .postPreviewLocation {
-    font-size: 16pt;
+    font-size: 1rem;
 }
 
 .postPreviewDate {
-    font-size: 12pt;
+    font-size: 0.75rem;
 }
 
 .postPreviewMemberInfo > * {
@@ -349,8 +341,8 @@
 }
 
 .postPreviewMembers {
-    font-size: 12pt;
-    margin-left: 15px;
+    font-size: 0.75rem;
+    margin-left: 0.9375rem;
 }
 
 #userPost {
@@ -364,22 +356,22 @@
 }
 
 #postContext {
-    font-size: 11pt;
-    margin-left: 50px;
-    margin-right: 50px;
+    font-size: 0.6875rem;
+    margin-left: 3.125rem;
+    margin-right: 3.125rem;
 }
 
 #ploggingDelete {
-    width: 40px;
+    width: 2.5rem;
     color: firebrick;
     text-align: center;
     font-weight: bold;
     background-color: ghostwhite;
-    box-shadow: 1px 1px 5px grey;
-    border-radius: 1em;
-    margin-top: 50px;
+    box-shadow: 0.0625rem 0.0625rem 0.3125rem grey;
+    border-radius: 1rem;
+    margin-top: 3.125rem;
     margin-left: auto;
-    padding: 7px;
+    padding: 0.4375rem;
 }
 #ploggingDelete:hover {
     color: ghostwhite;
@@ -387,16 +379,16 @@
 }
 
 #ploggingReport {
-    width: 40px;
+    width: 2.5rem;
     color: firebrick;
     text-align: center;
     font-weight: bold;
     background-color: ghostwhite;
-    box-shadow: 1px 1px 5px grey;
+    box-shadow: 0.0625rem 0.0625rem 0.3125rem grey;
     border-radius: 1em;
-    margin-top: 50px;
+    margin-top: 3.125rem;
     margin-left: auto;
-    padding: 7px;
+    padding: 0.4375rem;
 }
 #ploggingReport:hover {
     color: ghostwhite;
@@ -409,7 +401,7 @@
 }
 
 #postProfile {
-    width: 50px;
+    width: 3.125rem;
     aspect-ratio: 1 / 1;
     background-position: center;
     background-size: cover;
@@ -427,45 +419,45 @@
 
 #postWritter {
     width: fit-content;
-    font-size: 12pt;
+    font-size: 0.75rem;
 }
 
 #postUploadDate {
     width: fit-content;
     color: grey;
-    font-size: 9pt;
+    font-size: 0.5625rem;
 }
 
 #userPostMain {
     display:flex;
-    margin-top: 25px;
-    margin-bottom: 10px;
+    margin-top: 2.3125rem;
+    margin-bottom: 0.625rem;
 }
 
 #userPostTitle {
     width: 75%;
     flex-wrap: wrap;
-    font-size: 16pt;
+    font-size: 1rem;
 }
 
 #currentMembers {
     width: 25%;
     flex-wrap: wrap;
     text-align: right;
-    font-size: 13pt;
-    margin-right: 10px;
+    font-size: 0.8125rem;
+    margin-right: 0.625rem;
 }
 
 #currentMemberIco {
-    font-size: 13pt;
-    margin-right: 15px;
+    font-size: 0.8125rem;
+    margin-right: 0.9375rem;
 }
 
 #ploggingInfo {
     display:flex;
-    font-size: 13pt;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    font-size: 0.8125rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
 #ploggingStartDate {
@@ -477,35 +469,35 @@
     width: 50%;
     left: 50%;
     flex-wrap: wrap;
-    margin-left: 30px;
+    margin-left: 1.875rem;
 }
 
 #userPostContext {
-    margin-top: 25px;
-    margin-bottom: 35px;
+    margin-top: 2.3125rem;
+    margin-bottom: 3.3125rem;
 }
 
 #ploggingJoin {
-    width: 100px;
+    width: 6.25rem;
     color: white;
     margin: auto;
     text-align: center;
-    border-radius: 1em;
+    border-radius: 1rem;
     background-color: #5fa281;
-    padding: 10px;
+    padding: 0.625rem;
 }
 #ploggingJoin:hover {
     background-color: #416e58;
 }
 
 #ploggingLeft {
-    width: 100px;
+    width: 6.25rem;
     color: white;
     margin: auto;
     text-align: center;
-    border-radius: 1em;
+    border-radius: 1rem;
     background-color: #5fa281;
-    padding: 10px;
+    padding: 0.625rem;
 }
 #ploggingLeft:hover {
     background-color: #416e58;

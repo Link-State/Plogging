@@ -155,6 +155,7 @@ function onResize(e) {
 
 // 화면의 가로가 세로보다 커질 경우 PC에 맞게 슬롯들 크기, 위치 재구성
 function renderingPC() {
+    let html = document.getElementsByTagName("html").item(0);
     let background = document.getElementById("background");
     let slot1 = document.getElementById("slot1");
     let slot2 = document.getElementById("slot2");
@@ -170,6 +171,8 @@ function renderingPC() {
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
+
+    html.style.fontSize = "1rem";
 
     background.style.width = '100%';
     background.style.height = '';
@@ -205,17 +208,17 @@ function renderingPC() {
     }
 
     mailBox.style.width = "50%";
-    senderProfile.style.width = "50px";
-    senderProfile.style.height = "50px";
-    senderInfo.style.height = "50px";
-    mailSender.style.fontSize = "12pt";
-    sendDate.style.fontSize = "9pt";
+    senderProfile.style.width = "3.125rem";
+    senderProfile.style.height = "3.125rem";
+    senderInfo.style.height = "3.125rem";
+    mailSender.style.fontSize = "0.75rem";
+    sendDate.style.fontSize = "0.5625rem";
     
     noticeBar.style.height = "25%";
     noticeText.style.width = "70%";
-    noticeText.style.height = "calc(100% - 60px)";
-    noticeText.style.padding = "30px";
-    noticeText.style.fontSize = "16pt";
+    noticeText.style.height = "calc(100% - 3.75rem)";
+    noticeText.style.padding = "1.875rem";
+    noticeText.style.fontSize = "1rem";
     // noticeText.style.padding = "";
     // noticeText.style.width = "";
     speaker.style.top = "";
@@ -229,6 +232,7 @@ function renderingPC() {
 
 // 화면의 가로가 세로보다 작아질 경우 모바일에 맞게 슬롯들 크기, 위치 재구성
 function renderingMobile() {
+    let html = document.getElementsByTagName("html").item(0);
     let background = document.getElementById("background");
     let slot1 = document.getElementById("slot1");
     let slot2 = document.getElementById("slot2");
@@ -245,13 +249,15 @@ function renderingMobile() {
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
 
+    html.style.fontSize = "2rem";
+
     background.style.width = '';
     background.style.height = '100%';
 
     slot1.style.bottom = "26%";
     slot2.style.width = "45%";
     slot2.style.bottom = "20%";
-    slot4.style.width = "15%";
+    slot4.style.width = "20%";
     slot4.style.left = "32.5%";
     slot4.style.bottom = "15%";
 
@@ -279,17 +285,17 @@ function renderingMobile() {
     }
 
     mailBox.style.width = "100%";
-    senderProfile.style.width = "30px";
-    senderProfile.style.height = "30px";
-    senderInfo.style.height = "30px";
-    mailSender.style.fontSize = "11pt";
-    sendDate.style.fontSize = "8pt";
+    senderProfile.style.width = "1.875rem";
+    senderProfile.style.height = "1.875rem";
+    senderInfo.style.height = "1.875rem";
+    mailSender.style.fontSize = "0.6875rem";
+    sendDate.style.fontSize = "0.5rem";
 
     noticeBar.style.height = "40%";
-    noticeText.style.width = "calc(100% - 40px)";
-    noticeText.style.height = "calc(100% - 40px)";
-    noticeText.style.padding = "20px";
-    noticeText.style.fontSize = "13pt";
+    noticeText.style.width = "calc(100% - 2.5rem)";
+    noticeText.style.height = "calc(100% - 2.5rem)";
+    noticeText.style.padding = "1.25rem";
+    noticeText.style.fontSize = "0.8125rem";
     speaker.style.top = "-40%";
     speaker.style.right = "5%";
     speaker.style.height = "30%";

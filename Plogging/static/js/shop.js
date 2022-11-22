@@ -124,18 +124,19 @@ function buyItem(e) {
 // 아이템 장착 / 해제
 function itemEquip(e) {
     let slot = "slot" + ITEMLIST[e.target.id]['slot'];
-    let msg = EQUIPED[slot] === undefined ? "장착" : "해제";
+    let itemSlot = document.getElementById(slot);
+    let msg = (EQUIPED[slot] === undefined || EQUIPED[slot] !== e.target.id) ? "장착" : "해제";
     let answer = requestMessage("아이템을 " + msg + "하시겠습니까?");
     if (answer) {
         if (msg === "장착") {
-            let itemSlot = document.getElementById(slot);
             itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + e.target.id + ".png" + ")";
+            itemSlot.value = itemSlot;
             EQUIPED[slot] = e.target.id;
             SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"equip", 'itemName':e.target.id}});
         }
         else {
-            let itemSlot = document.getElementById(slot);
             itemSlot.style.backgroundImage = "";
+            itemSlot.value = "";
             delete EQUIPED[slot];
             SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"unmountItem", 'itemName':e.target.id}});
         }
