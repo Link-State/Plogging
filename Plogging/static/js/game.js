@@ -167,6 +167,9 @@ function renderingPC() {
     let senderInfo = document.getElementById('senderInfo');
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
+    let noticeBar = document.getElementById('noticeBar');
+    let noticeText = document.getElementById('noticeText');
+    let speaker = document.getElementById('speaker');
 
     background.style.width = '100%';
     background.style.height = '';
@@ -207,6 +210,19 @@ function renderingPC() {
     senderInfo.style.height = "50px";
     mailSender.style.fontSize = "12pt";
     sendDate.style.fontSize = "9pt";
+    
+    noticeBar.style.height = "25%";
+    noticeText.style.width = "70%";
+    noticeText.style.height = "calc(100% - 60px)";
+    noticeText.style.padding = "30px";
+    noticeText.style.fontSize = "16pt";
+    // noticeText.style.padding = "";
+    // noticeText.style.width = "";
+    speaker.style.top = "";
+    speaker.style.right = "";
+    speaker.style.height = "";
+    speaker.style.marginBottom = "";
+    speaker.style.transform = "";
 
     console.log("PC 모드");
 }
@@ -225,6 +241,9 @@ function renderingMobile() {
     let senderInfo = document.getElementById('senderInfo');
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
+    let noticeBar = document.getElementById('noticeBar');
+    let noticeText = document.getElementById('noticeText');
+    let speaker = document.getElementById('speaker');
 
     background.style.width = '';
     background.style.height = '100%';
@@ -265,6 +284,17 @@ function renderingMobile() {
     senderInfo.style.height = "30px";
     mailSender.style.fontSize = "11pt";
     sendDate.style.fontSize = "8pt";
+
+    noticeBar.style.height = "40%";
+    noticeText.style.width = "calc(100% - 40px)";
+    noticeText.style.height = "calc(100% - 40px)";
+    noticeText.style.padding = "20px";
+    noticeText.style.fontSize = "13pt";
+    speaker.style.top = "-40%";
+    speaker.style.right = "5%";
+    speaker.style.height = "30%";
+    speaker.style.marginBottom = "15%";
+    speaker.style.transform = "translate(5%, 40%)";
 
     console.log("모바일 모드");
 }

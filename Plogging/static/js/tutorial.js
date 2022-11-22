@@ -41,9 +41,9 @@ function loadTutorial() {
 
     if (TUTORIAL === null) {
         TUTORIAL = {
-            "first":true,
-            "plogging":true,
-            "shop":true
+            "EnterEntry":true,
+            "menu_0":"plogging",
+            "menu_2":"shop"
         };
         window.addEventListener('click', isTutorial);
 
@@ -61,7 +61,7 @@ function loadTutorial() {
         }
     }
 
-    if (TUTORIAL["first"]) {
+    if (TUTORIAL["EnterEntry"]) {
         msgs = [
             '"멍멍!"',
             "학교에 강아지가 나타났습니다.",
@@ -69,45 +69,40 @@ function loadTutorial() {
             "강아지와 함께 이 곳을 둘러봅시다."
         ];
         Guide(msgs);
-        TUTORIAL['first'] = false;
+        delete TUTORIAL['EnterEntry'];
         localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
     }
 }
 
 function isTutorial(e) {
     let id = e.target.id;
-    let keys = Object.keys(TUTORIAL);
-    let count = 0;
-    for (let key of keys) {
-        if (TUTORIAL[key]) {
-            count++;
-        }
-    }
+    let remainTutorial = Object.keys(TUTORIAL).length;
 
-    if (count <= 0) {
+    if (remainTutorial <= 0) {
         window.removeEventListener('click', isTutorial);
     }
-
-    if (id === 'menu_0') {
-        msgs = [
-            "여기는 플로깅을 모집하고 직접 참여하는 공간이네요!",
-            "이 곳을 통해 플로깅에 참여하면 제 보금자리를 꾸미는데 필요한 '플라스틱'을 얻을 수 있어요.",
-            "플로깅 모집에 주의사항이 있다면 (1) 최소 1시간 이후부터 모집 가능하다는 점. (2) 플로깅 시작 1시간 전에는 참가/참가취소가 불가능하다는 점. 흠..... 이정도겠네요.",
-            "이제 플로깅을 통해 자연도 회복하고 귀여운 저도 키워주세요.."
-        ];
-        Guide(msgs);
-        TUTORIAL['plogging'] = false;
-        localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
-    }
-    else if (id === 'menu_2') {
-        msgs = [
-            "여기는 상점이에요. 플로깅을 통해 모은 플라스틱으로 보금자리를 꾸미는데 필요한 아이템들을 살 수 있어요.",
-            "지금은... 상품이 2개밖에 없네요. 아직 입점한지 얼마 안되서 그런가봐요.",
-            "혹시 모르지 않을까요? 나중에는 더 많은 것들이 생길지!"
-        ];
-        Guide(msgs);
-        TUTORIAL['shop'] = false;
-        localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
+    else {
+        if (TUTORIAL[id] === "plogging") {
+            msgs = [
+                "여기는 플로깅을 모집하고 직접 참여하는 공간이네요!",
+                "이 곳을 통해 플로깅에 참여하면 제 보금자리를 꾸미는데 필요한 '플라스틱'을 얻을 수 있어요.",
+                "플로깅 모집에 주의사항이 있다면 (1) 최소 1시간 이후부터 모집 가능하다는 점. (2) 플로깅 시작 1시간 전에는 참가/참가취소가 불가능하다는 점. 흠..... 이정도겠네요.",
+                "이제 플로깅을 통해 자연도 회복하고 귀여운 저도 키워주세요.."
+            ];
+            Guide(msgs);
+            delete TUTORIAL[id];
+            localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
+        }
+        else if (TUTORIAL[id] === "shop") {
+            msgs = [
+                "여기는 상점이에요. 플로깅을 통해 모은 플라스틱으로 보금자리를 꾸미는데 필요한 아이템들을 살 수 있어요.",
+                "지금은... 상품이 2개밖에 없네요. 아직 입점한지 얼마 안되서 그런가봐요.",
+                "혹시 모르지 않을까요? 나중에는 더 많은 것들이 생길지!"
+            ];
+            Guide(msgs);
+            delete TUTORIAL[id];
+            localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
+        }
     }
 }
 

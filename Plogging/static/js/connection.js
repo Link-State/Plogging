@@ -98,7 +98,7 @@ SOCKET.on('response', function(data) {
 
         loadPloggingTimer();
         searchPost();
-        alert('게시글을 올렸습니다.');
+        actionMessage('게시글을 올렸습니다.');
     }
     else if (data.msg === 'deletePost') {
         CURRENTPLOGGING = '';
@@ -110,7 +110,7 @@ SOCKET.on('response', function(data) {
         START_TIME = -1;
         clearPloggingTimer();
         searchPost();
-        alert('게시글이 삭제되었습니다.');
+        actionMessage('게시글이 삭제되었습니다.');
     }
     else if (data.msg === 'joinPlogging') {
         CURRENTPLOGGING = data['data']['ploggingID'];
@@ -129,7 +129,7 @@ SOCKET.on('response', function(data) {
 
         loadPloggingTimer();
         searchPost();
-        alert('플로깅에 참가가 완료되었습니다.');
+        actionMessage('플로깅에 참가가 완료되었습니다.');
     }
     else if (data.msg === 'leftPlogging') {
         CURRENTPLOGGING = '';
@@ -141,7 +141,7 @@ SOCKET.on('response', function(data) {
         START_TIME = -1;
         clearPloggingTimer();
         searchPost();
-        alert('해당 플로깅의 참가 취소가 완료되었습니다.');
+        actionMessage('해당 플로깅의 참가 취소가 완료되었습니다.');
     }
     else if (data.msg === 'sendMail') {
         let mail = document.getElementById('mail');
@@ -151,11 +151,11 @@ SOCKET.on('response', function(data) {
         if (mail.style.display !== "none") {
             mail.style.display = "none";
         }
-        alert('메일이 전송되었습니다.');
+        actionMessage('메일이 전송되었습니다.');
     }
     else if (data.msg === 'deletedMail') {
         SOCKET.emit('request', {'msg':"getMailList"});
-        alert('메일이 삭제되었습니다.');
+        actionMessage('메일이 삭제되었습니다.');
     }
     else if (data.msg === 'readMail') {
         let idx = parseInt(data.data)-1;
@@ -185,7 +185,7 @@ SOCKET.on('response', function(data) {
                 getLocationBtn.style.display = 'none';
                 stopPloggingBtn.style.display = 'block';
                 stopPloggingBtn.onclick = stopPlogging;
-                alert("위치를 찍었습니다.");
+                actionMessage("위치를 찍었습니다.");
             }
         }
     }
@@ -198,14 +198,14 @@ SOCKET.on('response', function(data) {
         getLocationBtn.style.display = 'none';
         stopPloggingBtn.style.display = 'block';
         stopPloggingBtn.onclick = stopPlogging;
-        alert("위치를 찍었습니다.");
+        actionMessage("위치를 찍었습니다.");
     }
     else if (data.msg === 'stopPlogging') {
         CURRENTPLOGGING = '';
         START_TIME = -1;
         clearPloggingTimer();
         ploggingView(false);
-        alert("플로깅을 종료합니다.");
+        actionMessage("플로깅을 종료합니다.");
     }
     else if (data.msg === 'stopPloggingByHost') {
         if (data['data'] === CURRENTPLOGGING) {
@@ -213,10 +213,10 @@ SOCKET.on('response', function(data) {
             ploggingView(false);
 
             if (CURRENTPLOGGING === USERID) {
-                alert('플로깅을 종료합니다.');
+                actionMessage('플로깅을 종료합니다.');
             }
             else {
-                alert('주최자에 의해 플로깅이 종료되었습니다.');
+                actionMessage('주최자에 의해 플로깅이 종료되었습니다.');
             }
             CURRENTPLOGGING = '';
             START_TIME = -1;
@@ -232,7 +232,7 @@ SOCKET.on('response', function(data) {
         item_name.innerHTML = '이미 보유중';
         item_cost.innerHTML = '';
         item.onclick = itemEquip;
-        alert('물건 구매 완료');
+        actionMessage('물건 구매 완료');
     }
     else if (data.msg === 'equipItem') {
         actionMessage("아이템을 장착하였습니다.");
@@ -241,62 +241,62 @@ SOCKET.on('response', function(data) {
         actionMessage("아이템을 해제하였습니다.");
     }
     else if (data.msg === 'alreadyPost') {
-        alert('더 이상 게시글을 올릴 수 없습니다.');
+        actionMessage('더 이상 게시글을 올릴 수 없습니다.');
     }
     else if (data.msg === 'postNotExist') {
-        alert('게시글이 존재하지 않습니다.');
+        actionMessage('게시글이 존재하지 않습니다.');
     }
     else if (data.msg === 'fullMember') {
-        alert('이미 인원이 가득 찼습니다.');
+        actionMessage('이미 인원이 가득 찼습니다.');
     }
     else if (data.msg === 'notExistMember') {
-        alert('해당 플로깅에 참가중이지 않습니다.');
+        actionMessage('해당 플로깅에 참가중이지 않습니다.');
     }
     else if (data.msg === 'alreadyPlogging') {
-        alert('이미 플로깅에 참가중입니다.');
+        actionMessage('이미 플로깅에 참가중입니다.');
     }
     else if (data.msg === 'noSendSelf') {
         let sendBtn = document.getElementById('mailSend');
         sendBtn.onclick = sendMail;
-        alert('자기 자신에게는 메일을 보낼 수 없습니다.');
+        actionMessage('자기 자신에게는 메일을 보낼 수 없습니다.');
     }
     else if (data.msg === 'notChangePlogging') {
-        alert('플로깅 시작 1시간 전에는 상태를 변경할 수 없습니다.');
+        actionMessage('플로깅 시작 1시간 전에는 상태를 변경할 수 없습니다.');
     }
     else if (data.msg === 'beforePloggingStart') {
         let getLocationBtn = document.getElementById('getLocationBtn');
         let stopPloggingBtn = document.createElement('div');
         getLocationBtn.onclick = getLocation;
         stopPloggingBtn.onclick = stopPlogging;
-        alert('플로깅 시작 전 입니다.');
+        actionMessage('플로깅 시작 전 입니다.');
     }
     else if (data.msg === 'distanceTooFar') {
         let getLocationBtn = document.getElementById('getLocationBtn');
         getLocationBtn.onclick = getLocation;
-        alert('기준위치의 거리로부터 너무 멀리 떨어져있습니다.\n다시 위치를 찍어주세요.');
+        actionMessage('기준위치의 거리로부터 너무 멀리 떨어져있습니다.\n다시 위치를 찍어주세요.');
     }
     else if (data.msg === 'notExistMail') {
-        alert('존재하지 않는 메일입니다.');
+        actionMessage('존재하지 않는 메일입니다.');
     }
     else if (data.msg === 'notExistUser') {
-        alert('존재 하지 않는 유저입니다.');
+        actionMessage('존재 하지 않는 유저입니다.');
     }
     else if (data.msg === 'hostNotPinLocation') {
         let getLocationBtn = document.getElementById('getLocationBtn');
         getLocationBtn.onclick = getLocation;
-        alert("호스트가 아직 위치 안찍음");
+        actionMessage("호스트가 아직 위치 안찍음");
     }
     else if (data.msg === 'alreadyPinLocation') {
-        alert("이미 위치 찍음");
+        actionMessage("이미 위치 찍음");
     }
     else if (data.msg === 'notEnoughPlastic') {
-        alert("플라스틱 부족함.");
+        actionMessage("플라스틱 부족함.");
     }
     else if (data.msg === 'sessionFail') {
-        alert('세션이 끊어졌습니다. 다시 로그인 해주세요.');
+        actionMessage('세션이 끊어졌습니다. 다시 로그인 해주세요.');
     }
     else if (data.msg === 'invalidUser') {
-        alert('존재하지 않는 유저입니다. 로그인 먼저 해주세요.');
+        actionMessage('존재하지 않는 유저입니다. 로그인 먼저 해주세요.');
     }
     else if (data.msg === 'boardList') {
         let searchBtn = document.getElementById('search');
@@ -314,7 +314,7 @@ SOCKET.on('response', function(data) {
     }
     else if (data.msg === 'hasBlock') {
         BLOCK = true;
-        alert('일시적으로 사용이 제한되었습니다.');
+        actionMessage('일시적으로 사용이 제한되었습니다.');
     }
     else if (data.msg === 'send!') {
         console.log("response!");

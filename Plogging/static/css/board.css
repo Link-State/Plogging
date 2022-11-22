@@ -22,34 +22,34 @@
 }
 
 #locationMenu > #state {
-    width: 75px;
+    width: 110px;
     border: solid 2px #5fa281;
     border-radius: 1em;
-    margin-left: 100px;
+    margin-left: 20px;
 }
 
 #locationMenu > #country {
     width: 110px;
     border: solid 2px #5fa281;
     border-radius: 1em;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 #locationMenu > #zone {
     width: 110px;
     border: solid 2px #5fa281;
     border-radius: 1em;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 #search {
-    width: 8%;
+    width: 12%;
     aspect-ratio: 2 / 1;
     color: white;
     text-align: center;
     border-radius: 2em;
     background-color: #5fa281;
-    margin-left: 3%;
+    margin-left: 20px;
 }
 
 #searchResult {
@@ -87,8 +87,8 @@
     background-color: white;
     padding: 1%;
     margin-left: 16px;
-    margin-block-start: 16px;
-    margin-block-end: 16px;
+    /* margin-block-start: 16px;
+    margin-block-end: 16px; */
 }
 #joiningPlogging:hover {
     color: white;
@@ -103,8 +103,8 @@
     background-color: white;
     padding: 1%;
     margin-left: 16px;
-    margin-block-start: 16px;
-    margin-block-end: 16px;
+    /* margin-block-start: 16px;
+    margin-block-end: 16px; */
 }
 #write:hover {
     color: white;
@@ -168,6 +168,7 @@
     flex-wrap: wrap;
     margin-left: 50px;
     margin-right: 50px;
+    /* overflow-x: scroll; */
 }
 
 #postHeader {
@@ -209,35 +210,46 @@
     font-size: 11pt;
 }
 
-#locationGroup > * {
+#locationInputs > * {
     display: inline-block;
     background-color: transparent;
 }
 
-#locationGroup > #locationText {
+#locationText {
     min-width: 80px;
+    width: 10%;
 }
 
-#locationGroup > #setState {
+#locationInputs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+#setState {
     width: 75px;
+    /* width: 10%; */
     height: 30px;
 }
 
-#locationGroup > #setCountry {
+#setCountry {
     width: 110px;
+    /* width: 25%; */
     height: 30px;
     margin-left: 10px;
 }
 
-#locationGroup > #setZone {
+#setZone {
     width: 110px;
+    /* width: 25%; */
     height: 30px;
     margin-left: 10px;
 }
 
-#locationGroup > #setDetailSection {
-    width: 300px;
-    height: 30px;
+#setDetailSection {
+    width: 250px;
+    /* width: 40%; */
+    /* height: 30px; */
     margin-left: 10px;
 }
 

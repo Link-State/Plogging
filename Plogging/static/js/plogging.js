@@ -55,11 +55,11 @@ function stopPlogging() {
 
     if (CURRENTPLOGGING === USERID) {
         msg = 'stopPloggingByHost';
-        answer = confirm("플로깅에 참가중인 유저들 모두 플로깅이 종료됩니다.\n플로깅을 종료하시겠습니까?");
+        answer = requestMessage("플로깅에 참가중인 유저들 모두 플로깅이 종료됩니다.\n플로깅을 종료하시겠습니까?");
     }
     else {
         msg = 'stopPlogging';
-        answer = confirm("플로깅을 종료하시겠습니까?");
+        answer = requestMessage("플로깅을 종료하시겠습니까?");
     }
 
     if (answer) {

@@ -110,7 +110,7 @@ function updateItemList() {
 
 // 아이템 구매
 function buyItem(e) {
-    let answer = confirm("아이템을 구매하시겠습니까?");
+    let answer = requestMessage("아이템을 구매하시겠습니까?");
     e.target.onclick = '';
 
     if (answer) {
@@ -125,7 +125,7 @@ function buyItem(e) {
 function itemEquip(e) {
     let slot = "slot" + ITEMLIST[e.target.id]['slot'];
     let msg = EQUIPED[slot] === undefined ? "장착" : "해제";
-    let answer = confirm("아이템을 " + msg + "하시겠습니까?");
+    let answer = requestMessage("아이템을 " + msg + "하시겠습니까?");
     if (answer) {
         if (msg === "장착") {
             let itemSlot = document.getElementById(slot);

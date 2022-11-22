@@ -138,7 +138,7 @@ function loadReceiveMailForm() {
 
 // 메일 신고 (미구현)
 function mailReport() {
-  let answer = confirm("해당 메일을 신고하시겠습니까?");
+  let answer = requestMessage("해당 메일을 신고하시겠습니까?");
   if (answer) {
   }
 }
@@ -196,7 +196,7 @@ function deleteSelectedMail(e) {
 
   if (deleteAllMail.style.display !== "none") {
     if (CHECKED_COUNT > 0) {
-      let answer = confirm("선택한 메일을 삭제하시겠습니까?");
+      let answer = requestMessage("선택한 메일을 삭제하시겠습니까?");
       if (answer) {
         let deletingMail = {};
         let idx = 1;

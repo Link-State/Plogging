@@ -497,6 +497,10 @@ function loadPost() {
   locationText.id = "locationText";
   locationText.innerHTML = "위치";
 
+  // 위치 입력 폼
+  let locationInputs = document.createElement("div");
+  locationInputs.id = "locationInputs";
+
   // 광역시/도
   let setState = document.createElement("select");
   setState.id = "setState";
@@ -569,11 +573,12 @@ function loadPost() {
     return line;
   };
 
+  locationInputs.appendChild(setState);
+  locationInputs.appendChild(setCountry);
+  locationInputs.appendChild(setZone);
+  locationInputs.appendChild(setDetailSection);
   locationGroup.appendChild(locationText);
-  locationGroup.appendChild(setState);
-  locationGroup.appendChild(setCountry);
-  locationGroup.appendChild(setZone);
-  locationGroup.appendChild(setDetailSection);
+  locationGroup.appendChild(locationInputs);
   dateGroup.appendChild(dateText);
   dateGroup.appendChild(setDate);
   memberGroup.appendChild(memberText);
@@ -866,7 +871,7 @@ function boardUpdate(data) {
 
 // 내 게시글 삭제
 function deletePost(e) {
-  let answer = confirm("글을 삭제하시겠습니까?");
+  let answer = requestMessage("글을 삭제하시겠습니까?");
   if (answer) {
     SOCKET.emit("request", { msg:"deleteBoard" });
   }
@@ -884,10 +889,10 @@ function joinPlogging(e) {
     let startTime = new Date(year, month-1, day, hour, min).getTime();
     let answer;
     if (Date.now() + 3600000 >= startTime) {
-      answer = confirm("해당 플로깅은 참가 후, 취소할 수 없습니다.\n『참가...』 하시겠습니까?");
+      answer = requestMessage("해당 플로깅은 참가 후, 취소할 수 없습니다.\n『참가...』 하시겠습니까?");
     }
     else {
-      answer = confirm("해당 플로깅에 참가하시겠습니까?");
+      answer = requestMessage("해당 플로깅에 참가하시겠습니까?");
     }
     if (answer) {
       SOCKET.emit("request", {msg:"joinPlogging", data:e.target.value});
@@ -902,7 +907,7 @@ function joinPlogging(e) {
 // 플로깅 참가 철회
 function leftPlogging(e) {
   // 시작 1시간 전 취소는 약간의 패널티
-  let answer = confirm("해당 플로깅에 참가를 취소하시겠습니까?");
+  let answer = requestMessage("해당 플로깅에 참가를 취소하시겠습니까?");
   if (answer) {
     SOCKET.emit("request", { msg: "leftPlogging", data: e.target.value });
   }
@@ -910,7 +915,7 @@ function leftPlogging(e) {
 
 // 플로깅 신고 (미구현)
 function reportPost(e) {
-  let answer = confirm("해당 플로깅을 신고하시겠습니까?");
+  let answer = requestMessage("해당 플로깅을 신고하시겠습니까?");
   if (answer) {
     // 미구현
   }
@@ -1046,7 +1051,7 @@ function writePost() {
 
 // 게시글 업로드 요청
 function uploadPost() {
-  let answer = confirm("글을 게시하시겠습니까?");
+  let answer = requestMessage("글을 게시하시겠습니까?");
   if (answer) {
     let user_state = document.getElementById("setState").value;
     let user_country = document.getElementById("setCountry");
