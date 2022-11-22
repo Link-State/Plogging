@@ -178,6 +178,7 @@ function renderingPC() {
     let slot4 = document.getElementById("slot4");
     let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
+    let meunElem = document.getElementsByClassName("menuElem");
     let menu = document.getElementById('menu');
     let mail = document.getElementById('mail');
     let mailBox = document.getElementById('mailBox');
@@ -186,6 +187,7 @@ function renderingPC() {
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
     let ploggingMetaData = document.getElementById('ploggingMetaData');
+    let itemSlot = document.getElementsByClassName('itemSlot');
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
@@ -220,9 +222,15 @@ function renderingPC() {
     menu.style.right = "1%";
     menu.style.bottom = "";
 
-    for (let elem of document.getElementsByClassName("menuElem")) {
+    for (let elem of meunElem) {
         elem.style.width = "";
         elem.style.height = (100 / MENU_COUNT) + "%";
+    }
+
+    for (let elem of itemSlot) {
+        // PC
+        elem.style.width = "21rem";
+        elem.style.aspectRatio = "1 / 1";
     }
 
     mail.style.width = "50%";
@@ -261,6 +269,7 @@ function renderingMobile() {
     let slot4 = document.getElementById("slot4");
     let grass = document.getElementsByClassName("grass");
     let menuBtn = document.getElementById("menuBtn");
+    let menuElem = document.getElementsByClassName("menuElem");
     let menu = document.getElementById('menu');
     let mail = document.getElementById('mail');
     let mailBox = document.getElementById('mailBox');
@@ -269,6 +278,7 @@ function renderingMobile() {
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
     let ploggingMetaData = document.getElementById('ploggingMetaData');
+    let itemSlot = document.getElementsByClassName('itemSlot');
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
@@ -303,9 +313,15 @@ function renderingMobile() {
     menu.style.right = "13%";
     menu.style.bottom = "2%";
 
-    for (let elem of document.getElementsByClassName("menuElem")) {
+    for (let elem of menuElem) {
         elem.style.width = (100 / MENU_COUNT) + "%";
         elem.style.height = "";
+    }
+
+    for (let elem of itemSlot) {
+        // 모바일
+        elem.style.width = "100%";
+        elem.style.aspectRatio = "1 / 1";
     }
 
     mail.style.width = "100%";

@@ -15,16 +15,24 @@ function loadShop() {
     back.id = 'closeShopView';
     back.className = 'back';
 
+    let shopHeader = document.createElement('div');
+    shopHeader.id = "shopHeader";
+
+    // 이름
+    let shopTitle = document.createElement('div');
+    shopTitle.innerHTML = "독수리 상점";
+    shopTitle.id = "shopTitle";
+
     // 플라스틱
-    let plastic = document.createElement('div');
-    plastic.id = 'plastic';
+    let plasticInfo = document.createElement('div');
+    plasticInfo.id = 'plasticInfo';
 
     // 플라스틱 이미지 또는 아이콘
     let plasticIco = document.createElement('i');
     plasticIco.className = 'fa-solid fa-bottle-water';
     plasticIco.id = 'plasticIco';
 
-    // 보유 플라스틱
+    // 보유 플라스틱 수량
     let plasticAmount = document.createElement('span');
     plasticAmount.innerHTML = " : " + PLASTIC + "개";
     plasticAmount.id = 'plasticAmount';
@@ -33,10 +41,12 @@ function loadShop() {
     let shopItemList = document.createElement('div');
     shopItemList.id = 'shopItemList';
 
-    plastic.appendChild(plasticIco);
-    plastic.appendChild(plasticAmount);
+    plasticInfo.appendChild(plasticIco);
+    plasticInfo.appendChild(plasticAmount);
+    shopHeader.appendChild(shopTitle);
+    shopHeader.appendChild(plasticInfo);
     shop.appendChild(back);
-    shop.appendChild(plastic);
+    shop.appendChild(shopHeader);
     shop.appendChild(shopItemList);
     BODY.appendChild(shop);
     console.log("loaded shop window");
@@ -77,29 +87,80 @@ function updateItemList() {
 
     // 아이템 생성
     let registItem = (item) => {
-        let itemSlot = document.createElement('div');
-        let name = document.createElement('span');
-        let cost = document.createElement('span');
 
-        if (INVENTORY[item] !== undefined) {
-            name.innerHTML = "이미 보유중";
-            itemSlot.onclick = itemEquip;
-        }
-        else {
-            name.innerHTML = ITEMLIST[item]['name'];
-            cost.innerHTML = "가격 : " + ITEMLIST[item]['cost'] + "개";
-            itemSlot.onclick = buyItem;
-        }
-        name.id = item + "_name";
-        name.className = "itemName";
-        cost.id = item + "_cost";
-        cost.className = 'itemCost';
+        let itemSlot = document.createElement('div');
         itemSlot.id = item;
         itemSlot.className = "itemSlot";
-        itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + item + ".png" + ")";
 
-        itemSlot.appendChild(name);
-        itemSlot.appendChild(cost);
+        let itemPreview = document.createElement('div');
+        itemPreview.id = item + "_itemPreview";
+        itemPreview.className = "itemPreview";
+
+        let itemImage = document.createElement('div');
+        itemImage.style.backgroundImage = "url(" + PATH + "/static/image/" + item + ".png" + ")";
+        itemImage.id = item + "_itemImage";
+        itemImage.className= "itemImage";
+
+        let itemInfo = document.createElement('div');
+        itemInfo.id = item + "_itemInfo";
+        itemInfo.className = "itemInfo";
+
+        let itemName = document.createElement('div');
+        itemName.innerHTML = ITEMLIST[item]['name'];
+        itemName.id = item + "_itemName";
+        itemName.className = "itemName";
+
+        let itemCost = document.createElement('div');
+        itemCost.id = item + "_itemCost";
+        itemCost.className = "itemCost";
+
+        let itemDescript = document.createElement('div');
+        itemDescript.innerHTML = ITEMLIST[item]['descript'];
+        itemDescript.id = item + "_itemDescript";
+        itemDescript.className = "itemDescript";
+
+        let itemBuyBtn = document.createElement('div');
+        itemBuyBtn.style.display = "none";
+        itemBuyBtn.innerHTML = "구매";
+        itemBuyBtn.id = item + "_itemBuyBtn";
+        itemBuyBtn.className = "itemBuyBtn";
+        itemBuyBtn.value = item;
+
+        let itemEquipBtn = document.createElement('div');
+        itemEquipBtn.style.display = "none";
+        itemEquipBtn.id = item + "_itemEquipBtn";
+        itemEquipBtn.className = "itemEquipBtn";
+        itemEquipBtn.value = item;
+
+        if (INVENTORY[item] !== undefined) {
+            let slot = "slot" + ITEMLIST[item]['slot'];
+
+            itemCost.innerHTML = "보유 중";
+            itemEquipBtn.onclick = itemEquip;
+            itemEquipBtn.style.display = "flex";
+
+            if (EQUIPED[slot] === item) {
+                itemEquipBtn.innerHTML = "해제";
+            }
+            else {
+                itemEquipBtn.innerHTML = "적용";
+            }
+        }
+        else {
+            itemCost.innerHTML = "플라스틱 " + ITEMLIST[item]['cost'] + "개";
+            itemBuyBtn.onclick = buyItem;
+            itemEquipBtn.style.display = "flex";
+        }
+
+        itemPreview.appendChild(itemImage);
+        itemInfo.appendChild(itemName);
+        itemInfo.appendChild(itemCost);
+        itemSlot.appendChild(itemPreview);
+        itemSlot.appendChild(itemInfo);
+        itemSlot.appendChild(itemDescript);
+        itemSlot.appendChild(itemBuyBtn);
+        itemSlot.appendChild(itemEquipBtn);
+        
         return itemSlot;
     };
 
@@ -111,35 +172,43 @@ function updateItemList() {
 
 // 아이템 구매
 function buyItem(e) {
+    let itemName = e.target.value;
     let answer = requestMessage("아이템을 구매하시겠습니까?");
     e.target.onclick = '';
 
     if (answer) {
-        SOCKET.emit('request', {'msg':'buyItem', 'data':{'itemName':e.target.id}});
+        SOCKET.emit('request', {'msg':'buyItem', 'data':{'itemName':itemName}});
     }
     else {
         e.target.onclick = buyItem;
     }
 }
 
-// 아이템 장착 / 해제
+// 아이템 적용 / 해제
 function itemEquip(e) {
-    let slot = "slot" + ITEMLIST[e.target.id]['slot'];
+    let itemName = e.target.value;
+    let slot = "slot" + ITEMLIST[itemName]['slot'];
     let itemSlot = document.getElementById(slot);
-    let msg = (EQUIPED[slot] === undefined || EQUIPED[slot] !== e.target.id) ? "장착" : "해제";
+    let msg = (EQUIPED[slot] === undefined || EQUIPED[slot] !== itemName) ? "적용" : "해제";
     let answer = requestMessage("아이템을 " + msg + "하시겠습니까?");
     if (answer) {
-        if (msg === "장착") {
-            itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + e.target.id + ".png" + ")";
-            itemSlot.value = itemSlot;
-            EQUIPED[slot] = e.target.id;
-            SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"equip", 'itemName':e.target.id}});
+        if (msg === "적용") {
+            SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"equip", 'itemName':itemName}});
+            if (EQUIPED[slot] !== "") {
+                let originItem = document.getElementById(EQUIPED[slot] + "_itemEquipBtn");
+                originItem.innerHTML = "적용";
+            }
+            itemSlot.style.backgroundImage = "url(" + PATH + "/static/image/" + itemName + ".png" + ")";
+            itemSlot.value = itemName;
+            EQUIPED[slot] = itemName;
+            e.target.innerHTML = "해제";
         }
         else {
+            SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"unmountItem", 'itemName':itemName}});
             itemSlot.style.backgroundImage = "";
             itemSlot.value = "";
             delete EQUIPED[slot];
-            SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"unmountItem", 'itemName':e.target.id}});
+            e.target.innerHTML = "적용";
         }
     }
 }

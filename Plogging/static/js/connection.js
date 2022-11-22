@@ -37,6 +37,7 @@ SOCKET.on('response', function(data) {
         for (let key of keys) {
             let slot = document.getElementById(key);
             slot.style.backgroundImage = "url(" + PATH + "/static/image/" + EQUIPED[key] + ".png" + ")";
+            slot.value = EQUIPED[key];
         }
 
         // 메인화면 ON
@@ -62,7 +63,7 @@ SOCKET.on('response', function(data) {
                     getLocationBtn.style.display = 'none';
                     getLocationBtn.style.color = 'gray';
                     getLocationBtn.onclick = '';
-                    stopPloggingBtn.style.display = 'block';
+                    stopPloggingBtn.style.display = 'flex';
                     stopPloggingBtn.onclick = stopPlogging;
 
                     ploggingView(true);
@@ -175,7 +176,7 @@ SOCKET.on('response', function(data) {
                 
                 ploggingNotice.innerHTML = '주최자가 기준위치를 입력하였습니다.<br>현재 위치를 인증받으세요.';
                 getLocationBtn.onclick = getLocation;
-                getLocationBtn.style.color = 'black';
+                getLocationBtn.style.color = 'white';
             }
             else {
                 clearPloggingTimer();
@@ -185,7 +186,7 @@ SOCKET.on('response', function(data) {
                 
                 ploggingNotice.innerHTML = '플로깅중...';
                 getLocationBtn.style.display = 'none';
-                stopPloggingBtn.style.display = 'block';
+                stopPloggingBtn.style.display = 'flex';
                 stopPloggingBtn.onclick = stopPlogging;
                 actionMessage("위치를 인증받았습니다.");
             }
@@ -198,7 +199,7 @@ SOCKET.on('response', function(data) {
         
         ploggingNotice.innerHTML = '플로깅중...';
         getLocationBtn.style.display = 'none';
-        stopPloggingBtn.style.display = 'block';
+        stopPloggingBtn.style.display = 'flex';
         stopPloggingBtn.onclick = stopPlogging;
         actionMessage("위치를 인증받았습니다.");
     }
