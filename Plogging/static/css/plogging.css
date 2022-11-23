@@ -21,8 +21,10 @@
 #ploggingMetaData {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     width: 80%;
     margin: 0 auto;
+    font-size: 1.2rem;
 }
 
 #ploggingMetaData > * {

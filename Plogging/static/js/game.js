@@ -334,8 +334,8 @@ function renderingMobile() {
     mailSender.style.fontSize = "0.6875rem";
     sendDate.style.fontSize = "0.5rem";
     
-    ploggingMetaData.style.fontSize = "1.25rem";
-    ploggingMetaData.style.justifyContent = "space-between";
+    ploggingMetaData.style.fontSize = "";
+    ploggingMetaData.style.justifyContent = "";
 
     noticeBar.style.height = "40%";
     noticeText.style.width = "calc(100% - 2.5rem)";
