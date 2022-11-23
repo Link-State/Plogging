@@ -229,6 +229,7 @@ function renderingPC() {
 
     for (let elem of itemSlot) {
         // PC
+        // elem.style.gri
         // elem.style.width = "21rem";
         // elem.style.aspectRatio = "1 / 1";
     }
