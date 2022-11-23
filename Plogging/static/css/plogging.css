@@ -52,6 +52,7 @@
     background-color: #5fa281;
     border-radius: 0.875rem;
     padding: 0.5rem;
+    cursor: pointer;
 }
 
 #stopPloggingBtn {
@@ -64,4 +65,5 @@
     background-color: #5fa281;
     border-radius: 0.875rem;
     padding: 0.5rem;
+    cursor: pointer;
 }

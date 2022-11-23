@@ -149,7 +149,7 @@ function updateItemList() {
         else {
             itemCost.innerHTML = "플라스틱 " + ITEMLIST[item]['cost'] + "개";
             itemBuyBtn.onclick = buyItem;
-            itemEquipBtn.style.display = "flex";
+            itemBuyBtn.style.display = "flex";
         }
 
         itemPreview.appendChild(itemImage);
@@ -174,13 +174,9 @@ function updateItemList() {
 function buyItem(e) {
     let itemName = e.target.value;
     let answer = requestMessage("아이템을 구매하시겠습니까?");
-    e.target.onclick = '';
 
     if (answer) {
         SOCKET.emit('request', {'msg':'buyItem', 'data':{'itemName':itemName}});
-    }
-    else {
-        e.target.onclick = buyItem;
     }
 }
 
@@ -194,7 +190,7 @@ function itemEquip(e) {
     if (answer) {
         if (msg === "적용") {
             SOCKET.emit('request', {'msg':'equipItem', 'data':{'type':"equip", 'itemName':itemName}});
-            if (EQUIPED[slot] !== "") {
+            if (EQUIPED[slot] !== undefined) {
                 let originItem = document.getElementById(EQUIPED[slot] + "_itemEquipBtn");
                 originItem.innerHTML = "적용";
             }

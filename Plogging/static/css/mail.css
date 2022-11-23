@@ -20,6 +20,7 @@
     margin-left: auto;
     margin-right: 1.5rem;
     padding: 0.3125rem;
+    cursor: pointer;
 }
 #mailSend:hover {
     background-color: #416e58;
@@ -137,6 +138,7 @@
     border-radius: 0.3125rem;
     background-color: #5fa281;
     padding: 0.3125rem;
+    cursor: pointer;
 }
 #deleteMail:hover {
     background-color: #416e58;
@@ -163,6 +165,7 @@
 
 .user_mail {
     font-size: 0.75rem;
+    cursor: pointer;
 }
 
 .user_mail_checkbox {
@@ -229,6 +232,7 @@
     border-radius: 1rem;
     margin-right: 1.875rem;
     padding: 0.4375rem;
+    cursor: pointer;
 }
 #reportMail:hover {
     color: ghostwhite;
@@ -245,6 +249,7 @@
 
 #mailSender {
     width: fit-content;
+    cursor: pointer;
 }
 
 #sendDate {

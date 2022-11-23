@@ -20,6 +20,6 @@
     color: white;
     border: solid 0.0625rem black;
     background-color: red;
-    cursor: default;
+    cursor: pointer;
     z-index: 1;
 }

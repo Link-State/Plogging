@@ -15,6 +15,7 @@ SOCKET.on('response', function(data) {
         PLASTIC = data['data']['plastic'];
         PLOGGING_START_TIME = data['data']['startPloggingTime']
         PLOGGING_START_POINT = data['data']['ploggingStartPoint'];
+        delete EQUIPED["void"];
 
         // 요소 렌더링
         loadButton();
@@ -32,7 +33,7 @@ SOCKET.on('response', function(data) {
 
         // window.addEventListener('click', audioPlay);
 
-        // 장착중인 아이템 이미지 로드
+        // 적용중인 아이템 이미지 로드
         let keys = Object.keys(EQUIPED);
         for (let key of keys) {
             let slot = document.getElementById(key);
@@ -227,18 +228,24 @@ SOCKET.on('response', function(data) {
     }
     else if (data.msg === 'buyItem') {
         INVENTORY[data['data']['itemName']] = data['data']['slot'];
+
         let plasticAmount = document.getElementById('plasticAmount');
-        let item = document.getElementById(data['data']['itemName']);
-        let item_name = document.getElementById(data['data']['itemName']+"_name");
-        let item_cost = document.getElementById(data['data']['itemName']+"_cost");
+        let itemBuyBtn = document.getElementById(data['data']['itemName']+"_itemBuyBtn");
+        let itemEquipBtn = document.getElementById(data['data']['itemName']+"_itemEquipBtn");
+        let itemCost = document.getElementById(data['data']['itemName']+"_itemCost");
+
         plasticAmount.innerHTML = PLASTIC - ITEMLIST[data['data']['itemName']]['cost'] + "개";
-        item_name.innerHTML = '이미 보유중';
-        item_cost.innerHTML = '';
-        item.onclick = itemEquip;
+        itemBuyBtn.style.display = "none";
+        itemBuyBtn.onclick = "";
+        itemEquipBtn.style.display = "flex";
+        itemEquipBtn.onclick = itemEquip;
+        itemEquipBtn.innerHTML = "적용";
+        itemCost.innerHTML = "보유 중";
+
         actionMessage('아이템을 구매하였습니다.');
     }
     else if (data.msg === 'equipItem') {
-        actionMessage("아이템을 장착하였습니다.");
+        actionMessage("아이템을 적용하였습니다.");
     }
     else if (data.msg === 'unmountItem') {
         actionMessage("아이템을 해제하였습니다.");
@@ -317,6 +324,7 @@ SOCKET.on('response', function(data) {
         INVENTORY = data['data']['inventory'];
         ITEMLIST = data['data']['itemList'];
         PLASTIC = data['data']['plastic'];
+        delete INVENTORY["void"];
         updateItemList();
     }
     else if (data.msg === 'mailList') {

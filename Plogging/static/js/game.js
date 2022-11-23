@@ -250,7 +250,7 @@ function renderingPC() {
     noticeText.style.width = "70%";
     noticeText.style.height = "calc(100% - 3.75rem)";
     noticeText.style.padding = "1.875rem";
-    noticeText.style.fontSize = "1rem";
+    // noticeText.style.fontSize = "1rem";
     // noticeText.style.padding = "";
     // noticeText.style.width = "";
     speaker.style.top = "";
@@ -259,7 +259,7 @@ function renderingPC() {
     speaker.style.marginBottom = "";
     speaker.style.transform = "";
 
-    console.log("PC 모드");
+    console.log("changed PC mode");
 }
 
 // 화면의 가로가 세로보다 작아질 경우 모바일에 맞게 슬롯들 크기, 위치 재구성
@@ -343,14 +343,14 @@ function renderingMobile() {
     noticeText.style.width = "calc(100% - 2.5rem)";
     noticeText.style.height = "calc(100% - 2.5rem)";
     noticeText.style.padding = "1.25rem";
-    noticeText.style.fontSize = "0.8125rem";
+    // noticeText.style.fontSize = "0.8125rem";
     speaker.style.top = "-40%";
     speaker.style.right = "5%";
     speaker.style.height = "30%";
     speaker.style.marginBottom = "15%";
     speaker.style.transform = "translate(5%, 40%)";
 
-    console.log("모바일 모드");
+    console.log("changed Mobile mode");
 }
 
 function audioPlay() {

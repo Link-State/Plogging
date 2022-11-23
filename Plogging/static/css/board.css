@@ -49,6 +49,7 @@
     text-align: center;
     border-radius: 2rem;
     background-color: #5fa281;
+    cursor: pointer;
 }
 
 #searchResult {
@@ -72,6 +73,7 @@
     background-color:white;
     padding: 1%;
     margin-left: 1rem;
+    cursor: pointer;
 }
 #myPost:hover {
     color: white;
@@ -86,6 +88,7 @@
     background-color: white;
     padding: 1%;
     margin-left: 1rem;
+    cursor: pointer;
     /* margin-block-start: 1rem;
     margin-block-end: 1rem; */
 }
@@ -102,6 +105,7 @@
     background-color: white;
     padding: 1%;
     margin-left: 1rem;
+    cursor: pointer;
     /* margin-block-start: 1rem;
     margin-block-end: 1rem; */
 }
@@ -372,6 +376,7 @@
     margin-top: 3.125rem;
     margin-left: auto;
     padding: 0.4375rem;
+    cursor: pointer;
 }
 #ploggingDelete:hover {
     color: ghostwhite;
@@ -389,6 +394,7 @@
     margin-top: 3.125rem;
     margin-left: auto;
     padding: 0.4375rem;
+    cursor: pointer;
 }
 #ploggingReport:hover {
     color: ghostwhite;
@@ -420,6 +426,7 @@
 #postWritter {
     width: fit-content;
     font-size: 0.75rem;
+    cursor: pointer;
 }
 
 #postUploadDate {
@@ -485,6 +492,7 @@
     border-radius: 1rem;
     background-color: #5fa281;
     padding: 0.625rem;
+    cursor: pointer;
 }
 #ploggingJoin:hover {
     background-color: #416e58;
@@ -498,6 +506,7 @@
     border-radius: 1rem;
     background-color: #5fa281;
     padding: 0.625rem;
+    cursor: pointer;
 }
 #ploggingLeft:hover {
     background-color: #416e58;
