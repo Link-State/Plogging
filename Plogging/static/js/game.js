@@ -229,8 +229,8 @@ function renderingPC() {
 
     for (let elem of itemSlot) {
         // PC
-        elem.style.width = "21rem";
-        elem.style.aspectRatio = "1 / 1";
+        // elem.style.width = "21rem";
+        // elem.style.aspectRatio = "1 / 1";
     }
 
     mail.style.width = "50%";
@@ -320,8 +320,8 @@ function renderingMobile() {
 
     for (let elem of itemSlot) {
         // 모바일
-        elem.style.width = "100%";
-        elem.style.aspectRatio = "1 / 1";
+        // elem.style.width = "100%";
+        // elem.style.aspectRatio = "1 / 1";
     }
 
     mail.style.width = "100%";
