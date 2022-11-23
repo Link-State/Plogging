@@ -389,9 +389,9 @@ function sendMail(e) {
   let date = Date.now();
 
   if (title === "") {
-    actionMessage("제목");
+    actionMessage("제목을 입력해주세요.");
   } else if (context === "") {
-    actionMessage("내용");
+    actionMessage("내용을 입력해주세요.");
   } else {
     sendBtn.onclick = "";
     SOCKET.emit("request", {

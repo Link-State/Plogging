@@ -104,43 +104,137 @@ function loadMain() {
 // 메뉴 버튼 생성
 function loadButton() {
     const BACKGROUND = document.getElementById("background");
-
-    let menuBtn = document.createElement('div');
-    menuBtn.onclick = onClickMenu;
-    menuBtn.id = "menuBtn";
-
-    let menuIco = document.createElement('i');
-    menuIco.className = "fa-solid fa-bars";
-    menuIco.id = "menuIco";
-
-    let menu = document.createElement('div');
+    const CASCADING_MENU = (elem) => {
+        let outter = document.createElement("div");
+        outter.className = "outter";
+        let middle = document.createElement("div");
+        middle.className = "middle";
+        middle.appendChild(elem);
+        outter.appendChild(middle);
+        return outter;
+    };
+    
+    // 메뉴
+    let menu = document.createElement("div");
     menu.style.display = "none";
     menu.id = "menu";
 
-    for (let i = 0; i < MENU_COUNT; i++) {
-        let div = document.createElement('div');
-        div.onclick = MENU_FX[i];
-        div.id = "menu_" + i;
-        div.className = "menuElem";
-        menu.appendChild(div);
-    }
+    // 메뉴바 배경
+    let menuBackground = document.createElement("div");
+    menuBackground.id = "menuBackground";
 
-    menuBtn.appendChild(menuIco);
+    // 메뉴 리스트
+    let menuBox = document.createElement("div");
+    menuBox.id = "menuBox";
+
+    // 메일함
+    let openMailBoxBtn = document.createElement("div");
+    openMailBoxBtn.innerHTML = "메일함";
+    openMailBoxBtn.className = "menuElem";
+    openMailBoxBtn.onclick = openMailBox;
+    openMailBoxBtn.id = "openMailBoxBtn";
+
+    // 상점
+    let openShopBtn = document.createElement("div");
+    openShopBtn.innerHTML = "상점";
+    openShopBtn.className = "menuElem";
+    openShopBtn.onclick = showView;
+    openShopBtn.id = "openShopBtn";
+
+    // 중앙
+    let menuCenter = document.createElement("div");
+    menuCenter.id = "menuCenter";
+
+    // 게시판
+    let openBoardBtn = document.createElement("div");
+    openBoardBtn.innerHTML = "게시판";
+    openBoardBtn.className = "menuElem";
+    openBoardBtn.onclick = ploggingBoard;
+    openBoardBtn.id = "openBoardBtn";
+
+    // 패널 닫기
+    let hideMenuBtn = document.createElement("div");
+    hideMenuBtn.onclick = visibleControllMenu;
+    hideMenuBtn.id = "hideMenuBtn";
+
+    // 미니게임 
+    let openMiniGames = document.createElement("div");
+    openMiniGames.onclick = miniGame;
+    openMiniGames.innerHTML = "미니<br>게임";
+    openMiniGames.className = "menuElem";
+    openMiniGames.id = "openMiniGames";
+
+    // 설정
+    let openSetting = document.createElement("div");
+    openSetting.onclick = setting;
+    openSetting.innerHTML = "설정";
+    openSetting.className = "menuElem";
+    openSetting.id = "openSetting";
+
+    // 패널 열기
+    let visibleMenuBtn = document.createElement("div");
+    visibleMenuBtn.style.display = "none";
+    visibleMenuBtn.onclick = visibleControllMenu;
+    visibleMenuBtn.id = "visibleMenuBtn";
+    
+    // 패널 열기 이미지
+    let visibleMenuIco = document.createElement("div");
+    visibleMenuIco.id = "visibleMenuIco";
+
+    menuCenter.appendChild(CASCADING_MENU(openBoardBtn));
+    menuCenter.appendChild(hideMenuBtn);
+    menuBox.appendChild(CASCADING_MENU(openMailBoxBtn));
+    menuBox.appendChild(CASCADING_MENU(openShopBtn));
+    menuBox.appendChild(menuCenter);
+    menuBox.appendChild(CASCADING_MENU(openMiniGames));
+    menuBox.appendChild(CASCADING_MENU(openSetting));
+    menu.appendChild(menuBackground);
+    menu.appendChild(menuBox);
+
+    visibleMenuBtn.appendChild(visibleMenuIco);
+
     BACKGROUND.appendChild(menu);
-    BACKGROUND.appendChild(menuBtn);
+    BACKGROUND.appendChild(visibleMenuBtn);
+
+    // let menu = document.createElement('div');
+    // menu.style.display = "none";
+    // menu.id = "menu";
+
+    // for (let i = 0; i < MENU_COUNT; i++) {
+    //     let div = document.createElement('div');
+    //     div.onclick = MENU_FX[i];
+    //     div.id = "menu_" + i;
+    //     div.className = "menuElem";
+    //     menu.appendChild(div);
+    // }
+
+    // BACKGROUND.appendChild(menu);
+    // BACKGROUND.appendChild(menuBackground);
+
     console.log("loaded buttons from main window");
 }
 
-// 메뉴 버튼
-function onClickMenu() {
+// 메뉴바 화면 토글
+function visibleControllMenu() {
     let menu = document.getElementById("menu");
+    let visibleMenuBtn = document.getElementById("visibleMenuBtn");
 
     if (menu.style.display !== "none") {
         menu.style.display = "none";
+        visibleMenuBtn.style.display = "flex";
+    } else {
+        menu.style.display = "flex";
+        visibleMenuBtn.style.display = "none";
     }
-    else {
-        menu.style.display = "block";
-    }
+}
+
+
+function miniGame() {
+    actionMessage("준비중");
+}
+
+function setting() {
+    actionMessage("미구현");
 }
 
 // 브라우저 크기변화 함수 (리스너 포함)
@@ -177,9 +271,10 @@ function renderingPC() {
     let slot2 = document.getElementById("slot2");
     let slot4 = document.getElementById("slot4");
     let grass = document.getElementsByClassName("grass");
-    let menuBtn = document.getElementById("menuBtn");
-    let meunElem = document.getElementsByClassName("menuElem");
-    let menu = document.getElementById('menu');
+    let menu = document.getElementById("menu");
+    let hideMenuBtn = document.getElementById("hideMenuBtn");
+    let visibleMenuBtn = document.getElementById("visibleMenuBtn");
+    let visibleMenuIco = document.getElementById("visibleMenuIco");
     let mail = document.getElementById('mail');
     let mailBox = document.getElementById('mailBox');
     let senderProfile = document.getElementById('senderProfile');
@@ -187,7 +282,6 @@ function renderingPC() {
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
     let ploggingMetaData = document.getElementById('ploggingMetaData');
-    let itemSlot = document.getElementsByClassName('itemSlot');
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
@@ -210,30 +304,10 @@ function renderingPC() {
         }
     }
 
-    // menuBtn.style.width = "5%";
-    menuBtn.style.top = "1%";
-    menuBtn.style.right = "1%";
-    menuBtn.style.bottom = "";
-
-    menu.style.width = "7%";
-    menu.style.height = "";
-    menu.style.aspectRatio = "1 / " + MENU_COUNT;
-    menu.style.top = "10%";
-    menu.style.right = "1%";
-    menu.style.bottom = "";
-
-    for (let elem of meunElem) {
-        elem.style.width = "";
-        elem.style.height = (100 / MENU_COUNT) + "%";
-    }
-
-    for (let elem of itemSlot) {
-        // PC
-        // elem.style.gridColumn
-        // elem.style.gridRow
-        // elem.style.width = "21rem";
-        // elem.style.aspectRatio = "1 / 1";
-    }
+    menu.style.width = "65%";
+    hideMenuBtn.style.width = "30%";
+    visibleMenuBtn.style.width = "25%";
+    visibleMenuIco.style.width = "10%";
 
     mail.style.width = "50%";
     mailBox.style.width = "50%";
@@ -250,9 +324,6 @@ function renderingPC() {
     noticeText.style.width = "70%";
     noticeText.style.height = "calc(100% - 3.75rem)";
     noticeText.style.padding = "1.875rem";
-    // noticeText.style.fontSize = "1rem";
-    // noticeText.style.padding = "";
-    // noticeText.style.width = "";
     speaker.style.top = "";
     speaker.style.right = "";
     speaker.style.height = "";
@@ -270,9 +341,10 @@ function renderingMobile() {
     let slot2 = document.getElementById("slot2");
     let slot4 = document.getElementById("slot4");
     let grass = document.getElementsByClassName("grass");
-    let menuBtn = document.getElementById("menuBtn");
-    let menuElem = document.getElementsByClassName("menuElem");
-    let menu = document.getElementById('menu');
+    let menu = document.getElementById("menu");
+    let hideMenuBtn = document.getElementById("hideMenuBtn");
+    let visibleMenuBtn = document.getElementById("visibleMenuBtn");
+    let visibleMenuIco = document.getElementById("visibleMenuIco");
     let mail = document.getElementById('mail');
     let mailBox = document.getElementById('mailBox');
     let senderProfile = document.getElementById('senderProfile');
@@ -280,7 +352,6 @@ function renderingMobile() {
     let mailSender = document.getElementById('mailSender');
     let sendDate = document.getElementById('sendDate');
     let ploggingMetaData = document.getElementById('ploggingMetaData');
-    let itemSlot = document.getElementsByClassName('itemSlot');
     let noticeBar = document.getElementById('noticeBar');
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
@@ -303,28 +374,10 @@ function renderingMobile() {
         }
     }
 
-    // menuBtn.style.width = "10%";
-    menuBtn.style.top = "";
-    menuBtn.style.right = "2%";
-    menuBtn.style.bottom = "2%";
-
-    menu.style.width = "";
-    menu.style.height = "7%";
-    menu.style.aspectRatio = MENU_COUNT + " / 1";
-    menu.style.top = "";
-    menu.style.right = "13%";
-    menu.style.bottom = "2%";
-
-    for (let elem of menuElem) {
-        elem.style.width = (100 / MENU_COUNT) + "%";
-        elem.style.height = "";
-    }
-
-    for (let elem of itemSlot) {
-        // 모바일
-        // elem.style.width = "100%";
-        // elem.style.aspectRatio = "1 / 1";
-    }
+    menu.style.width = "100%";
+    hideMenuBtn.style.width = "20%";
+    visibleMenuBtn.style.width = "60%";
+    visibleMenuIco.style.width = "10%";
 
     mail.style.width = "100%";
     mail.style.height = "";

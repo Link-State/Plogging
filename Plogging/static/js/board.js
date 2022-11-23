@@ -881,7 +881,7 @@ function boardUpdate(data) {
 
 // 내 게시글 삭제
 function deletePost(e) {
-  let answer = requestMessage("글을 삭제하시겠습니까?");
+  let answer = requestMessage("게시글을 삭제하시겠습니까?");
   if (answer) {
     SOCKET.emit("request", { msg: "deleteBoard" });
   }
@@ -899,10 +899,9 @@ function joinPlogging(e) {
     let startTime = new Date(year, month - 1, day, hour, min).getTime();
     let answer;
     if (Date.now() + 3600000 >= startTime) {
-      answer = requestMessage(
-        "해당 플로깅은 참가 후, 취소할 수 없습니다.\n『참가...』 하시겠습니까?"
-      );
-    } else {
+      answer = requestMessage("해당 플로깅은 참가 후, 취소할 수 없습니다.\n『참가...』 하시겠습니까?");
+    }
+    else {
       answer = requestMessage("해당 플로깅에 참가하시겠습니까?");
     }
     if (answer) {
@@ -917,7 +916,7 @@ function joinPlogging(e) {
 
 // 플로깅 참가 철회
 function leftPlogging(e) {
-  let answer = requestMessage("해당 플로깅에 참가를 취소하시겠습니까?");
+  let answer = requestMessage("플로깅 참가를 취소하시겠습니까?");
   if (answer) {
     SOCKET.emit("request", { msg: "leftPlogging", data: e.target.value });
   }
@@ -925,7 +924,7 @@ function leftPlogging(e) {
 
 // 플로깅 신고 (미구현)
 function reportPost(e) {
-  let answer = requestMessage("해당 플로깅을 신고하시겠습니까?");
+  let answer = requestMessage("이 플로깅을 신고하시겠습니까?");
   if (answer) {
     // 미구현
   }
@@ -1035,8 +1034,9 @@ function detailPost(e) {
       mail.style.marginTop = "";
       mail.style.height = "";
       userPost.style.display = "block";
+
     } else {
-      actionMessage("작성 된 글이 없습니다.");
+      actionMessage("작성 한 게시글이 없습니다.");
     }
   }
 }
@@ -1065,7 +1065,7 @@ function writePost() {
 
 // 게시글 업로드 요청
 function uploadPost() {
-  let answer = requestMessage("글을 게시하시겠습니까?");
+  let answer = requestMessage("게시글을 올리시겠습니까?");
   if (answer) {
     let user_state = document.getElementById("setState").value;
     let user_country = document.getElementById("setCountry");
@@ -1085,15 +1085,15 @@ function uploadPost() {
     } else if (user_zone.hasChildNodes() && user_zone.value === "전체") {
       actionMessage("[구]를 선택해주세요.");
     } else if (user_section === "") {
-      actionMessage("상세 위치를 입력해주세요.");
+      actionMessage("[상세 위치]를 입력해주세요.");
     } else if (isNaN(member)) {
       actionMessage("멤버 모집 수는 '숫자'만 기재해주세요.");
     } else if (member < 2) {
-      actionMessage("멤버 모집은 2명 이상부터 가능합니다.");
+      actionMessage("멤버 모집은 2명부터 가능합니다.");
     } else if (startDate === "") {
       actionMessage("플로깅 시작 날짜를 입력해주세요.");
     } else if (Date.parse(startDate) <= Date.now() + 3600000) {
-      actionMessage("플로깅 시작 날짜는 1시간 후부터 설정 가능합니다.");
+      actionMessage("플로깅 시작 날짜는 1시간 이후부터 설정 가능합니다.");
     } else if (title === "") {
       actionMessage("제목을 입력해주세요.");
     } else if (context === "") {

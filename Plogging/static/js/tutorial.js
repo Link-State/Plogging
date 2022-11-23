@@ -44,6 +44,7 @@ function loadTutorial() {
     if (TUTORIAL === null) {
         TUTORIAL = {
             "EnterEntry":true,
+            "slot4":"guide",
             "menu_0":"plogging",
             "user_mail":"readMail",
             "menu_2":"shop"
@@ -64,16 +65,22 @@ function loadTutorial() {
         }
     }
 
-    if (TUTORIAL["EnterEntry"]) {
+    if (TUTORIAL["EnterEntry"] !== undefined) {
         msgs = [
             '"멍멍!"',
             "학교 공터에 강아지가 나타났습니다.",
-            "아무래도 캠퍼스 주변을 보금자리로 자리잡은 것 같네요.",
-            "강아지와 함께 캠퍼스 주변을 둘러봅시다."
+            "아무래도 학교 공터 주변을 보금자리로 자리잡은 것 같네요.",
+            "강아지가 자신을 따라오라는 눈빛을 보내고 있네요.",
+            "얼른 강아지를 따라가"
         ];
         Guide(msgs);
         delete TUTORIAL['EnterEntry'];
         localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
+    }
+
+    if (TUTORIAL["slot4"] === undefined) {
+        let menu = document.getElementById("menu");
+        menu.style.display = "block";
     }
 }
 
@@ -90,7 +97,17 @@ function isTutorial(e) {
             speaker.style.backgroundImage = "url(" + PATH + "/static/image/dog_sit.png" + ")";
         }
 
-        if (TUTORIAL[id] === "plogging") {
+        if (TUTORIAL[id] === "guide") {
+            msgs = [
+                "",
+                "",
+                ""
+            ];
+            Guide(msgs);
+            delete TUTORIAL[id];
+            localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
+        }
+        else if (TUTORIAL[id] === "plogging") {
             msgs = [
                 "여기는 플로깅을 모집하고 직접 참여하는 공간이에요.",
                 "이 곳을 통해 플로깅에 참여하면 학교를 꾸미는데 필요한 '플라스틱'을 얻을 수 있어요.",

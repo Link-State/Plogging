@@ -74,7 +74,7 @@ function stopPlogging() {
 
     if (CURRENTPLOGGING === USERID) {
         msg = 'stopPloggingByHost';
-        answer = requestMessage("플로깅에 참가중인 유저들 모두 플로깅이 종료됩니다.\n플로깅을 종료하시겠습니까?");
+        answer = requestMessage("이 플로깅을 진행하는 유저들 모두 플로깅이 종료됩니다.\n플로깅을 종료하시겠습니까?");
     }
     else {
         msg = 'stopPlogging';
@@ -154,15 +154,15 @@ function getLocation() {
         }, (e) => {
             // 권한 없음
             if (e.code === 1) {
-                actionMessage("위치 권한이 필요합니다.");
+                actionMessage("위치 권한을 수락해주세요.");
             }
             // 위치 가져오기 실패
             else if (e.code === 2) {
-                actionMessage("위치를 가져오는데에 실패했습니다.");
+                actionMessage("위치를 받아오는데에 실패했습니다.");
             }
             // 시간 초과
             else if (e.code === 3) {
-                actionMessage("위치를 가져오는데에 너무 오래걸립니다. 다시 시도해주세요.");
+                actionMessage("위치를 받아오는데에 너무 오래걸립니다. 다시 시도해주세요.");
             }
             getLocationBtn.onclick = getLocation;
         }, {
