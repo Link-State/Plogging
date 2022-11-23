@@ -147,7 +147,7 @@ function mailReport() {
 
 // 메일 보내기 폼 요소 생성
 function loadMailForm() {
-  const BODY = document.getElementsByTagName('body').item(0);
+  const BODY = document.getElementsByTagName("body").item(0);
   const BACKGROUND = document.getElementById("background");
 
   // 메일
@@ -155,12 +155,21 @@ function loadMailForm() {
   mail.style.display = "none";
   mail.id = "mail";
 
+  // 메일 헤더
+  let mailHeader = document.createElement("div");
+  mailHeader.id = "mailHeader";
+
   // 닫기
   let back = document.createElement("div");
   back.onclick = writeMail;
   back.id = "mailBack";
   back.className = "back";
   back.innerHTML = "X";
+
+  // 메일 헤더 텍스트
+  let mailHeaderText = document.createElement("div");
+  mailHeaderText.innerHTML = "새 메일";
+  mailHeaderText.id = "mailHeaderText";
 
   // 전송
   let mailSend = document.createElement("div");
@@ -191,9 +200,11 @@ function loadMailForm() {
   let mailContext = document.createElement("textarea");
   mailContext.id = "mailContext";
 
+  mailHeader.appendChild(back);
+  mailHeader.appendChild(mailHeaderText);
   mailReceiver.appendChild(mailReceiverText);
   mailReceiver.appendChild(mailReceiverUser);
-  mail.appendChild(back);
+  mail.appendChild(mailHeader);
   mail.appendChild(mailSend);
   mail.appendChild(mailReceiver);
   mail.appendChild(mailTitle);

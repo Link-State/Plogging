@@ -347,7 +347,7 @@ function loadBoard() {
   searchResult.id = "searchResult";
   searchResult.innerHTML = "0";
 
-  //
+  // 메뉴
   let postMenu = document.createElement("div");
   postMenu.id = "postMenu";
 
@@ -682,7 +682,7 @@ function loadUserPost() {
   let currentMemberIco = document.createElement("i");
   currentMemberIco.className = "fa-solid fa-person";
   currentMemberIco.id = "currentMemberIco";
-  
+
   let currentMemberAmount = document.createElement("span");
   currentMemberAmount.id = "currentMemberAmount";
 
@@ -752,7 +752,7 @@ function ploggingBoard() {
 
   if (background.style.display !== "none") {
     background.style.display = "none";
-    board.style.display = "block";
+    board.style.display = "flex";
     searchPost();
   } else {
     background.style.display = "block";
@@ -772,40 +772,44 @@ function boardUpdate(data) {
 
   const KEYS = Object.keys(data);
   const CREATE_POST = (key) => {
-
     let year = data[key]["date"]["y"];
     let month = data[key]["date"]["M"];
     let day = data[key]["date"]["d"];
     let hour = data[key]["date"]["h"];
     let minute = data[key]["date"]["m"];
-    let date = new Date(year, month-1, day, hour, minute).getTime();
+    let date = new Date(year, month - 1, day, hour, minute).getTime();
 
     if (Date.now() + 3600000 < date) {
-      date = 
-      month + "월 " +
-      day + "일 (" +
-      data[key]["date"]["w"][0] + ") " +
-      hour + "시 " +
-      minute + "분";
-  
+      date =
+        month +
+        "월 " +
+        day +
+        "일 (" +
+        data[key]["date"]["w"][0] +
+        ") " +
+        hour +
+        "시 " +
+        minute +
+        "분";
+
       // 미리보기
       let post = document.createElement("div");
       post.onclick = detailPost;
       post.value = key;
       post.className = "user_post";
-  
+
       // 미리보기 제목
       let postPreviewTitle = document.createElement("div");
       postPreviewTitle.innerHTML = data[key]["postTitle"];
       postPreviewTitle.className = "postPreviewTitle";
       postPreviewTitle.value = key;
-  
+
       // 미리보기 날짜
       let postPreviewDate = document.createElement("div");
       postPreviewDate.innerHTML = date;
       postPreviewDate.className = "postPreviewDate";
       postPreviewDate.value = key;
-  
+
       // 미리보기 위치
       let postPreviewLocation = document.createElement("div");
       postPreviewLocation.innerHTML =
@@ -818,24 +822,24 @@ function boardUpdate(data) {
         data[key]["section"];
       postPreviewLocation.className = "postPreviewLocation";
       postPreviewLocation.value = key;
-  
+
       // 미리보기 인원 정보
       let postPreviewMemberInfo = document.createElement("div");
       postPreviewMemberInfo.className = "postPreviewMemberInfo";
       postPreviewMemberInfo.value = key;
-  
+
       // 미리보기 인원 아이콘
       let postPreviewMemberIco = document.createElement("i");
       postPreviewMemberIco.className = "fa-solid fa-person";
       postPreviewMemberIco.value = key;
-  
+
       // 미리보기 인원 수 현황
       let postPreviewMembers = document.createElement("div");
       postPreviewMembers.innerHTML =
         data[key]["memberList"].length + " / " + data[key]["maxMember"];
       postPreviewMembers.className = "postPreviewMembers";
       postPreviewMembers.value = key;
-  
+
       postPreviewMemberInfo.appendChild(postPreviewMemberIco);
       postPreviewMemberInfo.appendChild(postPreviewMembers);
       post.appendChild(postPreviewTitle);
@@ -844,9 +848,8 @@ function boardUpdate(data) {
       post.appendChild(postPreviewMemberInfo);
       boardList.appendChild(post);
       count++;
-    }
-    else if (Date.now() - date >= 14400000) {
-      SOCKET.emit("request", {'msg':"overTimePlogging", 'data':key});
+    } else if (Date.now() - date >= 14400000) {
+      SOCKET.emit("request", { msg: "overTimePlogging", data: key });
     }
   };
 
@@ -880,29 +883,30 @@ function boardUpdate(data) {
 function deletePost(e) {
   let answer = requestMessage("글을 삭제하시겠습니까?");
   if (answer) {
-    SOCKET.emit("request", { msg:"deleteBoard" });
+    SOCKET.emit("request", { msg: "deleteBoard" });
   }
 }
 
 // 플로깅 참가
 function joinPlogging(e) {
   if ("geolocation" in navigator) {
-    let startDateObj = BOARD_LIST[e.target.value]['date'];
-    let year = startDateObj['y'];
-    let month = startDateObj['M'];
-    let day = startDateObj['d'];
-    let hour = startDateObj['h'];
-    let min = startDateObj['m'];
-    let startTime = new Date(year, month-1, day, hour, min).getTime();
+    let startDateObj = BOARD_LIST[e.target.value]["date"];
+    let year = startDateObj["y"];
+    let month = startDateObj["M"];
+    let day = startDateObj["d"];
+    let hour = startDateObj["h"];
+    let min = startDateObj["m"];
+    let startTime = new Date(year, month - 1, day, hour, min).getTime();
     let answer;
     if (Date.now() + 3600000 >= startTime) {
-      answer = requestMessage("해당 플로깅은 참가 후, 취소할 수 없습니다.\n『참가...』 하시겠습니까?");
-    }
-    else {
+      answer = requestMessage(
+        "해당 플로깅은 참가 후, 취소할 수 없습니다.\n『참가...』 하시겠습니까?"
+      );
+    } else {
       answer = requestMessage("해당 플로깅에 참가하시겠습니까?");
     }
     if (answer) {
-      SOCKET.emit("request", {msg:"joinPlogging", data:e.target.value});
+      SOCKET.emit("request", { msg: "joinPlogging", data: e.target.value });
     }
   } else {
     actionMessage(
@@ -945,7 +949,7 @@ function detailPost(e) {
         return;
       }
     }
-    let mail = document.getElementById('mail');
+    let mail = document.getElementById("mail");
     let userPostInfo = BOARD_LIST[clickedPost];
 
     if (BOARD_LIST[clickedPost] !== undefined) {
@@ -1031,7 +1035,6 @@ function detailPost(e) {
       mail.style.marginTop = "";
       mail.style.height = "";
       userPost.style.display = "block";
-
     } else {
       actionMessage("작성 된 글이 없습니다.");
     }
