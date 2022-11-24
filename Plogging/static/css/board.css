@@ -7,7 +7,8 @@
 
 #locationMenu {
     position: relative;
-    display: block;
+    display: flex;
+    gap: 1.25rem;
     width: 90%;
     padding-top: 5%;
     padding-bottom: 5%;
@@ -18,9 +19,8 @@
 }
 
 #locationMenu > * {
-    display: inline-block;
+    display: flex;
     font-size: 1rem;
-    margin-left: 1.25rem;
     height: 3rem;
 }
 
@@ -28,7 +28,6 @@
     width: 6.875rem;
     border: solid 0.125rem #5fa281;
     border-radius: 1rem;
-    margin-left: 1rem;
 }
 
 #country {
@@ -67,18 +66,23 @@
 }
 
 #postMenu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     width: 90%;
     margin: 0 auto;
 }
 
 #myPost {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
     color: black;
     border: solid 0.125rem #5fa281;
     border-radius: 2rem;
     background-color:white;
     padding: 1%;
-    margin-left: 1rem;
     cursor: pointer;
 }
 #myPost:hover {
@@ -87,13 +91,15 @@
 }
 
 #joiningPlogging {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
     color: black;
     border: solid 0.125rem #5fa281;
     border-radius: 2rem;
     background-color: white;
     padding: 1%;
-    margin-left: 1rem;
     cursor: pointer;
     /* margin-block-start: 1rem;
     margin-block-end: 1rem; */
@@ -104,13 +110,15 @@
 }
 
 #write {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
     color: black;
     border: solid 0.125rem #5fa281;
     border-radius: 2rem;
     background-color: white;
     padding: 1%;
-    margin-left: 1rem;
     cursor: pointer;
     /* margin-block-start: 1rem;
     margin-block-end: 1rem; */
@@ -333,6 +341,7 @@
 
 .postPreviewTitle {
     font-size: 1.125rem;
+    font-weight: bold;
 }
 
 .postPreviewLocation {
@@ -453,6 +462,7 @@
     width: 75%;
     flex-wrap: wrap;
     font-size: 1rem;
+    font-weight: bold;
 }
 
 #currentMembers {
