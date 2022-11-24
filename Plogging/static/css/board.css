@@ -308,15 +308,23 @@
 }
 
 .user_post {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    justify-content: space-between;
     cursor: pointer;
     width: 100%;
-    display: inline;
+    aspect-ratio: 10 / 1;
     background: white;
-    padding: 0.75rem 0.75rem 1.25rem 1.25rem;
+    padding: 0.875rem 1.25rem 0.875rem 1.25rem;
     margin: 0.9375rem 1rem;
     margin-bottom: 3%;
     border-radius: 2rem;
     box-shadow: 0.1875rem 0.1875rem 0.9375rem 0rem darkgray;
+}
+
+.user_post > * {
+    display: flex;
+    align-items: center;
 }
 
 .user_post:hover {
@@ -333,6 +341,11 @@
 
 .postPreviewDate {
     font-size: 0.75rem;
+    justify-content: flex-end;
+}
+
+.postPreviewMemberInfo {
+    justify-content: flex-end;
 }
 
 .postPreviewMemberInfo > * {
