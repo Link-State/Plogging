@@ -79,7 +79,7 @@ function loginForm(code) {
 
     let frame = document.createElement('div');
     frame.style.width = "49%";
-    frame.style.height = (50 - (1/rate)) + "%"; // height = N - ( n / rate ) %
+    frame.style.height = (50 - (1/rate)) + "%";
     frame.id = "frame";
 
     let loginText = document.createElement('div');

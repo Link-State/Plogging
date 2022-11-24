@@ -381,14 +381,7 @@ function loadBoard() {
   let boardList = document.createElement("div");
   boardList.id = "boardList";
 
-  // 페이징
-  // 2022/11/14 페이징 없애고 스크롤로!
-  let paging = document.createElement("div");
-  paging.id = "paging";
-
   search.appendChild(searchResult);
-  // boardRibon.appendChild(write);
-  // boardBody.appendChild(boardRibon);
   boardBody.appendChild(boardList);
   locationMenu.appendChild(state);
   locationMenu.appendChild(country);
@@ -401,7 +394,6 @@ function loadBoard() {
   board.appendChild(locationMenu);
   board.appendChild(postMenu);
   board.appendChild(boardBody);
-  board.appendChild(paging);
   BODY.appendChild(board);
   console.log("loaded board");
 }

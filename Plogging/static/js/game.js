@@ -68,41 +68,13 @@ function loadMain() {
     background.appendChild(slot1);
     BODY.appendChild(background);
 
-    // loadButton();
-    // loadBoard();
-    // loadPost();
-    // loadUserPost();
-    // loadMailBox();
-    // loadReceiveMailForm();
-    // loadMailForm();
-    // loadPlogging();
-    // loadShop();
-
     SOCKET.emit('request', {'msg':'initialize'});
     console.log("loaded main window");
-    // background.style.display = "block";
-
-
-    // [완료] 배경화면 div 크기 고정해서 브라우저 크기 줄이면 화면 잘리게끔 (ex.네이버 메인화면)
-    // [완료] 화면 가로가 세로보다 더 짧아질 경우 배경화면 div의 height를 100%로 변경
-    // [완료] ㄴ 이 때 아이템이 들어갈 슬롯들의 크기, 위치도 알맞게 변경
-    // [완료] 컨버전스홀의 경우 어떠한 화면비에도 width는 꽉 차있어야함. 
-    // [완료] ㄴ 최대 가로폭에 맞게 이미지 크기와 위치가 조정되어야함. (그 어떤 해상도의 사진이 들어와도!)
-    // 배경화면은 x방향으로 repeat해도 자연스러운 이미지이어야함.
-
-    // 메뉴1 : 플로깅 모집
-    // 메뉴2 : 봉사활동 연계
-    // 메뉴3 : 미니게임
-    // 메뉴4 : 상점 
-    // 메뉴5 : 설정
-    
-    // 각 슬롯들에 들어가는 이미지는 gif도 가능 (컨버전스홀, 독수리상, 강아지, 해 및 달)
-    // 강아지를 꾸미는 방향 보다는 주변 환경을 꾸미는 방향으로 가는 것이 좋아보임. (개발적인 측면에사도)
-    // 강아지는 다양한 동작까지는 구현 가능할것으로 예상됨.
 }
 
 // 메뉴 버튼 생성
 function loadButton() {
+    const BODY = document.getElementsByTagName('body').item(0);
     const BACKGROUND = document.getElementById("background");
     const CASCADING_MENU = (elem) => {
         let outter = document.createElement("div");
@@ -193,23 +165,8 @@ function loadButton() {
 
     visibleMenuBtn.appendChild(visibleMenuIco);
 
-    BACKGROUND.appendChild(menu);
-    BACKGROUND.appendChild(visibleMenuBtn);
-
-    // let menu = document.createElement('div');
-    // menu.style.display = "none";
-    // menu.id = "menu";
-
-    // for (let i = 0; i < MENU_COUNT; i++) {
-    //     let div = document.createElement('div');
-    //     div.onclick = MENU_FX[i];
-    //     div.id = "menu_" + i;
-    //     div.className = "menuElem";
-    //     menu.appendChild(div);
-    // }
-
-    // BACKGROUND.appendChild(menu);
-    // BACKGROUND.appendChild(menuBackground);
+    BODY.appendChild(menu);
+    BODY.appendChild(visibleMenuBtn);
 
     console.log("loaded buttons from main window");
 }
@@ -314,8 +271,8 @@ function renderingPC() {
     senderProfile.style.width = "3.125rem";
     senderProfile.style.height = "3.125rem";
     senderInfo.style.height = "3.125rem";
-    mailSender.style.fontSize = "0.75rem";
-    sendDate.style.fontSize = "0.5625rem";
+    mailSender.style.fontSize = "1rem";
+    sendDate.style.fontSize = "0.65rem";
     
     ploggingMetaData.style.fontSize = "1.5rem";
     ploggingMetaData.style.justifyContent = "space-around";
@@ -386,8 +343,8 @@ function renderingMobile() {
     senderProfile.style.width = "1.875rem";
     senderProfile.style.height = "1.875rem";
     senderInfo.style.height = "1.875rem";
-    mailSender.style.fontSize = "0.6875rem";
-    sendDate.style.fontSize = "0.5rem";
+    mailSender.style.fontSize = "1rem";
+    sendDate.style.fontSize = "0.75rem";
     
     ploggingMetaData.style.fontSize = "";
     ploggingMetaData.style.justifyContent = "";
@@ -396,7 +353,6 @@ function renderingMobile() {
     noticeText.style.width = "calc(100% - 2.5rem)";
     noticeText.style.height = "calc(100% - 2.5rem)";
     noticeText.style.padding = "1.25rem";
-    // noticeText.style.fontSize = "0.8125rem";
     speaker.style.top = "-40%";
     speaker.style.right = "5%";
     speaker.style.height = "30%";

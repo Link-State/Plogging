@@ -1,8 +1,12 @@
 #board {
+    position: fixed;
+    top: 0;
+    left: 0;
     flex-direction: column;
     width: 100%;
     height: 100%;
     background-color: #eff0ea;
+    z-index: 9;
 }
 
 #locationMenu {
@@ -153,14 +157,6 @@
     margin: 0 auto;
 }
 
-#paging {
-    position: absolute;
-    width: 100%;
-    bottom: 1%;
-    left: 50%;
-    transform: translate(-50%, 1%);
-}
-
 #post {
     position: fixed;
     width: 100%;
@@ -168,7 +164,7 @@
     left: 0;
     top: 0;
     background-color: #eff0ea;
-    z-index: 2;
+    z-index: 10;
 }
 
 #postSection {
@@ -373,11 +369,11 @@
     width: 100%;
     height: 100%;
     background-color: #eff0ea;
-    z-index: 3;
+    z-index: 10;
 }
 
 #postContext {
-    font-size: 0.6875rem;
+    font-size: 1rem;
     margin-left: 3.125rem;
     margin-right: 3.125rem;
 }
@@ -442,18 +438,22 @@
 
 #postWritter {
     width: fit-content;
-    font-size: 0.75rem;
+    /* font-size: 0.75rem; */
+    font-size: 1rem;
     cursor: pointer;
 }
 
 #postUploadDate {
     width: fit-content;
     color: grey;
-    font-size: 0.5625rem;
+    font-size: 0.75rem;
+    /* font-size: 0.5625rem; */
 }
 
 #userPostMain {
     display:flex;
+    font-weight: bold;
+    font-size: 1.25rem;
     margin-top: 2.3125rem;
     margin-bottom: 0.625rem;
 }
@@ -461,7 +461,7 @@
 #userPostTitle {
     width: 75%;
     flex-wrap: wrap;
-    font-size: 1rem;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
@@ -469,18 +469,17 @@
     width: 25%;
     flex-wrap: wrap;
     text-align: right;
-    font-size: 0.8125rem;
+    font-size: 1.5rem;
     margin-right: 0.625rem;
 }
 
 #currentMemberIco {
-    font-size: 0.8125rem;
     margin-right: 0.9375rem;
 }
 
 #ploggingInfo {
     display:flex;
-    font-size: 0.8125rem;
+    font-size: 1.1rem;
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
 }
