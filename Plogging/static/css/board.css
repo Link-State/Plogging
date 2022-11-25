@@ -338,18 +338,22 @@
 .postPreviewTitle {
     font-size: 1.125rem;
     font-weight: bold;
+    text-align: left;
 }
 
 .postPreviewLocation {
     font-size: 1rem;
+    text-align: left;
 }
 
 .postPreviewDate {
     font-size: 0.75rem;
+    text-align: right;
     justify-content: flex-end;
 }
 
 .postPreviewMemberInfo {
+    text-align: right;
     justify-content: flex-end;
 }
 

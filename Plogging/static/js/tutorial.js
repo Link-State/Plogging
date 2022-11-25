@@ -45,9 +45,9 @@ function loadTutorial() {
         TUTORIAL = {
             "EnterEntry":true,
             "slot4":"guide",
-            "menu_0":"plogging",
-            "user_mail":"readMail",
-            "menu_2":"shop"
+            "openBoardBtn":"plogging",
+            "openMailBoxBtn":"readMail",
+            "openShopBtn":"shop"
         };
         window.addEventListener('click', isTutorial);
 
@@ -68,10 +68,10 @@ function loadTutorial() {
     if (TUTORIAL["EnterEntry"] !== undefined) {
         msgs = [
             '"멍멍!"',
-            "학교 공터에 강아지가 나타났습니다.",
+            "학교 공터에 강아지가 나타났습니다!",
             "아무래도 학교 공터 주변을 보금자리로 자리잡은 것 같네요.",
-            "강아지가 자신을 따라오라는 눈빛을 보내고 있네요.",
-            "얼른 강아지를 따라가"
+            "강아지가 자신에게 와달라는 눈빛을 보내고 있어요.",
+            "얼른 강아지에게 다가가봅시다. (강아지를 클릭하세요.)"
         ];
         Guide(msgs);
         delete TUTORIAL['EnterEntry'];
@@ -94,25 +94,31 @@ function isTutorial(e) {
     else {
         if (TUTORIAL[id] !== undefined) {
             let speaker = document.getElementById('speaker');
-            speaker.style.backgroundImage = "url(" + PATH + "/static/image/dog_sit.png" + ")";
+            speaker.style.backgroundImage = "url(" + PATH + "/static/image/dog_sit.png)";
         }
 
         if (TUTORIAL[id] === "guide") {
             msgs = [
-                "",
-                "",
-                ""
+                "안녕하세요 멍멍!",
+                "아.. 뭘 하고 있었냐구요??",
+                "'플로깅'이요! 이거 하면 저기 앞에 슈퍼 사장님께서 제가 좋아하는 뼈다귀를 주세요.",
+                "아... 쳐다본 이유요..? 그 쪽 손에.. 맛있는게 있어서.... (침을 줄줄 흘리고 있다.)",
+                "저기, 그렇게 있지 말고 그 쪽도 플로깅해서 저랑 같이 뼈다귀 먹는게 어떠세요?? 이거도 맛있는데!",
+                "'플로깅'하는법 그렇게 어렵지 않아요, 제가 도와드릴께요!",
+                "(메뉴를 눌러보자)"
             ];
             Guide(msgs);
             delete TUTORIAL[id];
             localStorage.setItem("tutorial", JSON.stringify(TUTORIAL));
+            let menu = document.getElementById("menu");
+            menu.style.display = "block";
         }
         else if (TUTORIAL[id] === "plogging") {
             msgs = [
                 "여기는 플로깅을 모집하고 직접 참여하는 공간이에요.",
                 "이 곳을 통해 플로깅에 참여하면 학교를 꾸미는데 필요한 '플라스틱'을 얻을 수 있어요.",
                 "플로깅 모집에 주의사항이 있다면 (1) 최소 1시간 이후부터 모집 가능하다는 점, (2) 플로깅 시작 1시간 전에는 참가/참가취소가 불가능하다는 점이에요.",
-                "또, 게시글을 읽다가 작성자에게 질문/건의 사항이 생긴다면 해당 작성자의 이름부분을 누르면 메일을 보낼 수 있어요!",
+                "또, 게시글을 읽다가 작성자에게 질문/건의 사항이 생긴다면 해당 작성자의 이름을 누르면 메일을 보낼 수 있어요!",
                 "이제 플로깅을 통해 플라스틱을 수집해봐요!"
             ];
             Guide(msgs);
@@ -122,8 +128,8 @@ function isTutorial(e) {
         else if (TUTORIAL[id] === "readMail") {
             msgs = [
                 "메일을 읽고 답장은 어떻게 보내야 할까요?",
-                "해당 유저의 이름을 클릭하면 메일을 보낼 수 있어요.",
-                "저는 강아지라서... 글이 개발새발 써지네요.."
+                "보낸 사람의 이름을 클릭하면 답장 메일을 작성할 수 있답니다.",
+                "근데... 저는 강아지라서... 글이 개발새발 써지네요.."
             ];
             Guide(msgs);
             delete TUTORIAL[id];

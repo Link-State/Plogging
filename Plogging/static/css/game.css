@@ -1,15 +1,3 @@
-html {
-    width: 100%;
-    height: 100%;
-}
-
-body {
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    overflow: hidden;
-    margin: 0 auto;
-}
 
 #background {
     position: absolute;
@@ -114,7 +102,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 #menuBackground {
@@ -175,12 +163,11 @@ body {
 
 #menuCenter {
     display: flex;
-    align-content: center;
+    align-content: flex-end;
     align-items: flex-end;
     justify-content: center;
     flex-wrap: wrap;
     width: 10rem;
-    height: 12.5rem;
     /* aspect-ratio: 1 / 1; */
     z-index: 7;
 }
@@ -203,7 +190,7 @@ body {
 #menuCenter > .outter > .middle > .menuElem {
     display: flex;
     border-radius: 50%;
-    font-size: 1.75rem;
+    font-size: 1.25rem;
     z-index: 7;
     cursor: pointer;
 }
@@ -215,6 +202,7 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    margin-bottom: 0.5rem;
     background-image: url("../image/hide_menu.png");
     cursor: pointer;
 }

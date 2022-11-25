@@ -75,7 +75,6 @@ function loadMain() {
 // 메뉴 버튼 생성
 function loadButton() {
     const BODY = document.getElementsByTagName('body').item(0);
-    const BACKGROUND = document.getElementById("background");
     const CASCADING_MENU = (elem) => {
         let outter = document.createElement("div");
         outter.className = "outter";
@@ -243,8 +242,6 @@ function renderingPC() {
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
 
-    html.style.fontSize = "1rem";
-
     background.style.width = '100%';
     background.style.height = '';
 
@@ -313,8 +310,6 @@ function renderingMobile() {
     let noticeText = document.getElementById('noticeText');
     let speaker = document.getElementById('speaker');
 
-    html.style.fontSize = "2rem";
-
     background.style.width = '';
     background.style.height = '100%';
 
@@ -332,7 +327,7 @@ function renderingMobile() {
     }
 
     menu.style.width = "100%";
-    hideMenuBtn.style.width = "20%";
+    hideMenuBtn.style.width = "30%";
     visibleMenuBtn.style.width = "60%";
     visibleMenuIco.style.width = "10%";
 
@@ -349,7 +344,7 @@ function renderingMobile() {
     ploggingMetaData.style.fontSize = "";
     ploggingMetaData.style.justifyContent = "";
 
-    noticeBar.style.height = "40%";
+    noticeBar.style.height = "30%";
     noticeText.style.width = "calc(100% - 2.5rem)";
     noticeText.style.height = "calc(100% - 2.5rem)";
     noticeText.style.padding = "1.25rem";

@@ -9,8 +9,8 @@ function init(code) {
         let p = document.createElement('p');
 
         p.style.color = "#fff";
-        p.style.fontSize = "48pt";
-        p.textContent = "{$logo}";
+        p.style.fontSize = "3rem";
+        p.textContent = "키우깅";
         div.style.width = "fit-content";
         div.style.height = "fit-content";
         div.style.position = "absolute";
@@ -83,7 +83,7 @@ function loginForm(code) {
     frame.id = "frame";
 
     let loginText = document.createElement('div');
-    loginText.innerHTML = "{$text}";
+    loginText.innerHTML = "로그인";
     loginText.id = "loginText";
 
     let loginFail = document.createElement('div');
@@ -93,6 +93,7 @@ function loginForm(code) {
     let loginIcon = document.createElement('i');
     loginIcon.style.fontSize = "32pt";
     loginIcon.onclick = () => {location.href = "http://" + document.domain + ":" + location.port + "/login";};
+    // loginIcon.onclick = () => {location.href = "https://" + document.domain + ":" + location.port + "/login";};
     loginIcon.innerText = "";
     loginIcon.className = "fa-brands fa-google";
     loginIcon.id = "loginIcon"
