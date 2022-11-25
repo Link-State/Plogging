@@ -28,39 +28,41 @@
 }
 
 #loginText {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
     font-size: 2rem;
     opacity: 0;
-    width: fit-content;
-    height: fit-content;
-    position: relative;
     top: 25%;
     left: 50%;
     transform: translate(-50%, -15%);
+    text-align: center;
     animation: iconopacity 500ms linear 3000ms both;
 }
 
 #loginIcon {
+    position: absolute;
     font-size: 2rem;
-    opacity: 0;
-    width: fit-content;
+    width: 90%;
     height: fit-content;
-    position: relative;
-    cursor: pointer;
-    border: solid 0.125rem black;
-    border-radius: 0.125rem;
-    padding: 0.375rem;
     top: 55%;
     left: 50%;
+    text-align: center;
+    border-radius: 0.125rem;
+    opacity: 0;
+    padding: 0.375rem;
+    cursor: pointer;
     transform: translate(-50%, -45%);
     animation: textopacity 500ms linear 3500ms both;
 }
 
 #loginFail {
+    position: absolute;
     font-size: 0.5rem;
     opacity: 0;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
-    position: absolute;
+    text-align: center;
     z-index: 2;
     color: red;
     top: 45%;
