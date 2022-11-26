@@ -374,12 +374,14 @@
     height: 100%;
     background-color: #eff0ea;
     z-index: 10;
+    overflow-y: scroll;
 }
 
 #postContext {
     font-size: 1rem;
     margin-left: 3.125rem;
     margin-right: 3.125rem;
+    margin-bottom: 3.125rem;
 }
 
 #ploggingDelete {
@@ -456,29 +458,36 @@
 
 #userPostMain {
     display:flex;
-    font-weight: bold;
+    justify-content: space-between;
     font-size: 1.25rem;
     margin-top: 2.3125rem;
     margin-bottom: 0.625rem;
 }
 
 #userPostTitle {
-    width: 75%;
+    display:flex;
+    /* width: 75%; */
     flex-wrap: wrap;
     font-size: 1.5rem;
     font-weight: bold;
 }
 
 #currentMembers {
-    width: 25%;
+    display:flex;
+    /* width: 25%; */
     flex-wrap: wrap;
     text-align: right;
-    font-size: 1.5rem;
-    margin-right: 0.625rem;
+    font-size: 1.25rem;
+    gap: 0.5rem;
+    /* margin-right: 0.625rem; */
 }
 
-#currentMemberIco {
-    margin-right: 0.9375rem;
+#currentMembers > * {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
 }
 
 #ploggingInfo {
@@ -493,11 +502,19 @@
     flex-wrap: wrap;
 }
 
+#ploggingStartDate_when {
+    font-weight: bold;
+}
+
 #ploggingLocation {
     width: 50%;
     left: 50%;
     flex-wrap: wrap;
     margin-left: 1.875rem;
+}
+
+#ploggingLocation_where {
+    font-weight: bold;
 }
 
 #userPostContext {

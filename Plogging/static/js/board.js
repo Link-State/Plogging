@@ -654,9 +654,23 @@ function loadUserPost() {
   let ploggingLocation = document.createElement("div");
   ploggingLocation.id = "ploggingLocation";
 
+  let ploggingLocation_where = document.createElement("div");
+  ploggingLocation_where.innerHTML = "어디서?";
+  ploggingLocation_where.id = "ploggingLocation_where";
+
+  let ploggingLocation_loc = document.createElement("div");
+  ploggingLocation_loc.id = "ploggingLocation_loc";
+
   // 시작 일자
   let ploggingStartDate = document.createElement("div");
   ploggingStartDate.id = "ploggingStartDate";
+
+  let ploggingStartDate_when = document.createElement("div");
+  ploggingStartDate_when.innerHTML = "언제?";
+  ploggingStartDate_when.id = "ploggingStartDate_when";
+
+  let ploggingStartDate_date = document.createElement("div");
+  ploggingStartDate_date.id = "ploggingStartDate_date";
 
   // 게시글 메인 정보
   let userPostMain = document.createElement("div");
@@ -718,7 +732,11 @@ function loadUserPost() {
   currentMembers.appendChild(currentMemberIco);
   currentMembers.appendChild(currentMemberAmount);
   userPostMain.appendChild(currentMembers);
+  ploggingStartDate.appendChild(ploggingStartDate_when);
+  ploggingStartDate.appendChild(ploggingStartDate_date);
   ploggingInfo.appendChild(ploggingStartDate);
+  ploggingLocation.appendChild(ploggingLocation_where);
+  ploggingLocation.appendChild(ploggingLocation_loc);
   ploggingInfo.appendChild(ploggingLocation);
   postContext.appendChild(ploggingDelete);
   postContext.appendChild(ploggingReport);
@@ -960,8 +978,8 @@ function detailPost(e) {
       let userPostTitle = document.getElementById("userPostTitle");
       let postWritter = document.getElementById("postWritter");
       let postUploadDate = document.getElementById("postUploadDate");
-      let ploggingStartDate = document.getElementById("ploggingStartDate");
-      let ploggingLocation = document.getElementById("ploggingLocation");
+      let ploggingStartDate_date = document.getElementById("ploggingStartDate_date");
+      let ploggingLocation_loc = document.getElementById("ploggingLocation_loc");
       let currentMemberAmount = document.getElementById("currentMemberAmount");
       let userPostContext = document.getElementById("userPostContext");
       let ploggingDelete = document.getElementById("ploggingDelete");
@@ -986,8 +1004,8 @@ function detailPost(e) {
         "분 " +
         recordedDate.getSeconds() +
         "초 ";
-      ploggingLocation.innerHTML =
-        "어디서?&nbsp;&nbsp;&nbsp;" +
+        ploggingLocation_loc.innerHTML =
+        "" +
         userPostInfo["state"] +
         " " +
         userPostInfo["country"] +
@@ -995,7 +1013,7 @@ function detailPost(e) {
         userPostInfo["zone"] +
         " " +
         userPostInfo["section"];
-      ploggingStartDate.innerHTML = "언제?&nbsp;&nbsp;&nbsp;" + startDate;
+        ploggingStartDate_date.innerHTML = "" + startDate;
       currentMemberAmount.innerHTML =
         userPostInfo["memberList"].length + " / " + userPostInfo["maxMember"];
       userPostContext.innerHTML = userPostInfo["postContext"];
