@@ -6,20 +6,29 @@ function init(code) {
         BODY.style.backgroundColor = "#000";
 
         let div = document.createElement('div');
-        let p = document.createElement('p');
+        let inner_div1 = document.createElement('div');
+        inner_div1.style.display = "flex";
+        inner_div1.innerHTML = "학교";
+        let inner_div2 = document.createElement('div');
+        inner_div2.style.display = "flex";
+        inner_div2.innerHTML = "키우깅";
 
-        p.style.color = "#fff";
-        p.style.fontSize = "3rem";
-        p.textContent = "키우깅";
-        div.style.width = "fit-content";
-        div.style.height = "fit-content";
+        div.style.flexWrap = "wrap";
+        div.style.justifyContent = "center";
+        div.style.alignContent = "center";
+        div.style.alignItems = "center";
+        div.style.display = "flex";
+        div.style.color = "#fff";
+        div.style.fontSize = "3rem";
+        div.style.textAlign = "center";
         div.style.position = "absolute";
         div.style.opacity = 0;
         div.style.top = "50%";
         div.style.left = "50%";
         div.style.transform = "translate(-50%, -50%)";
+        div.appendChild(inner_div1);
+        div.appendChild(inner_div2);
 
-        div.appendChild(p);
         BODY.appendChild(div);
         
         div.animate([
@@ -92,8 +101,8 @@ function loginForm(code) {
 
     let loginIcon = document.createElement('i');
     loginIcon.style.fontSize = "32pt";
-    loginIcon.onclick = () => {location.href = "http://" + document.domain + ":" + location.port + "/login";};
-    // loginIcon.onclick = () => {location.href = "https://" + document.domain + ":" + location.port + "/login";};
+    // loginIcon.onclick = () => {location.href = "http://" + document.domain + ":" + location.port + "/login";};
+    loginIcon.onclick = () => {location.href = "https://" + document.domain + ":" + location.port + "/login";};
     loginIcon.innerText = "";
     loginIcon.className = "fa-brands fa-google";
     loginIcon.id = "loginIcon"
