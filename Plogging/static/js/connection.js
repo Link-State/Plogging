@@ -1,4 +1,4 @@
-const SOCKET = io.connect("http://" + document.domain + ":" + location.port);
+const SOCKET = io.connect("https://" + document.domain + ":" + location.port);
 // const PATH = "http://" + document.domain + ":" + location.port + "";
 const PATH = "https://" + document.domain + ":" + location.port + "";
 let ITEMLIST = {};
